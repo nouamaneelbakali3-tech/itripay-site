@@ -151,17 +151,19 @@ body[data-lang="ar"] .lang a[hreflang="ar"] {
 /* ─────────── L'MEDIA SLOT ───────────
    9:19.5 = l'A17 (1080x2340). L'3ard 320px max. Hna kaydkhol l'screenshot
    mn be3d: <img> f device frame, nfs l'box, nfs l'grid, walo kaytbeddel.
-   Daba fih l'objet typographique, f l'wast. Bla border: machi placeholder. */
+   Daba fih l'objet typographique. Bla border: machi placeholder.
+
+   L'aspect-ratio kaytfe33el GHIR melli l'box fiha <img>. B l'objet
+   typographique, box dyal 693px kanet kat-khelli ~120px khawyin fo9 w
+   t7t kol objet — bidhat l'fragh li kan-7awlo n-tjennbo. L'slot kayn,
+   nfs l'3ard, nfs l'blasa f l'grid; l'irtifa3 kayji mn li fih. */
 .media { display: flex; justify-content: center; }
 .media-box {
-  width: 100%; max-width: 320px; aspect-ratio: 9 / 19.5;
+  width: 100%; max-width: 320px;
   display: flex; align-items: center; justify-content: center;
 }
+.media-box:has(img) { aspect-ratio: 9 / 19.5; }
 .media-box > * { width: 100%; }
-@media (max-width: 879px) {
-  /* 3la telifon l'box ma-khasshach tkoun twila khawya: l'objet howa l'irtifa3 */
-  .media-box { aspect-ratio: auto; }
-}
 
 /* ─────────── buttons ─────────── */
 .btn {
@@ -266,9 +268,8 @@ body[data-lang="ar"] .lang a[hreflang="ar"] {
 .ledger {
   background: #fff; border-radius: var(--radius); box-shadow: var(--shadow);
   padding: var(--s5); display: grid; gap: var(--s3);
-  /* Str b7al l'carnet: khtout khfaf kol 52px */
-  background-image: repeating-linear-gradient(to bottom, transparent 0 51px, var(--credit-line) 51px 52px);
-  background-origin: content-box;
+  /* L'khtout dyal l'carnet homa l'border dyal kol str (52px), machi
+     background mkerrer: dak kan kaytle3 mkhellet m3a l'header. */
 }
 .ledger header { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s3); }
 .ledger-title { font-weight: 800; font-size: var(--title); color: var(--credit-dark); }
@@ -313,7 +314,7 @@ body[data-lang="ar"] .lang a[hreflang="ar"] {
   background: var(--action-tint); border-radius: 4px 4px 0 0;
   box-shadow: inset 0 0 0 1.5px var(--action);
 }
-.bar.today i, .bar:nth-child(5) i { background: var(--action); }
+.bar.today i { background: var(--action); }
 .bar span { font-size: var(--micro); color: var(--ink-4); text-align: center; font-weight: 600; }
 
 /* ─────────── languages ─────────── */
