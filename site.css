@@ -1,0 +1,382 @@
+/* ============================================================================
+   PAYNA — site.css
+   Tokens mn l'app, machi mkhtar3in. Kol lawn hna 3endo l'malaf li ja menno.
+   ============================================================================ */
+
+:root {
+  /* L'azraq dyal l'logo: android/app/src/main/res/values/ic_launcher_background.xml */
+  --brand: #0D48BE;
+  --brand-deep: #0A3A9A;
+  /* L'azraq dyal l'UI: lib/main.dart ColorScheme.fromSeed, kol zerr f l'app */
+  --action: #2563EB;
+  --action-dark: #1D4ED8;
+  --action-tint: #EFF6FF;
+  /* L'crédit: lib/screens/credit_screen.dart */
+  --credit: #F97316;
+  --credit-dark: #EA580C;
+  --credit-tint: #FFF7ED;
+  --credit-tint-2: #FFEDD5;
+  --credit-line: #FED7AA;
+  --credit-ink: #7C2D12;
+  /* Neutres: partout f l'app */
+  --ink: #111827;
+  --ink-2: #374151;
+  --ink-3: #6B7280;
+  --ink-4: #9CA3AF;
+  --line: #E5E7EB;
+  --line-2: #D1D5DB;
+  --surface-2: #F3F4F6;
+  --page: #F8F9FA;
+  --ok: #16A34A;
+  --ok-tint: #DCFCE7;
+  --err: #EF4444;
+
+  /* Type: Cairo howa fontFamily dyal l'app (lib/main.dart). L'ar9am dyal
+     l'7ajm mn lib/core/tokens.dart, mkebbrin l l'web (13px body dyal
+     telifon = 17px dyal écran). L'adwar nfshom. */
+  --font: 'Cairo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-tifinagh: 'Noto Sans Tifinagh', var(--font);
+  --micro: 0.75rem;     /* 12 */
+  --caption: 0.875rem;  /* 14 */
+  --body: 1.0625rem;    /* 17 */
+  --body-lg: 1.1875rem; /* 19 */
+  --title: 1.25rem;     /* 20 */
+  --h2: clamp(1.75rem, 1.2rem + 2vw, 2.5rem);   /* 28–40 */
+  --h1: clamp(2.5rem, 1.5rem + 4.5vw, 4.5rem);  /* 40–72 */
+  --display: clamp(3rem, 2rem + 3vw, 4.25rem);  /* l'mableg, l'taman */
+
+  /* Fragh: kollo 3la 4, b7al AppSpace */
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 20px; --s6: 24px;
+  --s8: 32px; --s10: 40px; --s12: 48px; --s16: 64px; --s24: 96px;
+
+  --radius: 16px;
+  --radius-sm: 10px;
+  --wrap: 1120px;
+  --gutter: var(--s5);
+  --shadow: 0 1px 2px rgba(17, 24, 39, .06), 0 12px 32px rgba(17, 24, 39, .08);
+}
+
+/* ─────────── base ─────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: var(--body);
+  line-height: 1.6;
+  color: var(--ink);
+  background: #fff;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+h1, h2, h3, p, ul, dl { margin: 0; }
+ul { padding: 0; list-style: none; }
+h1, h2, h3 { line-height: 1.15; font-weight: 800; letter-spacing: -0.01em; }
+h1 { font-size: var(--h1); }
+h2 { font-size: var(--h2); }
+h3 { font-size: var(--title); }
+/* L'3arabiya ma-3endhach letter-spacing negative: l'7oruf mrebbtin. */
+[dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3 { letter-spacing: 0; }
+[dir="rtl"] { line-height: 1.75; }
+
+.wrap { width: min(100% - 2 * var(--gutter), var(--wrap)); margin-inline: auto; }
+.skip {
+  position: absolute; inset-inline-start: var(--s4); top: -100px;
+  padding: var(--s2) var(--s4); background: var(--ink); color: #fff;
+  border-radius: var(--radius-sm); z-index: 10;
+}
+.skip:focus { top: var(--s4); }
+
+/* ─────────── nav ─────────── */
+.nav { background: #fff; border-bottom: 1px solid var(--line); }
+.nav-row {
+  display: flex; align-items: center; gap: var(--s6);
+  min-height: 72px;
+}
+.brand {
+  display: inline-flex; align-items: center; gap: var(--s3);
+  text-decoration: none; font-weight: 800; font-size: 1.5rem; letter-spacing: -0.01em;
+}
+.brand img { width: 46px; height: 36px; }
+.nav-links { display: flex; gap: var(--s5); margin-inline-start: auto; }
+.nav-links a { text-decoration: none; color: var(--ink-2); font-weight: 600; font-size: var(--caption); }
+.nav-links a:hover { color: var(--action); }
+.lang { display: flex; gap: var(--s1); }
+.lang a {
+  text-decoration: none; font-weight: 600; font-size: var(--micro);
+  padding: var(--s1) var(--s2); border-radius: 999px; color: var(--ink-3);
+  border: 1px solid transparent;
+}
+.lang a:hover { color: var(--ink); background: var(--surface-2); }
+body[data-lang="en"] .lang a[hreflang="en"],
+body[data-lang="fr"] .lang a[hreflang="fr"],
+body[data-lang="ar"] .lang a[hreflang="ar"] {
+  color: var(--brand); border-color: var(--brand); background: transparent;
+}
+
+/* ─────────── layout grids ─────────── */
+.grid {
+  display: grid; grid-template-columns: 1fr; gap: var(--s10);
+  align-items: center;
+}
+@media (min-width: 880px) {
+  .grid { grid-template-columns: 1.15fr 0.85fr; gap: var(--s16); }
+  .grid.flip .copy { order: 2; }
+  .grid.flip .media { order: 1; }
+}
+.copy > * + * { margin-block-start: var(--s4); }
+.copy.center { text-align: center; max-width: 640px; margin-inline: auto; }
+.eyebrow {
+  font-size: var(--caption); font-weight: 800; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--action);
+}
+[dir="rtl"] .eyebrow { letter-spacing: 0; }
+.copy p:not(.eyebrow):not(.wordmark) { font-size: var(--body-lg); color: var(--ink-2); }
+.points { margin-block-start: var(--s6) !important; display: grid; gap: var(--s3); }
+.points li {
+  position: relative; padding-inline-start: var(--s8);
+  font-size: var(--body); color: var(--ink-2);
+}
+.points li::before {
+  content: ""; position: absolute; inset-inline-start: 0; top: 0.55em;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--action-tint);
+  box-shadow: inset 0 0 0 2px var(--action);
+}
+.points li::after {
+  content: ""; position: absolute; inset-inline-start: 6px; top: calc(0.55em + 6px);
+  width: 6px; height: 6px; border-radius: 50%; background: var(--action);
+}
+
+/* ─────────── L'MEDIA SLOT ───────────
+   9:19.5 = l'A17 (1080x2340). L'3ard 320px max. Hna kaydkhol l'screenshot
+   mn be3d: <img> f device frame, nfs l'box, nfs l'grid, walo kaytbeddel.
+   Daba fih l'objet typographique, f l'wast. Bla border: machi placeholder. */
+.media { display: flex; justify-content: center; }
+.media-box {
+  width: 100%; max-width: 320px; aspect-ratio: 9 / 19.5;
+  display: flex; align-items: center; justify-content: center;
+}
+.media-box > * { width: 100%; }
+@media (max-width: 879px) {
+  /* 3la telifon l'box ma-khasshach tkoun twila khawya: l'objet howa l'irtifa3 */
+  .media-box { aspect-ratio: auto; }
+}
+
+/* ─────────── buttons ─────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 52px; padding: var(--s3) var(--s6);
+  border-radius: var(--radius-sm); text-decoration: none;
+  font-weight: 800; font-size: var(--body); background: var(--action); color: #fff;
+  transition: background .15s;
+}
+.btn:hover { background: var(--action-dark); }
+.btn.ghost { background: transparent; color: #fff; box-shadow: inset 0 0 0 2px rgba(255,255,255,.55); }
+.btn.ghost:hover { background: rgba(255,255,255,.1); }
+.cta { display: flex; flex-wrap: wrap; gap: var(--s3); margin-block-start: var(--s8) !important; }
+
+/* ─────────── hero ─────────── */
+.hero {
+  position: relative; overflow: hidden;
+  background: var(--brand); color: #fff;
+  padding-block: var(--s16) var(--s24);
+}
+.hero .wordmark { font-weight: 800; font-size: var(--title); opacity: .85; letter-spacing: 0.02em; }
+.hero h1 { color: #fff; }
+.hero .copy p:not(.eyebrow):not(.wordmark) { color: rgba(255,255,255,.86); }
+.hero .lede { max-width: 560px; }
+/* L'watermark: l'manta 233px native, mkebbra l 900px. B 8% opacity l'blur
+   ma-kaybanch. Hadi l'wa7ida l'kbira li kan-9bel. Kat-khrej mn l'jiha. */
+.watermark {
+  position: absolute; width: 900px; height: auto;
+  inset-inline-end: -220px; top: -60px;
+  opacity: .08; pointer-events: none; user-select: none;
+}
+[dir="rtl"] .watermark { transform: scaleX(-1); }
+
+/* ─────────── L'REÇU (hero) ─────────── */
+.receipt {
+  background: #fff; color: var(--ink); border-radius: var(--radius);
+  padding: var(--s6); box-shadow: var(--shadow);
+  display: grid; gap: var(--s4);
+  /* L'7afa dyal te7t: msennana b7al l'papier dyal l'imprimante. */
+  -webkit-mask: linear-gradient(#000 0 0) top / 100% calc(100% - 10px) no-repeat,
+    radial-gradient(circle at 10px 100%, transparent 6px, #000 6.5px) bottom / 20px 10px repeat-x;
+  mask: linear-gradient(#000 0 0) top / 100% calc(100% - 10px) no-repeat,
+    radial-gradient(circle at 10px 100%, transparent 6px, #000 6.5px) bottom / 20px 10px repeat-x;
+  padding-block-end: var(--s8);
+}
+.receipt header { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s3); }
+.receipt header strong { font-size: var(--title); font-weight: 800; }
+.receipt header span { font-size: var(--caption); color: var(--ink-3); }
+.receipt .amount {
+  font-size: var(--display); font-weight: 800; line-height: 1; letter-spacing: -0.02em;
+  padding-block: var(--s2);
+  border-block: 1px dashed var(--line-2);
+}
+.receipt .amount small { font-size: 0.4em; font-weight: 600; color: var(--ink-3); letter-spacing: 0; }
+.receipt dl { display: grid; gap: var(--s2); }
+.receipt dl div { display: flex; justify-content: space-between; font-size: var(--caption); }
+.receipt dt { color: var(--ink-3); }
+.receipt dd { margin: 0; font-weight: 600; }
+.receipt footer { font-size: var(--micro); color: var(--ink-4); text-align: center; }
+.chip {
+  display: inline-flex; align-items: center; gap: var(--s2);
+  font-size: var(--micro); font-weight: 800; padding: var(--s1) var(--s3);
+  border-radius: 999px; width: fit-content;
+}
+.chip::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.chip.ok { background: var(--ok-tint); color: var(--ok); }
+.chip.warm { background: var(--credit-tint-2); color: var(--credit-dark); }
+
+/* ─────────── sections ─────────── */
+.feature { padding-block: var(--s24); }
+.feature.credit { background: var(--credit-tint); }
+.feature.credit .eyebrow { color: var(--credit-dark); }
+.feature.credit .points li::before { background: var(--credit-tint-2); box-shadow: inset 0 0 0 2px var(--credit); }
+.feature.credit .points li::after { background: var(--credit); }
+.feature.analytics { background: var(--page); }
+
+/* ─────────── L'CLAVIER (pay) ─────────── */
+.keypad { display: grid; gap: var(--s4); }
+.kp-amount {
+  display: grid; justify-items: center; gap: var(--s1);
+  padding: var(--s6) var(--s4); border-radius: var(--radius);
+  background: var(--page); border: 1px solid var(--line);
+}
+.kp-label { font-size: var(--caption); color: var(--ink-3); font-weight: 600; }
+.kp-value { font-size: var(--display); font-weight: 800; line-height: 1; letter-spacing: -0.02em; }
+.kp-cur { font-size: var(--body); font-weight: 600; color: var(--ink-3); }
+.kp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s2); direction: ltr; }
+.kp-grid span {
+  display: flex; align-items: center; justify-content: center;
+  height: 56px; border-radius: var(--radius-sm);
+  background: #fff; border: 1px solid var(--line);
+  font-size: 1.5rem; font-weight: 600; color: var(--ink);
+}
+.kp-grid .kp-del { color: var(--ink-3); font-size: 1.25rem; }
+.kp-btn {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 56px; border-radius: var(--radius-sm);
+  background: var(--action); color: #fff; font-weight: 800; font-size: var(--body-lg);
+}
+
+/* ─────────── L'CARNET (credit) ─────────── */
+.ledger {
+  background: #fff; border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: var(--s5); display: grid; gap: var(--s3);
+  /* Str b7al l'carnet: khtout khfaf kol 52px */
+  background-image: repeating-linear-gradient(to bottom, transparent 0 51px, var(--credit-line) 51px 52px);
+  background-origin: content-box;
+}
+.ledger header { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s3); }
+.ledger-title { font-weight: 800; font-size: var(--title); color: var(--credit-dark); }
+.ledger-total { font-size: var(--caption); color: var(--ink-3); }
+.ledger-total b { color: var(--credit-dark); font-size: var(--body-lg); }
+.ledger-head {
+  display: flex; justify-content: space-between;
+  font-size: var(--micro); font-weight: 800; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--ink-4); border-block-end: 2px solid var(--credit-line); padding-block-end: var(--s1);
+}
+[dir="rtl"] .ledger-head { letter-spacing: 0; }
+.rows { display: grid; }
+.rows li {
+  display: flex; justify-content: space-between; align-items: center; gap: var(--s3);
+  height: 52px; border-block-end: 1px solid var(--credit-line);
+}
+.rows li:last-child { border-block-end: 0; }
+.who { display: grid; line-height: 1.25; }
+.who b { font-weight: 600; font-size: var(--body); }
+.who small { font-size: var(--micro); color: var(--ink-3); }
+.bal { font-weight: 800; color: var(--credit-dark); font-size: var(--body-lg); }
+
+/* ─────────── L'ARQAM (analytics) ─────────── */
+.stats { display: grid; gap: var(--s3); }
+.tiles { display: grid; gap: var(--s3); }
+.tile {
+  background: #fff; border-radius: var(--radius-sm); border: 1px solid var(--line);
+  padding: var(--s3) var(--s4); display: flex; justify-content: space-between; align-items: baseline;
+}
+.tile span { font-size: var(--caption); color: var(--ink-3); font-weight: 600; }
+.tile b { font-size: var(--title); font-weight: 800; }
+.tile:first-child b { color: var(--action); font-size: 1.5rem; }
+.chart {
+  background: #fff; border-radius: var(--radius); border: 1px solid var(--line);
+  padding: var(--s4); display: grid; gap: var(--s3);
+}
+.chart-label { font-size: var(--caption); color: var(--ink-3); font-weight: 600; }
+.bars { display: flex; align-items: flex-end; gap: var(--s2); height: 160px; }
+.bar { flex: 1; display: grid; grid-template-rows: 1fr auto; height: 100%; gap: var(--s1); }
+.bar i {
+  display: block; align-self: end; height: calc(var(--v) * 100%);
+  background: var(--action-tint); border-radius: 4px 4px 0 0;
+  box-shadow: inset 0 0 0 1.5px var(--action);
+}
+.bar.today i, .bar:nth-child(5) i { background: var(--action); }
+.bar span { font-size: var(--micro); color: var(--ink-4); text-align: center; font-weight: 600; }
+
+/* ─────────── languages ─────────── */
+.languages { padding-block: var(--s24); }
+.specimen {
+  margin-block-start: var(--s12);
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s4);
+}
+@media (min-width: 720px) { .specimen { grid-template-columns: repeat(4, 1fr); } }
+.specimen div {
+  display: grid; justify-items: center; gap: var(--s2);
+  padding: var(--s8) var(--s4); border-radius: var(--radius);
+  background: var(--page); border: 1px solid var(--line);
+}
+.specimen .word { font-size: var(--display); font-weight: 800; line-height: 1.1; color: var(--brand); }
+.specimen .tifinagh { font-family: var(--font-tifinagh); font-weight: 400; }
+.specimen .name { font-size: var(--caption); font-weight: 600; color: var(--ink-3); }
+
+/* ─────────── pricing ─────────── */
+.pricing { background: var(--brand); color: #fff; padding-block: var(--s24); }
+.pricing .eyebrow { color: rgba(255,255,255,.7); }
+.pricing h2 { color: #fff; }
+.plan {
+  margin: var(--s12) auto 0; max-width: 560px;
+  background: #fff; color: var(--ink); border-radius: var(--radius);
+  padding: var(--s8); box-shadow: var(--shadow);
+  display: grid; gap: var(--s4);
+}
+.price { display: flex; align-items: baseline; gap: var(--s3); flex-wrap: wrap; }
+.price .num { font-size: var(--display); font-weight: 800; line-height: 1; letter-spacing: -0.02em; color: var(--brand); }
+.price .unit { font-size: var(--body-lg); font-weight: 600; color: var(--ink-3); }
+.rule { font-weight: 800; color: var(--ink); font-size: var(--body-lg); }
+.how { color: var(--ink-3); font-size: var(--caption); }
+.plan h3 { margin-block-start: var(--s4); font-size: var(--caption); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3); }
+[dir="rtl"] .plan h3 { letter-spacing: 0; }
+.included { display: grid; gap: var(--s2); }
+.included li { position: relative; padding-inline-start: var(--s6); font-size: var(--body); }
+.included li::before {
+  content: ""; position: absolute; inset-inline-start: 0; top: .55em;
+  width: 12px; height: 12px; border-radius: 3px; background: var(--action);
+}
+.plan .btn { margin-block-start: var(--s4); }
+
+/* ─────────── footer ─────────── */
+.footer { background: var(--ink); color: rgba(255,255,255,.75); padding-block: var(--s12) var(--s8); }
+.footer-row {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--s6);
+  padding-block-end: var(--s6); border-block-end: 1px solid rgba(255,255,255,.12);
+}
+.footer .brand { color: #fff; }
+.footer .contact { display: flex; gap: var(--s2); margin-inline-start: auto; font-size: var(--caption); }
+.footer .contact a { color: #fff; font-weight: 600; }
+.footer .lang a { color: rgba(255,255,255,.6); }
+.footer .lang a:hover { color: #fff; background: rgba(255,255,255,.1); }
+.footer .fine { font-size: var(--micro); color: rgba(255,255,255,.45); padding-block-start: var(--s6); }
+
+/* ─────────── petits écrans ─────────── */
+@media (max-width: 720px) {
+  :root { --gutter: var(--s4); }
+  .nav-links { display: none; }
+  .lang { margin-inline-start: auto; }
+  .hero { padding-block: var(--s12) var(--s16); }
+  .feature, .languages, .pricing { padding-block: var(--s16); }
+  .watermark { width: 520px; inset-inline-end: -160px; top: auto; bottom: -60px; }
+  .footer .contact { margin-inline-start: 0; width: 100%; }
+}

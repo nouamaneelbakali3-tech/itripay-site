@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="{{lang}}" dir="{{dir}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{meta_title}}</title>
+<meta name="description" content="{{meta_description}}">
+<meta name="theme-color" content="#0D48BE">
+
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+
+<link rel="canonical" href="https://payna.vercel.app/{{lang}}/">
+<link rel="alternate" hreflang="en" href="https://payna.vercel.app/en/">
+<link rel="alternate" hreflang="fr" href="https://payna.vercel.app/fr/">
+<link rel="alternate" hreflang="ar" href="https://payna.vercel.app/ar/">
+<link rel="alternate" hreflang="x-default" href="https://payna.vercel.app/en/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Payna">
+<meta property="og:title" content="{{meta_title}}">
+<meta property="og:description" content="{{meta_description}}">
+<meta property="og:url" content="https://payna.vercel.app/{{lang}}/">
+<meta property="og:locale" content="{{og_locale}}">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Noto+Sans+Tifinagh&display=swap">
+<link rel="stylesheet" href="/site.css">
+</head>
+<body data-lang="{{lang}}">
+<a class="skip" href="#main">{{skip_to_content}}</a>
+
+<header class="nav">
+  <div class="wrap nav-row">
+    <a class="brand" href="/{{lang}}/">
+      <img src="/assets/mark-blue.png" alt="" width="46" height="36">
+      <span>Payna</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#pay">{{nav_pay}}</a>
+      <a href="#credit">{{nav_credit}}</a>
+      <a href="#analytics">{{nav_analytics}}</a>
+      <a href="#pricing">{{nav_pricing}}</a>
+    </nav>
+    <nav class="lang" aria-label="{{lang_switch_label}}">
+      <a href="/en/" hreflang="en" lang="en">EN</a>
+      <a href="/fr/" hreflang="fr" lang="fr">FR</a>
+      <a href="/ar/" hreflang="ar" lang="ar">AR</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero">
+  <img class="watermark" src="/assets/watermark.png" alt="" aria-hidden="true" width="241" height="189">
+  <div class="wrap grid">
+    <div class="copy">
+      <p class="wordmark">{{hero_wordmark}}</p>
+      <h1>{{hero_line_html}}</h1>
+      <p class="lede">{{hero_description}}</p>
+      <div class="cta">
+        <a class="btn" href="mailto:payna.contact@gmail.com">{{cta_contact}}</a>
+        <a class="btn ghost" href="#pricing">{{cta_pricing}}</a>
+      </div>
+    </div>
+    <div class="media">
+      <div class="media-box">
+        <article class="receipt" aria-label="{{receipt_label}}">
+          <header>
+            <strong>{{demo_shop}}</strong>
+            <span>{{demo_city}}</span>
+          </header>
+          <p class="amount"><bdi>120.00</bdi> <small>{{cur}}</small></p>
+          <dl>
+            <div><dt>{{receipt_date}}</dt><dd>{{demo_date}}</dd></div>
+            <div><dt>{{receipt_method}}</dt><dd>{{receipt_method_value}}</dd></div>
+            <div><dt>{{receipt_ref}}</dt><dd><bdi>{{receipt_ref_value}}</bdi></dd></div>
+          </dl>
+          <p class="chip ok">{{receipt_paid}}</p>
+          <footer>{{receipt_thanks}}</footer>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ PAY ═══════════════ -->
+<section class="feature" id="pay">
+  <div class="wrap grid">
+    <div class="copy">
+      <p class="eyebrow">{{pay_eyebrow}}</p>
+      <h2>{{pay_title}}</h2>
+      <p>{{pay_body}}</p>
+      <ul class="points">
+        <li>{{pay_p1}}</li>
+        <li>{{pay_p2}}</li>
+        <li>{{pay_p3}}</li>
+      </ul>
+    </div>
+    <div class="media">
+      <div class="media-box">
+        <div class="keypad" aria-hidden="true">
+          <div class="kp-amount">
+            <span class="kp-label">{{kp_amount_label}}</span>
+            <span class="kp-value"><bdi>120.00</bdi></span>
+            <span class="kp-cur">{{cur}}</span>
+          </div>
+          <div class="kp-grid">
+            <span>1</span><span>2</span><span>3</span>
+            <span>4</span><span>5</span><span>6</span>
+            <span>7</span><span>8</span><span>9</span>
+            <span>.</span><span>0</span><span class="kp-del" title="{{kp_delete_label}}">⌫</span>
+          </div>
+          <div class="kp-btn">{{kp_pay}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CREDIT ═══════════════ -->
+<section class="feature credit" id="credit">
+  <div class="wrap grid flip">
+    <div class="copy">
+      <p class="eyebrow">{{credit_eyebrow}}</p>
+      <h2>{{credit_title}}</h2>
+      <p>{{credit_body}}</p>
+      <ul class="points">
+        <li>{{credit_p1}}</li>
+        <li>{{credit_p2}}</li>
+        <li>{{credit_p3}}</li>
+      </ul>
+    </div>
+    <div class="media">
+      <div class="media-box">
+        <div class="ledger" aria-hidden="true">
+          <header>
+            <span class="ledger-title">{{ledger_title}}</span>
+            <span class="ledger-total">{{ledger_total_label}} <b><bdi>1 240.00</bdi> {{cur}}</b></span>
+          </header>
+          <div class="ledger-head"><span>{{ledger_col_customer}}</span><span>{{ledger_col_balance}}</span></div>
+          <ul class="rows">
+            <li><span class="who"><b>{{demo_c1}}</b><small>{{demo_c1_note}}</small></span><span class="bal"><bdi>320.00</bdi></span></li>
+            <li><span class="who"><b>{{demo_c2}}</b><small>{{demo_c2_note}}</small></span><span class="bal"><bdi>180.00</bdi></span></li>
+            <li><span class="who"><b>{{demo_c3}}</b><small>{{demo_c3_note}}</small></span><span class="bal"><bdi>540.00</bdi></span></li>
+            <li><span class="who"><b>{{demo_c4}}</b><small>{{demo_c4_note}}</small></span><span class="bal"><bdi>200.00</bdi></span></li>
+          </ul>
+          <p class="chip warm">{{ledger_sms}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ ANALYTICS ═══════════════ -->
+<section class="feature analytics" id="analytics">
+  <div class="wrap grid">
+    <div class="copy">
+      <p class="eyebrow">{{analytics_eyebrow}}</p>
+      <h2>{{analytics_title}}</h2>
+      <p>{{analytics_body}}</p>
+      <ul class="points">
+        <li>{{analytics_p1}}</li>
+        <li>{{analytics_p2}}</li>
+        <li>{{analytics_p3}}</li>
+      </ul>
+    </div>
+    <div class="media">
+      <div class="media-box">
+        <div class="stats" aria-hidden="true">
+          <div class="tiles">
+            <div class="tile"><span>{{stat_today}}</span><b><bdi>1 320</bdi> {{cur}}</b></div>
+            <div class="tile"><span>{{stat_week}}</span><b><bdi>8 745</bdi> {{cur}}</b></div>
+            <div class="tile"><span>{{stat_month}}</span><b><bdi>31 060</bdi> {{cur}}</b></div>
+          </div>
+          <div class="chart">
+            <p class="chart-label">{{chart_label}}</p>
+            <div class="bars">
+              <div class="bar" style="--v:0.58"><i></i><span>{{day_1}}</span></div>
+              <div class="bar" style="--v:0.71"><i></i><span>{{day_2}}</span></div>
+              <div class="bar" style="--v:0.46"><i></i><span>{{day_3}}</span></div>
+              <div class="bar" style="--v:0.83"><i></i><span>{{day_4}}</span></div>
+              <div class="bar" style="--v:1"><i></i><span>{{day_5}}</span></div>
+              <div class="bar" style="--v:0.92"><i></i><span>{{day_6}}</span></div>
+              <div class="bar today" style="--v:0.64"><i></i><span>{{day_7}}</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ LANGUAGES ═══════════════ -->
+<section class="languages" id="languages">
+  <div class="wrap">
+    <div class="copy center">
+      <p class="eyebrow">{{lang_eyebrow}}</p>
+      <h2>{{lang_title}}</h2>
+      <p>{{lang_body}}</p>
+    </div>
+    <div class="specimen">
+      <div><span class="word" lang="ar" dir="rtl">ادفع</span><span class="name">{{lang_darija}}</span></div>
+      <div><span class="word tifinagh" lang="zgh" dir="ltr">ⵙⵍⵎⴷ</span><span class="name">{{lang_amazigh}}</span></div>
+      <div><span class="word" lang="fr" dir="ltr">Payer</span><span class="name">{{lang_french}}</span></div>
+      <div><span class="word" lang="en" dir="ltr">Pay</span><span class="name">{{lang_english}}</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ PRICING ═══════════════ -->
+<section class="pricing" id="pricing">
+  <div class="wrap">
+    <div class="copy center">
+      <p class="eyebrow">{{pricing_eyebrow}}</p>
+      <h2>{{pricing_title}}</h2>
+    </div>
+    <div class="plan">
+      <p class="price"><span class="num"><bdi>49</bdi></span><span class="unit">{{price_cur}} {{per_month}}</span></p>
+      <p class="rule">{{pricing_free_rule}}</p>
+      <p class="how">{{pricing_how}}</p>
+      <h3>{{included_title}}</h3>
+      <ul class="included">
+        <li>{{inc_1}}</li>
+        <li>{{inc_2}}</li>
+        <li>{{inc_3}}</li>
+        <li>{{inc_4}}</li>
+        <li>{{inc_5}}</li>
+        <li>{{inc_6}}</li>
+      </ul>
+      <a class="btn" href="mailto:payna.contact@gmail.com">{{cta_contact}}</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-row">
+    <a class="brand" href="/{{lang}}/">
+      <img src="/assets/mark-white.png" alt="" width="46" height="36">
+      <span>Payna</span>
+    </a>
+    <p class="contact"><span>{{footer_contact_label}}</span> <a href="mailto:payna.contact@gmail.com">payna.contact@gmail.com</a></p>
+    <nav class="lang" aria-label="{{lang_switch_label}}">
+      <a href="/en/" hreflang="en" lang="en">English</a>
+      <a href="/fr/" hreflang="fr" lang="fr">Français</a>
+      <a href="/ar/" hreflang="ar" lang="ar">العربية</a>
+    </nav>
+  </div>
+  <div class="wrap"><p class="fine">{{footer_note}}</p></div>
+</footer>
+</body>
+</html>
