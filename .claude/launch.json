@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "site",
+      "runtimeExecutable": "dart",
+      "runtimeArgs": ["run", "tool/serve.dart", "8080"],
+      "port": 8080
+    }
+  ]
+}

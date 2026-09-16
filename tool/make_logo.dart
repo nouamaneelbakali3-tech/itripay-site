@@ -1,43 +1,39 @@
 // ============================================================================
-// L'MARK DYAL PAYNA, MN L'LAUNCHER FOREGROUND — L'ISTI3MAL L'SGHIR BARK.
+// L'MARK DYAL PAYNA, MN L'MASDAR L'ASLI.
 //
 //   dart run tool/make_logo.dart
 //
-// Kayqra assets/source/ic_launcher_foreground_xxxhdpi.png w kaykhrej:
+// Kayqra assets/source/logo.png.png (2000x2000, joj lwan: #0D48BE w byed,
+// bla alpha — nfs l'malaf li kaykhrej menno l'launcher f l'app) w kaykhrej:
 //
-//   assets/mark-white.png      l'manta byda 3la alpha, m9etta3a 3la l'bbox
-//   assets/mark-blue.png       nfs l'chakl, m3emmer b #0D48BE (l'header 3la byed)
-//   assets/watermark.png       nfs mark-white.png (l'opacity kaydiro CSS)
-//   assets/favicon-16.png      mrebbe3 azraq + l'manta byda
-//   assets/favicon-32.png
+//   assets/mark-white.png        l'manta byda 3la alpha, 480px 3ard (l'header, l'footer)
+//   assets/mark-blue.png         nfs l'chakl m3emmer b #0D48BE (l'header 3la byed)
+//   assets/watermark.png         l'manta byda, 1200px 3ard (l'hero, 8% opacity)
+//   assets/favicon-16.png        mrebbe3 azraq + l'manta byda — nfs l'tarkiba
+//   assets/favicon-32.png        dyal l'launcher
 //   assets/apple-touch-icon.png  180x180
 //
-// ⚠ 3LACH HADI MACHI L'LOGO L'7A9I9I. L'masdar assets/icon/logo.png.png
-// (2000x2000) dya3. Li b9a howa l'khroj dyal tool/make_launcher_icon.dart
-// f l'app: canvas 432 fih manta dyal 233x181 px. Had l'7ajm kafi l header
-// 7tta l 110px CSS (220px 3la 2x) w l favicons. MA-KAFICH l hero mark:
-// f 600px l'ajni7a kaydou3o w l'khatt l'dakhli kaywelli mkhellet.
-// L'watermark kaydouz 7it b 8% opacity l'3in ma-katchoufch l'blur.
+// L'KEYING: nfs l'fikra dyal tool/make_launcher_icon.dart f l'app. L'sura
+// joj lwan bark b antialiasing binathom, donc alpha = ch7al l'pixel 9rib
+// mn l'byed 3la l'canal l'a7mar (0x0D -> 0, 0xFF -> 255). Ma-kaynch
+// takhmin, w l'7afa kat-b9a n9iya bla fringe zer9a.
 //
-// ⚠ L'THRESHOLD. L'fill dyal l'manta f l'masdar machi 255: 240-254
-// mkhellta (l'noise dyal l'masdar l'asli dez mn l'keying). 11 951 pixel
-// f 240-255, ~470 pixel dyal l'7afa t7t 240. Donc: alpha >= 240 -> 255.
-// L'7afa kat-b9a b l'ramp dyalha, l'fill kaywelli sabt.
+// ⚠ L'ISTI3MAL. L'plan l'mwafe9 3lih: header <= 110px, favicons,
+// watermark. L'hero howa khatt w lawn, machi mark kbir. Ila tbeddel
+// hadchi, kaytbeddel f l'template w l'CSS, machi hna.
 //
-// ⚠ MA-KAY-UPSCALICH 3EMMERO. Kol khroj <= 233px 3ard.
+// ⚠ MA-KAY-UPSCALICH 3EMMERO. L'masdar 1293px dyal 3ard l'manta; akbar
+// khroj 1200.
 // ============================================================================
 
 import 'dart:io';
 
 import 'package:image/image.dart' as img;
 
-const String source = 'assets/source/ic_launcher_foreground_xxxhdpi.png';
+const String source = 'assets/source/logo.png.png';
 const String out = 'assets';
 
 const int brandR = 0x0D, brandG = 0x48, brandB = 0xBE;
-
-/// Pixels f had l'alpha wla fo9 menno homa l'fill: kaywelliw 255.
-const int fillThreshold = 240;
 
 void main() {
   final src = img.decodePng(File(source).readAsBytesSync());
@@ -45,18 +41,22 @@ void main() {
     stderr.writeln('ma-9dertch n9ra $source');
     exit(1);
   }
+  final bg = src.getPixel(0, 0);
+  if (bg.r.toInt() != brandR || bg.g.toInt() != brandG || bg.b.toInt() != brandB) {
+    stderr.writeln('l\'pixel (0,0) machi #0D48BE: '
+        '${bg.r.toInt()},${bg.g.toInt()},${bg.b.toInt()} — machi l\'masdar l\'mtwe9e3');
+    exit(1);
+  }
+  stdout.writeln('masdar: ${src.width}x${src.height}');
 
-  // ── 1. Threshold + byed khalis ──
-  // L'RGB f l'masdar 254 machi 255; l'chakl howa l'alpha. Kan-7etto
-  // l'lawn 3la byed khalis w kan-khelliw ghir l'alpha ychedd l'chakl.
+  // ── 1. Azraq -> alpha, l'lawn byed khalis ──
   final keyed = img.Image(width: src.width, height: src.height, numChannels: 4);
   for (final p in src) {
-    var a = p.a.toInt();
-    if (a >= fillThreshold) a = 255;
+    final a = ((p.r.toInt() - brandR) * 255 / (255 - brandR)).round().clamp(0, 255);
     keyed.setPixelRgba(p.x, p.y, 255, 255, 255, a);
   }
 
-  // ── 2. Crop 3la l'bbox dyal l'mark (+4px padding) ──
+  // ── 2. Crop 3la l'bbox (+2% padding) ──
   var minX = keyed.width, minY = keyed.height, maxX = -1, maxY = -1;
   for (final p in keyed) {
     if (p.a > 0) {
@@ -66,7 +66,7 @@ void main() {
       if (p.y > maxY) maxY = p.y;
     }
   }
-  const pad = 4;
+  final pad = ((maxX - minX) * 0.02).round();
   final mark = img.copyCrop(
     keyed,
     x: minX - pad,
@@ -77,28 +77,25 @@ void main() {
   stdout.writeln('mark: ${mark.width}x${mark.height} '
       '(bbox ${maxX - minX + 1}x${maxY - minY + 1} + ${pad}px)');
 
-  _write('mark-white.png', mark);
-  _write('watermark.png', mark);
+  img.Image down(img.Image im, int w) =>
+      img.copyResize(im, width: w, interpolation: img.Interpolation.cubic);
+
+  _write('mark-white.png', down(mark, 480));
+  _write('watermark.png', down(mark, 1200));
 
   // ── 3. Azraq 3la byed: nfs l'alpha, lawn akhor ──
   final blue = img.Image(width: mark.width, height: mark.height, numChannels: 4);
   for (final p in mark) {
     blue.setPixelRgba(p.x, p.y, brandR, brandG, brandB, p.a.toInt());
   }
-  _write('mark-blue.png', blue);
+  _write('mark-blue.png', down(blue, 480));
 
-  // ── 4. Favicons: mrebbe3 azraq, l'manta f l'wast b 70% dyal l'3ard ──
-  // Nfs l'tarkiba dyal l'launcher (azraq + byed). B 16px l'manta
-  // b7al l'launcher f l'drawer: kat-9ra b7al chakl, machi b7al tafasil.
+  // ── 4. Favicons: mrebbe3 azraq, l'manta 72% dyal l'3ard ──
+  // Nfs l'tarkiba dyal l'launcher. B 16px l'manta kat-9ra b7al chakl.
   for (final size in [16, 32, 180]) {
     final icon = img.Image(width: size, height: size, numChannels: 4);
     img.fill(icon, color: img.ColorRgba8(brandR, brandG, brandB, 255));
-    final targetW = (size * 0.72).round();
-    final scaled = img.copyResize(
-      mark,
-      width: targetW,
-      interpolation: img.Interpolation.cubic,
-    );
+    final scaled = down(mark, (size * 0.72).round());
     img.compositeImage(
       icon,
       scaled,
