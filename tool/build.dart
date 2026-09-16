@@ -31,6 +31,22 @@ const List<String> languages = ['en', 'fr', 'ar'];
 
 final RegExp placeholder = RegExp(r'\{\{([a-z0-9_]+)\}\}');
 
+/// ⛔ L'KLAM LI MA-KAYDKHOLCH, F AY LOUGHA.
+///
+/// Tap-to-pay kaytwsef b7al l'produit. Ma-kaynch "certified", ma-kaynch
+/// "bank-approved", ma-kaynch smiya dyal réseau dyal l'cartes — 7it l'NFC
+/// f l'app UI bla PSP wraha (docs/boundaries.md §16 f l'app). Tarjama
+/// t9der tdekhkhel l'claim mn l'jiha: "sans contact" mzyan, "agréé" la.
+/// Had l'lista hna w machi f README bach l'build ytih, machi bach chi
+/// wa7ed y9ra l'qa3ida.
+final List<RegExp> forbidden = [
+  RegExp(r'certif', caseSensitive: false), // certified / certifié
+  RegExp(r'bank[- ]?approved', caseSensitive: false),
+  RegExp(r'approuvé|agréé|homologu', caseSensitive: false),
+  RegExp(r'\b(visa|mastercard|maestro|cmi)\b', caseSensitive: false),
+  RegExp(r'معتمد|مصرف|بنك|فيزا|ماستر'),
+];
+
 void main() {
   final tpl = File(template).readAsStringSync();
   final used = placeholder.allMatches(tpl).map((m) => m.group(1)!).toSet();
@@ -40,6 +56,18 @@ void main() {
     final path = 'src/strings/$lang.json';
     final strings = (jsonDecode(File(path).readAsStringSync()) as Map)
         .map((k, v) => MapEntry(k as String, v as String));
+
+    for (final entry in strings.entries) {
+      for (final rule in forbidden) {
+        final hit = rule.firstMatch(entry.value);
+        if (hit != null) {
+          stderr.writeln('$path: "${entry.key}" fiha klam mamnou3: '
+              '"${hit.group(0)}" — chouf `forbidden` f tool/build.dart');
+          failed = true;
+        }
+      }
+    }
+    if (failed) continue;
 
     final missing = used.difference(strings.keys.toSet());
     if (missing.isNotEmpty) {
