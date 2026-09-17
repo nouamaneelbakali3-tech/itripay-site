@@ -73,10 +73,16 @@ with the placeholder key, read in the browser console:
 
     400  {"success": false, "message": "Invalid form_id/access_key format. Must be a valid UUID.", "data": {…}}
 
-The JS keys success off `response.ok && json.success`, which is that
-shape. A `200 {"success": true}` has *not* been observed yet — it needs
-a real key. Until it is, the success state is verified against a stub.
+**Observed success, 2026-09-17**, two real submissions from the local
+build with the live key, one from `/en/` and one from `/ar/` (Arabic
+name, subject and message, RTL form), response bodies read from a fetch
+wrapper in the console:
 
-**Before the first push:** replace `PASTE_YOUR_WEB3FORMS_ACCESS_KEY` in
-`src/site.json` with the real key and rebuild. The build warns while the
-placeholder is there.
+    200  {"success": true, "data": {"subject": "Payna website — new message", "from_name": "Payna website", "name": "…", "email": "…", "message": "…"}, "message": "Form submitted successfully!"}
+    200  {"success": true, "data": {"subject": "موقع Payna — رسالة جديدة", …}, "message": "Form submitted successfully!"}
+
+The Arabic text came back byte-identical in `data`. The JS keys success
+off `response.ok && json.success`, which is both shapes.
+
+The key in `src/site.json` is the live one. The build warns if it is
+ever put back to the placeholder.
