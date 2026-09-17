@@ -1,5 +1,5 @@
 {
-  "base_url": "https://payna.vercel.app",
+  "base_url": "https://payna-ma.vercel.app",
   "contact_email": "payna.contact@gmail.com",
   "form_endpoint": "https://api.web3forms.com/submit",
   "form_access_key": "4d43e91a-6d9f-464f-98af-6f4eb05f321c"
