@@ -3,8 +3,10 @@
 //
 //   dart run tool/build.dart
 //
-// Kayqra src/template.html w src/strings/<lang>.json, w kaykteb
-// <lang>/index.html l kol lougha. L'khroj kayt-commita: Vercel
+// Kayqra src/template.html w src/sent.html, src/site.json (l'config li
+// ma-3endhach lougha: l'URL, l'email, l'clé dyal l'form) w
+// src/strings/<lang>.json, w kaykteb <lang>/index.html w
+// <lang>/sent/index.html l kol lougha. L'khroj kayt-commita: Vercel
 // ma-kaybni walo, kaykhdem l'HTML b7al ma howa.
 //
 // ⚠ 3LACH GÉNÉRATEUR W MACHI TLATA DYAL L'MALAFAT B L'YED. Tlata dyal
@@ -18,16 +20,28 @@
 //   {{key}}        kayt-escapa (& < > ") — l'klam l'3adi.
 //   {{key_html}}   kaydkhol b7al ma howa — ghir melli l'string fiha markup
 //                  (b7al <br> f l'hero line). 9lil w m3roufin.
+//   {{key_js}}     kaykhrej b7al JS string literal (jsonEncode): l'klam li
+//                  kayqrah l'script dyal l'form. L'quotes ma-kaykessrouch walo.
 //   Key na9sa f lougha = khata2, machi warning. L'page ma-tkhrejch
 //   b {{hero_line}} mektouba fiha.
-//   Key f l'JSON ma-kayst3emlhach l'template = warning: klam mayyet.
+//   Key f l'JSON ma-kayst3emlhach ta template = warning: klam mayyet.
+//   Key f site.json w f lougha b joj = khata2: ma-kaynch "li ghleb".
 // ============================================================================
 
 import 'dart:convert';
 import 'dart:io';
 
-const String template = 'src/template.html';
+const String siteConfig = 'src/site.json';
+const Map<String, String> templates = {
+  'src/template.html': 'index.html',
+  'src/sent.html': 'sent/index.html',
+};
 const List<String> languages = ['en', 'fr', 'ar'];
+
+/// L'qima li kayna f site.json 9bel ma yt7ett l'clé l'7a9i9iya. L'build
+/// kaydouz (bach t9der tchouf l'site m7alliyan bla clé) walakin kay3eyyet
+/// b sawt 3ali: form b had l'qima kayrje3 khata2 mn Web3Forms, machi email.
+const String keyPlaceholder = 'PASTE_YOUR_WEB3FORMS_ACCESS_KEY';
 
 final RegExp placeholder = RegExp(r'\{\{([a-z0-9_]+)\}\}');
 
@@ -48,16 +62,35 @@ final List<RegExp> forbidden = [
 ];
 
 void main() {
-  final tpl = File(template).readAsStringSync();
-  final used = placeholder.allMatches(tpl).map((m) => m.group(1)!).toSet();
+  final config = _readJson(siteConfig);
+  final tpls = templates.map((src, _) => MapEntry(src, File(src).readAsStringSync()));
+  final used = <String>{};
+  for (final tpl in tpls.values) {
+    used.addAll(placeholder.allMatches(tpl).map((m) => m.group(1)!));
+  }
+
+  if (config['form_access_key'] == keyPlaceholder) {
+    stderr.writeln('');
+    stderr.writeln('⚠⚠ src/site.json: form_access_key mazal "$keyPlaceholder".');
+    stderr.writeln('   L\'site kaytbna, walakin l\'form ma-ghadi ywsel l ta email.');
+    stderr.writeln('   7ett l\'clé dyal Web3Forms 9bel ay push.');
+    stderr.writeln('');
+  }
 
   var failed = false;
   for (final lang in languages) {
     final path = 'src/strings/$lang.json';
-    final strings = (jsonDecode(File(path).readAsStringSync()) as Map)
-        .map((k, v) => MapEntry(k as String, v as String));
+    final langStrings = _readJson(path);
 
-    for (final entry in strings.entries) {
+    final overlap = langStrings.keys.toSet().intersection(config.keys.toSet());
+    if (overlap.isNotEmpty) {
+      stderr.writeln('$path: keys kaynin 7tta f $siteConfig: ${overlap.join(', ')}');
+      failed = true;
+      continue;
+    }
+    final strings = {...config, ...langStrings};
+
+    for (final entry in langStrings.entries) {
       for (final rule in forbidden) {
         final hit = rule.firstMatch(entry.value);
         if (hit != null) {
@@ -82,19 +115,26 @@ void main() {
           '${(dead.toList()..sort()).join(', ')}');
     }
 
-    final html = tpl.replaceAllMapped(placeholder, (m) {
-      final key = m.group(1)!;
-      final value = strings[key]!;
-      return key.endsWith('_html') ? value : _escape(value);
-    });
-
-    final out = File('$lang/index.html');
-    out.parent.createSync(recursive: true);
-    out.writeAsStringSync(html);
-    stdout.writeln('-> ${out.path} (${html.length} chars)');
+    for (final entry in tpls.entries) {
+      final html = entry.value.replaceAllMapped(placeholder, (m) {
+        final key = m.group(1)!;
+        final value = strings[key]!;
+        if (key.endsWith('_html')) return value;
+        if (key.endsWith('_js')) return jsonEncode(value);
+        return _escape(value);
+      });
+      final out = File('$lang/${templates[entry.key]}');
+      out.parent.createSync(recursive: true);
+      out.writeAsStringSync(html);
+      stdout.writeln('-> ${out.path} (${html.length} chars)');
+    }
   }
   if (failed) exit(1);
 }
+
+Map<String, String> _readJson(String path) =>
+    (jsonDecode(File(path).readAsStringSync()) as Map)
+        .map((k, v) => MapEntry(k as String, v as String));
 
 String _escape(String s) => s
     .replaceAll('&', '&amp;')

@@ -68,6 +68,9 @@ body {
   background: #fff;
 }
 img { display: block; max-width: 100%; height: auto; }
+/* `hidden` khasso yghleb ay display: bla hadi, .form-done{display:grid}
+   kaybane 7tta melli l'attribut mektoub. */
+[hidden] { display: none !important; }
 a { color: inherit; }
 h1, h2, h3, p, ul, dl { margin: 0; }
 ul { padding: 0; list-style: none; }
@@ -358,6 +361,46 @@ body[data-lang="ar"] .lang a[hreflang="ar"] {
 }
 .plan .btn { margin-block-start: var(--s4); }
 
+/* ─────────── contact ─────────── */
+.contact { padding-block: var(--s24); background: var(--page); border-block-start: 1px solid var(--line); }
+.contact-alt { font-size: var(--caption) !important; color: var(--ink-3) !important; }
+.contact-alt a { color: var(--action); font-weight: 600; }
+.contact .media { align-items: stretch; }
+.form, .form-done {
+  width: 100%; max-width: 440px;
+  background: #fff; border-radius: var(--radius); border: 1px solid var(--line);
+  box-shadow: var(--shadow); padding: var(--s6);
+  display: grid; gap: var(--s4);
+}
+.field { display: grid; gap: var(--s1); }
+.field label { font-size: var(--caption); font-weight: 600; color: var(--ink-2); }
+.field input, .field textarea {
+  font: inherit; color: var(--ink);
+  padding: var(--s3) var(--s4); border-radius: var(--radius-sm);
+  border: 1px solid var(--line-2); background: #fff;
+  min-height: 48px; width: 100%;
+}
+.field textarea { resize: vertical; min-height: 140px; }
+.field input:focus, .field textarea:focus {
+  outline: 2px solid var(--action); outline-offset: 0; border-color: var(--action);
+}
+/* L'honeypot: mkhebbi 3la l'nas, mawjoud l l'bots. Machi display:none
+   bach l'bots l'ghbiya y3emmroh. */
+.hp { position: absolute; inset-inline-start: -9999px; width: 1px; height: 1px; opacity: 0; }
+.form .btn { width: 100%; }
+.form .btn:disabled { opacity: .6; cursor: wait; }
+.form-status { font-size: var(--caption); font-weight: 600; padding: var(--s3) var(--s4); border-radius: var(--radius-sm); }
+.form-status.wait { background: var(--action-tint); color: var(--action-dark); }
+.form-status.err { background: #FEF2F2; color: #DC2626; }
+.form-done { justify-items: start; }
+.form-done h3, .form-done h1 { font-size: var(--h2); }
+.form-done p:not(.chip) { color: var(--ink-2); }
+.form-done:focus { outline: none; }
+
+/* L'page /sent/ (bla JS) */
+.sent-page { min-height: 60vh; display: grid; place-items: center; padding-block: var(--s16); background: var(--page); }
+.sent-page .form-done { max-width: 520px; margin-inline: auto; }
+
 /* ─────────── footer ─────────── */
 .footer { background: var(--ink); color: rgba(255,255,255,.75); padding-block: var(--s12) var(--s8); }
 .footer-row {
@@ -365,8 +408,8 @@ body[data-lang="ar"] .lang a[hreflang="ar"] {
   padding-block-end: var(--s6); border-block-end: 1px solid rgba(255,255,255,.12);
 }
 .footer .brand { color: #fff; }
-.footer .contact { display: flex; gap: var(--s2); margin-inline-start: auto; font-size: var(--caption); }
-.footer .contact a { color: #fff; font-weight: 600; }
+.footer .footer-contact { display: flex; gap: var(--s2); margin-inline-start: auto; font-size: var(--caption); }
+.footer .footer-contact a { color: #fff; font-weight: 600; }
 .footer .lang a { color: rgba(255,255,255,.6); }
 .footer .lang a:hover { color: #fff; background: rgba(255,255,255,.1); }
 .footer .fine { font-size: var(--micro); color: rgba(255,255,255,.45); padding-block-start: var(--s6); }
@@ -379,5 +422,5 @@ body[data-lang="ar"] .lang a[hreflang="ar"] {
   .hero { padding-block: var(--s12) var(--s16); }
   .feature, .languages, .pricing { padding-block: var(--s16); }
   .watermark { width: 520px; inset-inline-end: -160px; top: auto; bottom: -60px; }
-  .footer .contact { margin-inline-start: 0; width: 100%; }
+  .footer .footer-contact { margin-inline-start: 0; width: 100%; }
 }

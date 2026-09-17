@@ -102,6 +102,24 @@
   "inc_5": "Credit — track debts and SMS alerts",
   "inc_6": "Custom receipt — with your logo and shop name",
 
+  "contact_eyebrow": "Contact",
+  "contact_title": "Talk to us.",
+  "contact_body": "Investors, accelerators, merchants who want in early — write to us here and we answer from the same inbox.",
+  "contact_alt": "Or email us directly:",
+  "form_subject": "Payna website — new message",
+  "form_name": "Your name",
+  "form_email": "Your email",
+  "form_message": "Message",
+  "form_send": "Send",
+  "form_sending_js": "Sending…",
+  "form_invalid_js": "Please fill in all three fields, with a valid email address.",
+  "form_rejected_js": "The message was not accepted. Please email us directly at payna.contact@gmail.com.",
+  "form_unknown_js": "We could not confirm the message was sent. Please email us directly at payna.contact@gmail.com.",
+  "sent_chip": "Sent",
+  "sent_title": "Thank you — we have your message.",
+  "sent_body": "We read everything that comes in and reply from payna.contact@gmail.com.",
+  "sent_back": "Back to the site",
+
   "footer_contact_label": "Contact",
   "footer_note": "© 2026 Payna. Made in Morocco."
 }

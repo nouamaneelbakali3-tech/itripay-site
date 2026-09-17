@@ -63,7 +63,7 @@
       <h1>هاتفك هو<br>جهاز الدفع.</h1>
       <p class="lede">تحوّل Payna هاتف أندرويد عادياً إلى جهاز دفع للتجار في المغرب — الدفع باللمس، ودفتر ديون رقمي مع تذكيرات SMS، وأرقام المبيعات اليومية، بالدارجة والأمازيغية والفرنسية والإنجليزية، مقابل 49 درهماً في الشهر.</p>
       <div class="cta">
-        <a class="btn" href="mailto:payna.contact@gmail.com">تواصل معنا</a>
+        <a class="btn" href="#contact">تواصل معنا</a>
         <a class="btn ghost" href="#pricing">اطّلع على السعر</a>
       </div>
     </div>
@@ -232,12 +232,136 @@
         <li>الديون — تتبع الديون وتنبيهات SMS</li>
         <li>إيصال مخصص — بشعارك واسم محلك</li>
       </ul>
-      <a class="btn" href="mailto:payna.contact@gmail.com">تواصل معنا</a>
+      <a class="btn" href="#contact">تواصل معنا</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CONTACT ═══════════════
+     Web3Forms. L'access_key 3lani b l'tasmim (docs.web3forms.com FAQ: "Access
+     key is public"); howa alias dyal l'email, machi secret. Bla JS: POST
+     3adi, w Web3Forms kayredirecti l /ar/sent/ (nfs l'domaine: l'free
+     plan kay9bel ghir hadi). B JS: fetch, w l'naja7 wla l'khata2 kaybano
+     f blasthom bla ma ytbeddel l'page. L'email kayb9a f l'footer f l'joj
+     7alat. -->
+<section class="contact" id="contact">
+  <div class="wrap grid">
+    <div class="copy">
+      <p class="eyebrow">تواصل</p>
+      <h2>تواصل معنا.</h2>
+      <p>مستثمرون، مسرّعات أعمال، تجار يريدون الانضمام مبكراً — اكتبوا لنا هنا، ونجيب من البريد نفسه.</p>
+      <p class="contact-alt">أو راسلنا مباشرة: <a href="mailto:payna.contact@gmail.com">payna.contact@gmail.com</a></p>
+    </div>
+    <div class="media">
+      <form class="form" action="https://api.web3forms.com/submit" method="POST" id="contact-form" novalidate>
+        <input type="hidden" name="access_key" value="PASTE_YOUR_WEB3FORMS_ACCESS_KEY">
+        <input type="hidden" name="subject" value="موقع Payna — رسالة جديدة">
+        <input type="hidden" name="from_name" value="Payna website">
+        <input type="hidden" name="redirect" value="https://payna.vercel.app/ar/sent/">
+        <!-- Honeypot: l'bots kay3emmro kolchi; l'nas ma-kaychoufouhch. -->
+        <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <div class="field">
+          <label for="f-name">اسمك</label>
+          <input id="f-name" name="name" type="text" required autocomplete="name" maxlength="120">
+        </div>
+        <div class="field">
+          <label for="f-email">بريدك الإلكتروني</label>
+          <input id="f-email" name="email" type="email" required autocomplete="email" maxlength="200" dir="ltr">
+        </div>
+        <div class="field">
+          <label for="f-message">الرسالة</label>
+          <textarea id="f-message" name="message" required rows="5" maxlength="4000"></textarea>
+        </div>
+
+        <p class="form-status" id="form-status" role="status" aria-live="polite" hidden></p>
+
+        <button class="btn" type="submit" id="form-submit">إرسال</button>
+      </form>
+
+      <div class="form-done" id="form-done" hidden tabindex="-1">
+        <p class="chip ok">أُرسلت</p>
+        <h3>شكراً — وصلتنا رسالتك.</h3>
+        <p>نقرأ كل ما يصلنا ونجيب من payna.contact@gmail.com.</p>
+      </div>
     </div>
   </div>
 </section>
 
 </main>
+
+<script>
+// Progressive enhancement bark. Bla JS l'form kaykhdem b7al form 3adi
+// (POST + redirect l /sent/). B JS: nb9aw f l'page, w kanwerriw l'naja7
+// wla l'khata2 f blasthom.
+//
+// ⚠ Ghiyab l'jawab machi jawab. Timeout wla network error ma-kay3niwch
+// "ma-tsiftatch": kay3niw "ma-3refnach". L'klam dyal l'khata2 kay9oul
+// hadchi b l'7arf w kay3ti l'email — ma-kay9oulch "failed".
+(function () {
+  var form = document.getElementById('contact-form');
+  var status = document.getElementById('form-status');
+  var done = document.getElementById('form-done');
+  var button = document.getElementById('form-submit');
+  if (!form || !window.fetch || !window.FormData) return;
+
+  var t = {
+    sending: "جارٍ الإرسال…",
+    invalid: "يرجى ملء الحقول الثلاثة، مع بريد إلكتروني صحيح.",
+    rejected: "لم تُقبل الرسالة. راسلنا مباشرة على payna.contact@gmail.com.",
+    unknown: "لم نتمكن من تأكيد إرسال الرسالة. راسلنا مباشرة على payna.contact@gmail.com."
+  };
+
+  function show(kind, text) {
+    status.hidden = false;
+    status.className = 'form-status ' + kind;
+    status.textContent = text;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!form.checkValidity()) {
+      show('err', t.invalid);
+      form.reportValidity();
+      return;
+    }
+    var data = new FormData(form);
+    data.delete('redirect'); // b JS ma-kaynch redirect: l'jawab JSON
+    var body = {};
+    data.forEach(function (v, k) { body[k] = v; });
+
+    button.disabled = true;
+    show('wait', t.sending);
+
+    var controller = window.AbortController ? new AbortController() : null;
+    var timer = controller && setTimeout(function () { controller.abort(); }, 15000);
+
+    fetch(form.action, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(body),
+      signal: controller ? controller.signal : undefined
+    }).then(function (res) {
+      return res.json().then(function (json) { return { ok: res.ok, json: json }; },
+                             function () { return { ok: res.ok, json: null }; });
+    }).then(function (r) {
+      if (r.ok && r.json && r.json.success) {
+        form.hidden = true;
+        done.hidden = false;
+        done.focus();
+      } else {
+        // L'server jaweb b "la": hadi refus 7a9i9i, machi ghiyab.
+        show('err', t.rejected);
+        button.disabled = false;
+      }
+    }).catch(function () {
+      // Timeout, network, CORS: ma-3refnach. Ma-n9oulouch "failed".
+      show('err', t.unknown);
+      button.disabled = false;
+    }).then(function () { if (timer) clearTimeout(timer); });
+  });
+})();
+</script>
 
 <footer class="footer">
   <div class="wrap footer-row">
@@ -245,7 +369,7 @@
       <img src="/assets/mark-white.png" alt="" width="46" height="36">
       <span>Payna</span>
     </a>
-    <p class="contact"><span>للتواصل</span> <a href="mailto:payna.contact@gmail.com">payna.contact@gmail.com</a></p>
+    <p class="footer-contact"><span>للتواصل</span> <a href="mailto:payna.contact@gmail.com">payna.contact@gmail.com</a></p>
     <nav class="lang" aria-label="اللغة">
       <a href="/en/" hreflang="en" lang="en">English</a>
       <a href="/fr/" hreflang="fr" lang="fr">Français</a>

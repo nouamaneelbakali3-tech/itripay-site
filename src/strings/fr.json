@@ -102,6 +102,24 @@
   "inc_5": "Crédit — suivi des dettes et alertes SMS",
   "inc_6": "Reçu personnalisé — avec logo et nom de votre boutique",
 
+  "contact_eyebrow": "Contact",
+  "contact_title": "Parlons-en.",
+  "contact_body": "Investisseurs, accélérateurs, commerçants qui veulent en être tôt — écrivez-nous ici, nous répondons depuis la même boîte.",
+  "contact_alt": "Ou écrivez-nous directement :",
+  "form_subject": "Site Payna — nouveau message",
+  "form_name": "Votre nom",
+  "form_email": "Votre e-mail",
+  "form_message": "Message",
+  "form_send": "Envoyer",
+  "form_sending_js": "Envoi…",
+  "form_invalid_js": "Merci de remplir les trois champs, avec une adresse e-mail valide.",
+  "form_rejected_js": "Le message n'a pas été accepté. Écrivez-nous directement à payna.contact@gmail.com.",
+  "form_unknown_js": "Nous n'avons pas pu confirmer l'envoi du message. Écrivez-nous directement à payna.contact@gmail.com.",
+  "sent_chip": "Envoyé",
+  "sent_title": "Merci — nous avons votre message.",
+  "sent_body": "Nous lisons tout ce qui arrive et répondons depuis payna.contact@gmail.com.",
+  "sent_back": "Retour au site",
+
   "footer_contact_label": "Contact",
   "footer_note": "© 2026 Payna. Fait au Maroc."
 }

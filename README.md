@@ -50,3 +50,33 @@ grid or the copy.
 Tap-to-pay is described as the product. Never "certified", never
 "bank-approved", never a card network name — in any of the three
 languages.
+
+## Contact form
+
+Web3Forms, free plan. The form POSTs to `https://api.web3forms.com/submit`
+with the access key from `src/site.json`. **The access key is public by
+design** — Web3Forms' own FAQ: "Access key is public. No need to confuse
+it with secret API key… Think of it as an alias to your email." It can
+only send mail *to* the address it was created for.
+
+- Without JavaScript: plain POST; Web3Forms redirects to `/{lang}/sent/`
+  (free plan allows same-domain redirects only). An error without JS
+  lands on Web3Forms' own error page — that path is not ours to style.
+- With JavaScript: `fetch` with `Accept: application/json`, stays on the
+  page, shows one of four states inline: sending, invalid, rejected,
+  unknown. "Unknown" (timeout, network) says *we could not confirm* — a
+  missing answer is not a failure.
+- The footer keeps the email address in every state.
+
+**Observed response, 2026-09-17**, from a real POST to the live endpoint
+with the placeholder key, read in the browser console:
+
+    400  {"success": false, "message": "Invalid form_id/access_key format. Must be a valid UUID.", "data": {…}}
+
+The JS keys success off `response.ok && json.success`, which is that
+shape. A `200 {"success": true}` has *not* been observed yet — it needs
+a real key. Until it is, the success state is verified against a stub.
+
+**Before the first push:** replace `PASTE_YOUR_WEB3FORMS_ACCESS_KEY` in
+`src/site.json` with the real key and rebuild. The build warns while the
+placeholder is there.

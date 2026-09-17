@@ -102,6 +102,24 @@
   "inc_5": "الديون — تتبع الديون وتنبيهات SMS",
   "inc_6": "إيصال مخصص — بشعارك واسم محلك",
 
+  "contact_eyebrow": "تواصل",
+  "contact_title": "تواصل معنا.",
+  "contact_body": "مستثمرون، مسرّعات أعمال، تجار يريدون الانضمام مبكراً — اكتبوا لنا هنا، ونجيب من البريد نفسه.",
+  "contact_alt": "أو راسلنا مباشرة:",
+  "form_subject": "موقع Payna — رسالة جديدة",
+  "form_name": "اسمك",
+  "form_email": "بريدك الإلكتروني",
+  "form_message": "الرسالة",
+  "form_send": "إرسال",
+  "form_sending_js": "جارٍ الإرسال…",
+  "form_invalid_js": "يرجى ملء الحقول الثلاثة، مع بريد إلكتروني صحيح.",
+  "form_rejected_js": "لم تُقبل الرسالة. راسلنا مباشرة على payna.contact@gmail.com.",
+  "form_unknown_js": "لم نتمكن من تأكيد إرسال الرسالة. راسلنا مباشرة على payna.contact@gmail.com.",
+  "sent_chip": "أُرسلت",
+  "sent_title": "شكراً — وصلتنا رسالتك.",
+  "sent_body": "نقرأ كل ما يصلنا ونجيب من payna.contact@gmail.com.",
+  "sent_back": "العودة إلى الموقع",
+
   "footer_contact_label": "للتواصل",
   "footer_note": "© 2026 Payna. صُنع في المغرب."
 }
