@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ItriPay — Direction C · capture harness</title>
+<meta name="robots" content="noindex">
+<!-- Capture harness only (mockups/capture-demo.ps1). The same page as index.html, with two changes for headless Edge:
+     ?timers=1  frames are driven by a timer, because headless Edge does not run requestAnimationFrame on its clock;
+     ?still=1   entrance animations are skipped, because headless Edge 157 does not advance CSS animations,
+                so the hero would otherwise be photographed before it has faded in. -->
+<link rel="preload" href="fonts/Poppins-ExtraBold.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="preload" href="fonts/Cairo-Regular.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="site.css">
+<style id="still" media="not all">
+  .motion .up,.motion .rv,.motion .rv.in,.motion .headline .w i,.motion .star.draw .b-fill,.motion .star.draw .b-facet,.motion .star.draw .b-line,
+  .motion .star[role=group] .blade.on,.motion .star[role=group] .blade.on .b-ping,.motion .carnet.in li{animation:none !important}
+  .motion .rv{opacity:1}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+  (function () {
+    var q = new URLSearchParams(location.search);
+    if (q.has('timers')) window.requestAnimationFrame = function (cb) { return setTimeout(function () { cb(performance.now()); }, 16); };
+    if (q.has('still')) document.getElementById('still').media = 'all';
+    /* ?vw=&vh=  pin the layout to the capture size. Headless Edge runs the page in a smaller viewport and
+       only resizes to --window-size for the photo; without this the hero reflows at that moment while the
+       cursor and threads stay where they were drawn. */
+    if (q.has('vw')) { var s = document.documentElement.style; s.width = q.get('vw') + 'px'; s.setProperty('--vh', (q.get('vh') / 100) + 'px'); }
+  })();
+</script>
+<script src="content.js"></script>
+<script src="site.js"></script>
+<script src="../demo.js"></script>
+</body>
+</html>

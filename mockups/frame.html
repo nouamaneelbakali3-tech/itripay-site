@@ -1,0 +1,16 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>ItriPay mockups — phone-width frame (used by capture.sh)</title>
+<body style="margin:0;background:#fff">
+<iframe id="f" title="page at phone width" style="display:block;border:0;width:390px;height:900px"></iframe>
+<script>
+  var q = new URLSearchParams(location.search), f = document.getElementById('f');
+  f.style.width = (q.get('w') || 390) + 'px';
+  if (q.has('h')) f.style.height = q.get('h') + 'px';
+  f.src = q.get('dir') + '/?lang=' + (q.get('lang') || 'en') + (q.has('shot') ? '&shot=1' : '');
+  var t = setInterval(function () {
+    var h = f.contentDocument && f.contentDocument.documentElement.getAttribute('data-h');
+    if (!h) return; clearInterval(t); f.style.height = h + 'px';
+    setTimeout(function () { document.documentElement.setAttribute('data-h', h); }, 400);
+  }, 100);
+</script>
