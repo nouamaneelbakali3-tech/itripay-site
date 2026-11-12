@@ -28,7 +28,8 @@ the `image` package the logo tool uses.
 | `mockups/` | The redesign prototypes and `mockups/HANDOFF.md` (every design decision). Not deployed |
 | `tool/` | The four scripts above |
 | `vercel.json` | `/` → `/en/`, clean URLs, cache headers |
-| `.vercelignore` | Allowlist of what is deployed: `en/ fr/ ar/ assets/ index.html site.css site.js vercel.json` |
+| `sitemap.xml`, `robots.txt` | **Generated** by `tool/build.dart` from `base_url`. The sitemap lists `/en/ /fr/ /ar/` with hreflang alternates; the sent pages are left out and carry `noindex` (meta tag, plus `X-Robots-Tag` in `vercel.json`), and robots.txt does not block them, so crawlers can see that |
+| `.vercelignore` | Allowlist of what is deployed: `en/ fr/ ar/ assets/ index.html site.css site.js vercel.json sitemap.xml robots.txt` |
 
 ## Brand
 

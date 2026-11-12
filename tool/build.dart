@@ -140,6 +140,27 @@ void main() {
     }
   }
   if (failed) exit(1);
+  _writeSeoFiles(config['base_url']!);
+}
+
+/// sitemap.xml w robots.txt, mn base_url bach ma-yfreqouch 3la l'domaine.
+/// L'sitemap fih ghir l'pages dyal l'loughat (b l'hreflang dyalhom, b7al
+/// l'<link rel="alternate"> f l'template). L'pages dyal /sent/ machi fih:
+/// 3endhom <meta name="robots" content="noindex"> w X-Robots-Tag f
+/// vercel.json. Ma-kat-tsedch f robots.txt: crawler msdoud ma-kaychoufch
+/// l'noindex.
+void _writeSeoFiles(String base) {
+  final alternates = [
+    for (final l in languages) '    <xhtml:link rel="alternate" hreflang="$l" href="$base/$l/"/>',
+    '    <xhtml:link rel="alternate" hreflang="x-default" href="$base/en/"/>',
+  ].join('\n');
+  final urls = languages.map((l) => '  <url>\n    <loc>$base/$l/</loc>\n$alternates\n  </url>').join('\n');
+  final sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n'
+      '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n'
+      '        xmlns:xhtml="http://www.w3.org/1999/xhtml">\n$urls\n</urlset>\n';
+  File('sitemap.xml').writeAsStringSync(sitemap);
+  File('robots.txt').writeAsStringSync('User-agent: *\nAllow: /\n\nSitemap: $base/sitemap.xml\n');
+  stdout.writeln('-> sitemap.xml, robots.txt ($base)');
 }
 
 /// L'keys li kaybnihom l'build, machi l'tarjama:
