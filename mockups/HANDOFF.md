@@ -181,8 +181,9 @@ partnering" button switches the form to Contact.
 2. **A phone test** — on a real, cheap Android phone: hero fits the first screen with the browser bars showing,
    smoothness of the sky and star, the soft pulse on waitlist buttons, Arabic layout.
 3. **A real form submission** from the deployed preview (one per mode) to confirm Web3Forms delivers with the new
-   subjects and sender name; and verify `contact@itripay.com` receives mail (the Web3Forms key still delivers to
-   the inbox it was created for). The app still says `support@`.
+   subjects and sender name; and verify `contact@itripay.com` receives mail. Since 2026-11-12 the Web3Forms key is
+   one registered to `contact@itripay.com`, and real submissions with it are answered success (see README); the
+   arrival in that inbox is checked there. The app still says `support@`.
 4. **Merge into `main`** when approved — Vercel deploys `main`.
 
 ## Files in `mockups/`

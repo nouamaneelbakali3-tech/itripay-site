@@ -56,7 +56,8 @@ Web3Forms, free plan. One form, two modes: **Join the waitlist** (name, email, o
 and **Contact us** (message required). The form POSTs to `https://api.web3forms.com/submit` with
 the access key from `src/site.json`. **The access key is public by design** — Web3Forms' own FAQ:
 "Access key is public. No need to confuse it with secret API key… Think of it as an alias to your
-email." It can only send mail *to* the address it was created for.
+email." It can only send mail *to* the address it was created for: since 2026-11-12 that is
+`contact@itripay.com` (the earlier key went to the previous inbox).
 
 - Sender name "ItriPay website". Subject "ItriPay website — waitlist" or "— new message" (translated
   in FR/AR); the field `intent` (`waitlist` / `contact`) is in every email.
@@ -83,5 +84,9 @@ byte-identical in `data`. The script keys success off `response.ok && json.succe
   Arabic name and message returned byte-identical in `data`.
 
 Whether they reached the inbox is checked there, not here: Web3Forms answering success means it accepted them.
+
+**Observed, 2026-11-12**, after switching to the key registered to `contact@itripay.com`: one real submission from
+`/en/` (contact mode, `test@example.com`) answered `200 {"success": true, …}` with subject
+"ItriPay website — new message" and `from_name` "ItriPay website".
 
 The key in `src/site.json` is the live one. The build warns if it is ever put back to the placeholder.
