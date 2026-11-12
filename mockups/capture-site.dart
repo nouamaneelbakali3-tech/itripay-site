@@ -279,7 +279,7 @@ Future<void> checks() async {
       reply = {status: 200, body: {success: true}};
       window.fetch = (url, opt) => { sent = {url, headers: opt.headers, body: JSON.parse(opt.body)}; return Promise.resolve(new Response(JSON.stringify(reply.body), {status: 200})); };
       form.querySelector('button[type=submit]').click(); await w(100);
-      out.contactSent = sent; out.contactDone = !document.querySelector('[data-done=contact]').hidden && form.hidden;
+      out.contactSent = sent; out.contactDone = getComputedStyle(document.querySelector('[data-done=contact]')).display !== 'none' && getComputedStyle(form).display === 'none';   // what is on screen, not just the attribute
       out.doneText = document.querySelector('[data-done=contact] h3').textContent;
       return out;
     })()''');

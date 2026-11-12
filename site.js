@@ -387,7 +387,7 @@
                                function () { return { ok: res.ok, json: null }; });
       }).then(function (r) {
         if (r.ok && r.json && r.json.success) {
-          form.hidden = true;
+          show('', ''); form.hidden = true;
           var done = $('[data-done="' + m + '"]'); done.hidden = false; done.focus();
         } else if (r.json && r.json.success === false) {
           show('bad', D.rejected); submit.disabled = false;      /* the server said no */

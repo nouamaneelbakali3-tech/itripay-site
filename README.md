@@ -74,4 +74,14 @@ two real submissions with the live key (one English, one Arabic, RTL) gave
 `200 {"success": true, …, "message": "Form submitted successfully!"}` with the Arabic text
 byte-identical in `data`. The script keys success off `response.ok && json.success`.
 
+**Observed, 2026-11-12**, as ItriPay: two real submissions from the local build of `redesign-c` (bd7f514), with
+`test@example.com` as the address, both answered
+`200 {"success": true, …, "message": "Form submitted successfully!"}`:
+
+- `/en/`, waitlist: `subject` "ItriPay website — waitlist", `from_name` "ItriPay website", `intent` "waitlist".
+- `/ar/`, contact: `subject` "موقع ItriPay — رسالة جديدة", `from_name` "ItriPay website", `intent` "contact",
+  Arabic name and message returned byte-identical in `data`.
+
+Whether they reached the inbox is checked there, not here: Web3Forms answering success means it accepted them.
+
 The key in `src/site.json` is the live one. The build warns if it is ever put back to the placeholder.

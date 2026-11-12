@@ -374,7 +374,8 @@ details p{padding-bottom:24px;max-width:66ch}
 .form-status.wait{color:var(--body)}
 .form button[disabled]{opacity:.7;cursor:progress}
 .form-done{display:grid;gap:10px;justify-items:start;background:#fff;border-radius:32px;padding:clamp(24px,3.4vw,40px);box-shadow:0 30px 70px -45px rgba(13,72,190,.5)}
-.form-done[hidden]{display:none}
+/* the script hides the form on success with the hidden attribute; .form's display:grid would otherwise win */
+.form[hidden],.form-done[hidden]{display:none}
 .form-done:focus{outline:0}
 .form-done h3{font-family:var(--f-head);font-weight:800;font-size:clamp(24px,2.6vw,32px);letter-spacing:-.02em;margin:0}
 .chip{display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:0 14px 0 10px;border-radius:999px;background:#DCFCE7;color:#0B6B3A;font-family:var(--f-ui);font-weight:700;font-size:14px}
