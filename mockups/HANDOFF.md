@@ -18,7 +18,7 @@ chosen and revised four times. Nothing in `src/` has changed yet; the live site 
 - **Contact email:** `contact@itripay.com` everywhere on the site (header form, footer, error messages).
   The app still uses `support@itripay.com` (`AppStrings.supportEmail`) — not changed, flag only.
   Not yet verified that `contact@` actually receives mail.
-- **base_url:** stays `payna-ma.vercel.app` for now (`src/site.json`).
+- **base_url:** `https://www.itripay.com` since 2026-11-12 (`src/site.json`); `itripay.com` redirects to www. Before that it was `payna-ma.vercel.app`.
 - **Setup stays:** `tool/build.dart`, strings in `src/strings/{en,fr,ar}.json`, three languages, Arabic fully RTL,
   Web3Forms form, Vercel deploys `main`.
 - **Copy rules:** real content only. No testimonials, no invented numbers, no partner or bank logos.
