@@ -1,11 +1,13 @@
-# payna-site
+# itripay-site
 
-The Payna marketing site. Static HTML and CSS, three languages, deployed
-on Vercel with no build step.
+The ItriPay marketing site. Static HTML, CSS and one small script, three
+languages (English, French, Arabic in full RTL), deployed on Vercel with
+no build step.
 
-    dart run tool/build.dart     # src/template.html + src/strings/*.json -> en/ fr/ ar/
-    dart run tool/serve.dart     # http://localhost:8080/  (local preview)
-    dart run tool/make_logo.dart # regenerate the mark and favicons from assets/source/
+    dart run tool/build.dart      # src/ -> en/ fr/ ar/ (index + sent page)
+    dart run tool/serve.dart      # http://localhost:8080/  (local preview)
+    dart run tool/make_logo.dart  # favicons, og image, marks from assets/source/itripay-logo.png
+    dart run tool/make_fonts.dart # assets/source/fonts/*.ttf -> assets/fonts/*.woff
 
 Dart comes with Flutter; nothing else is needed. `dart pub get` once for
 the `image` package the logo tool uses.
@@ -14,75 +16,62 @@ the `image` package the logo tool uses.
 
 | Path | What |
 |---|---|
-| `src/template.html` | The one page, with `{{key}}` placeholders |
+| `src/template.html` | The page, with `{{key}}` placeholders |
+| `src/sent.html` | The page Web3Forms redirects to after a form sent without JavaScript |
 | `src/strings/{en,fr,ar}.json` | The words. Every key must exist in all three |
-| `en/ fr/ ar/` | **Generated.** Edit the template or the strings, then rebuild. Committed so Vercel serves them as-is |
-| `site.css` | All styling. Colour tokens at the top, each with the app file it came from |
-| `assets/` | Mark, watermark, favicons — generated from `assets/source/` |
-| `tool/` | The three scripts above |
+| `src/site.json` | What does not change with the language: base URL, contact email, form endpoint and key |
+| `en/ fr/ ar/` | **Generated.** Edit `src/`, then rebuild. Committed so Vercel serves them as-is |
+| `site.css` | All styling. Colour tokens at the top |
+| `site.js` | Behaviour only (motion, the star, the waitlist threads, the live form). The page reads complete without it |
+| `assets/` | Favicons, og image, marks, fonts — generated from `assets/source/` |
+| `assets/source/` | The logo and the app's TTF fonts. Not deployed |
+| `mockups/` | The redesign prototypes and `mockups/HANDOFF.md` (every design decision). Not deployed |
+| `tool/` | The four scripts above |
 | `vercel.json` | `/` → `/en/`, clean URLs, cache headers |
+| `.vercelignore` | Allowlist of what is deployed: `en/ fr/ ar/ assets/ index.html site.css site.js vercel.json` |
 
 ## Brand
 
-Colours are the app's, not guesses. `#0D48BE` is the logo blue (brand
-surfaces: hero, pricing). `#2563EB` is the app's UI blue (every button,
-so buttons here match future screenshots). `#F97316` is the Credit
-screen's orange. See the top of `site.css` for provenance.
+- **Name:** ItriPay, in Latin letters in every language. Itri (ⵉⵜⵔⵉ) is the Tamazight word for star.
+- **Four values:** Connection · Speed · Security · Innovation — one per point of the star.
+- **Logo:** `assets/source/itripay-logo.png` (6250×6250, from the app repo). The site draws the star
+  as SVG, traced from that PNG (the `ip-blade` path in the templates and `assets/favicon.svg`).
+- **Colours:** built from the logo blue `#0D48BE`, one step lighter (`#1452CC`) for buttons and links.
+  The orange is the app's Credit orange, the gold is Premium. All text pairs pass WCAG AA; the table is in
+  `mockups/HANDOFF.md` §4.
+- **Fonts:** the app's own (Poppins 800/900, DM Sans 700/900, Cairo 400–800), self-hosted. WOFF, not
+  WOFF2: there is no Brotli encoder on the build machine. See the top of `tool/make_fonts.dart`.
+- **Contact:** `contact@itripay.com` everywhere on the site.
 
-## The mark
+## Copy rules
 
-`assets/source/ic_launcher_foreground_xxxhdpi.png` is the largest
-surviving derivative of the lost 2000×2000 logo: a 233×181 manta on a
-432 canvas. It is used **small only** — header ≤ 110px, favicons, and
-the 8% hero watermark. It is not a hero mark and must not be upscaled
-into one. When the original is found, drop it in `assets/source/`,
-update `tool/make_logo.dart` to read it, and the hero can change.
+Real content only: no testimonials, no invented numbers, no partner or bank logos. ItriPay is
+pre-launch and looking for a licensed payment partner; the site never says ItriPay is licensed,
+"certified" or "bank-approved", and never names a card network. `tool/build.dart` refuses to build
+if a string breaks this (the `forbidden` list).
 
-## Screenshots, later
+## Waitlist and contact form
 
-Every feature section has a `.media-box`: a 9:19.5 box (the Galaxy A17's
-aspect), max 320px wide. It holds a typographic object today. A screenshot
-goes in the same box — `<img>` in a device frame — with no change to the
-grid or the copy.
+Web3Forms, free plan. One form, two modes: **Join the waitlist** (name, email, optional message)
+and **Contact us** (message required). The form POSTs to `https://api.web3forms.com/submit` with
+the access key from `src/site.json`. **The access key is public by design** — Web3Forms' own FAQ:
+"Access key is public. No need to confuse it with secret API key… Think of it as an alias to your
+email." It can only send mail *to* the address it was created for.
 
-## Copy rule
+- Sender name "ItriPay website". Subject "ItriPay website — waitlist" or "— new message" (translated
+  in FR/AR); the field `intent` (`waitlist` / `contact`) is in every email.
+- Without JavaScript: plain POST, the browser checks name and email, and Web3Forms redirects to
+  `/{lang}/sent/` (the free plan allows same-domain redirects only, so it is built from `base_url`).
+  An error without JS lands on Web3Forms' own error page — that path is not ours to style.
+- With JavaScript: `fetch` with `Accept: application/json`, stays on the page, shows one of the
+  states inline: sending, invalid, rejected, unknown, or success. "Unknown" (timeout, network) says
+  *we could not confirm* — a missing answer is not a failure.
+- The email address stays visible next to the form and in the footer in every state.
 
-Tap-to-pay is described as the product. Never "certified", never
-"bank-approved", never a card network name — in any of the three
-languages.
+**Observed, 2026-09-17**, under the site's previous name: a real POST with the placeholder key gave
+`400 {"success": false, "message": "Invalid form_id/access_key format. Must be a valid UUID."}`, and
+two real submissions with the live key (one English, one Arabic, RTL) gave
+`200 {"success": true, …, "message": "Form submitted successfully!"}` with the Arabic text
+byte-identical in `data`. The script keys success off `response.ok && json.success`.
 
-## Contact form
-
-Web3Forms, free plan. The form POSTs to `https://api.web3forms.com/submit`
-with the access key from `src/site.json`. **The access key is public by
-design** — Web3Forms' own FAQ: "Access key is public. No need to confuse
-it with secret API key… Think of it as an alias to your email." It can
-only send mail *to* the address it was created for.
-
-- Without JavaScript: plain POST; Web3Forms redirects to `/{lang}/sent/`
-  (free plan allows same-domain redirects only). An error without JS
-  lands on Web3Forms' own error page — that path is not ours to style.
-- With JavaScript: `fetch` with `Accept: application/json`, stays on the
-  page, shows one of four states inline: sending, invalid, rejected,
-  unknown. "Unknown" (timeout, network) says *we could not confirm* — a
-  missing answer is not a failure.
-- The footer keeps the email address in every state.
-
-**Observed response, 2026-09-17**, from a real POST to the live endpoint
-with the placeholder key, read in the browser console:
-
-    400  {"success": false, "message": "Invalid form_id/access_key format. Must be a valid UUID.", "data": {…}}
-
-**Observed success, 2026-09-17**, two real submissions from the local
-build with the live key, one from `/en/` and one from `/ar/` (Arabic
-name, subject and message, RTL form), response bodies read from a fetch
-wrapper in the console:
-
-    200  {"success": true, "data": {"subject": "Payna website — new message", "from_name": "Payna website", "name": "…", "email": "…", "message": "…"}, "message": "Form submitted successfully!"}
-    200  {"success": true, "data": {"subject": "موقع Payna — رسالة جديدة", …}, "message": "Form submitted successfully!"}
-
-The Arabic text came back byte-identical in `data`. The JS keys success
-off `response.ok && json.success`, which is both shapes.
-
-The key in `src/site.json` is the live one. The build warns if it is
-ever put back to the placeholder.
+The key in `src/site.json` is the live one. The build warns if it is ever put back to the placeholder.

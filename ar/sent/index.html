@@ -3,36 +3,44 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>شكراً — وصلتنا رسالتك. — Payna</title>
+<title>شكراً. وصلنا طلبك. — ItriPay</title>
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#0D48BE">
+<meta name="theme-color" content="#1A63E6">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap">
+<link rel="preload" href="/assets/fonts/Cairo-ExtraBold.woff" as="font" type="font/woff" crossorigin>
 <link rel="stylesheet" href="/site.css">
+<script src="/site.js" defer></script>
 </head>
-<body data-lang="ar">
+<body class="sent">
 <!-- L'page dyal l'naja7 bla JS: Web3Forms kayredirecti hna mn be3d POST
-     3adi. B JS l'ta7ir ma-kaywselch hna: l'naja7 kaybane f l'page nafsha. -->
-<header class="nav">
-  <div class="wrap nav-row">
-    <a class="brand" href="/ar/">
-      <img src="/assets/mark-blue.png" alt="" width="46" height="36">
-      <span>Payna</span>
-    </a>
+     3adi. B JS l'ta7ir ma-kaywselch hna: l'naja7 kaybane f l'form nafso.
+     Nfs l'sma dyal l'hero: l'nejma kat-trsem, w l'nojoum f l'canvas. -->
+<svg class="sprite" aria-hidden="true"><defs>
+<g id="ip-blade"><path d="M0 -588 L119 -221 Q132 -171 94 -138 L34 -91 Q14 -76 22 -46 L-297 -298 L-176 -252 Q-116 -231 -98 -286 Z" fill="currentColor"/><path d="M0 -588 V-232 Q0 -176 -52 -172 Q-70 -171 -88 -181 L-297 -298 L-176 -252 Q-116 -231 -98 -286 Z" fill="rgba(4,18,56,.15)"/></g>
+<path id="ip-outline" pathLength="1" d="M0 -588 L119 -221 Q132 -171 94 -138 L34 -91 Q14 -76 22 -46 L-297 -298 L-176 -252 Q-116 -231 -98 -286 Z"/>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+</defs></svg>
+
+<header class="site-head"><div class="wrap">
+  <div class="brand">
+    <button type="button" class="logo-spin" aria-label="أدِر النجمة"><svg class="star draw" viewBox="-640 -640 1280 1280" aria-hidden="true"><g><g class="blade"><use class="b-body" href="#ip-blade"/><use class="b-line" href="#ip-outline"/></g></g><g transform="rotate(90)"><g class="blade"><use class="b-body" href="#ip-blade"/><use class="b-line" href="#ip-outline"/></g></g><g transform="rotate(180)"><g class="blade"><use class="b-body" href="#ip-blade"/><use class="b-line" href="#ip-outline"/></g></g><g transform="rotate(270)"><g class="blade"><use class="b-body" href="#ip-blade"/><use class="b-line" href="#ip-outline"/></g></g></svg></button>
+    <a href="/ar/" class="wordmark">ItriPay</a>
   </div>
-</header>
-<main id="main" class="sent-page">
-  <div class="wrap">
-    <div class="form-done">
-      <p class="chip ok">أُرسلت</p>
-      <h1>شكراً — وصلتنا رسالتك.</h1>
-      <p>نقرأ كل ما يصلنا ونجيب من payna.contact@gmail.com.</p>
-      <a class="btn" href="/ar/">العودة إلى الموقع</a>
-    </div>
+</div></header>
+
+<main id="main" class="hero sent-hero">
+  <canvas class="sky" aria-hidden="true"></canvas><div class="aurora" aria-hidden="true"></div>
+  <div class="wrap sent-c">
+    <div class="sent-star up" style="--i:0"><div class="rot"><svg class="star draw" viewBox="-640 -640 1280 1280" aria-hidden="true"><g><g class="blade"><use class="b-body" href="#ip-blade"/><use class="b-line" href="#ip-outline"/></g></g><g transform="rotate(90)"><g class="blade"><use class="b-body" href="#ip-blade"/><use class="b-line" href="#ip-outline"/></g></g><g transform="rotate(180)"><g class="blade"><use class="b-body" href="#ip-blade"/><use class="b-line" href="#ip-outline"/></g></g><g transform="rotate(270)"><g class="blade"><use class="b-body" href="#ip-blade"/><use class="b-line" href="#ip-outline"/></g></g></svg></div></div>
+    <p class="chip on-sky up" style="--i:2"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>أُرسل</p>
+    <h1 class="sent-title up" style="--i:3">شكراً. وصلنا طلبك.</h1>
+    <p class="hero-sub up" style="--i:4">إذا انضممت إلى قائمة الانتظار، سنراسلك عند افتتاح ItriPay. وإذا كتبت لنا، نجيبك من contact@itripay.com.</p>
+    <p class="up" style="--i:5"><a class="btn btn-primary" href="/ar/"><span>العودة إلى الموقع</span><svg class="ic ar" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+    <p class="sent-mail up" style="--i:6">للتواصل: <a href="mailto:contact@itripay.com">contact@itripay.com</a></p>
   </div>
 </main>
 </body>

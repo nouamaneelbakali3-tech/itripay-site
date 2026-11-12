@@ -1,0 +1,13 @@
+# Vercel uploads and serves only what is listed here; everything else in the
+# repo (mockups/ — 30 MB of prototypes —, src/, tool/, assets/source/, docs)
+# stays out of the deployment. Allowlist form from vercel.com/docs/deployments/vercel-ignore.
+/*
+!/en
+!/fr
+!/ar
+!/assets
+!/index.html
+!/site.css
+!/site.js
+!/vercel.json
+/assets/source

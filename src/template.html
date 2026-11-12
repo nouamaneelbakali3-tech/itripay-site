@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{meta_title}}</title>
 <meta name="description" content="{{meta_description}}">
-<meta name="theme-color" content="#0D48BE">
+<meta name="theme-color" content="#1A63E6">
 
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
@@ -18,365 +19,281 @@
 <link rel="alternate" hreflang="x-default" href="{{base_url}}/en/">
 
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Payna">
+<meta property="og:site_name" content="ItriPay">
 <meta property="og:title" content="{{meta_title}}">
 <meta property="og:description" content="{{meta_description}}">
 <meta property="og:url" content="{{base_url}}/{{lang}}/">
 <meta property="og:locale" content="{{og_locale}}">
+<meta property="og:image" content="{{base_url}}/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Noto+Sans+Tifinagh&display=swap">
+<link rel="preload" href="/assets/fonts/{{preload_font}}" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/assets/fonts/Cairo-Regular.woff" as="font" type="font/woff" crossorigin>
 <link rel="stylesheet" href="/site.css">
+<script src="/site.js" defer></script>
 </head>
-<body data-lang="{{lang}}">
-<a class="skip" href="#main">{{skip_to_content}}</a>
+<body>
+<!-- L'sprite: l'blade dyal l'nejma (mrsoum mn assets/source/itripay-logo.png)
+     w l'icons. Kolchi kaystaamel <use href="#..."> bach l'path ma-yt3awedch. -->
+<svg class="sprite" aria-hidden="true"><defs>
+<g id="ip-blade"><path d="M0 -588 L119 -221 Q132 -171 94 -138 L34 -91 Q14 -76 22 -46 L-297 -298 L-176 -252 Q-116 -231 -98 -286 Z" fill="currentColor"/><path d="M0 -588 V-232 Q0 -176 -52 -172 Q-70 -171 -88 -181 L-297 -298 L-176 -252 Q-116 -231 -98 -286 Z" fill="rgba(4,18,56,.15)"/></g>
+<path id="ip-outline" pathLength="1" d="M0 -588 L119 -221 Q132 -171 94 -138 L34 -91 Q14 -76 22 -46 L-297 -298 L-176 -252 Q-116 -231 -98 -286 Z"/>
+<symbol id="i-tap" viewBox="0 0 24 24"><path d="M7 8.5a5 5 0 0 1 0 7M10.5 6a9 9 0 0 1 0 12M14 3.5a13 13 0 0 1 0 17"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5M9 7h7M9 11h5"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M5 20V11M11 20V4M17 20v-6M2.5 20h19"/></symbol>
+<symbol id="i-receipt" viewBox="0 0 24 24"><path d="M5 3v18l2.5-1.5L10 21l2-1.5 2 1.5 2.5-1.5L19 21V3l-2.5 1.5L14 3l-2 1.5L10 3 7.5 4.5z"/><path d="M9 9h6M9 13h6"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.2a6.5 6.5 0 0 1 3.5 5.8"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></symbol>
+<symbol id="i-shop" viewBox="0 0 24 24"><path d="M3 9l1.5-5h15L21 9M4.5 10.5V20h15v-9.5M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0M10 20v-5h4v5"/></symbol>
+<symbol id="i-cup" viewBox="0 0 24 24"><path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5zM17 10h1.5a2.5 2.5 0 0 1 0 5H17M7 3v3M11 3v3M15 3v3"/></symbol>
+<symbol id="i-basket" viewBox="0 0 24 24"><path d="M3 10h18l-1.6 9a2 2 0 0 1-2 1.6H6.6a2 2 0 0 1-2-1.6zM8 10l3-6M16 10l-3-6M9 14v3M15 14v3"/></symbol>
+<symbol id="i-taxi" viewBox="0 0 24 24"><path d="M5 17H3.5v-4.2l1.8-4.6A2 2 0 0 1 7.2 7h9.6a2 2 0 0 1 1.9 1.2l1.8 4.6V17H19M5 17v2M19 17v2M5 17h14M3.5 12.5h17"/><circle cx="7.5" cy="14.8" r=".9"/><circle cx="16.5" cy="14.8" r=".9"/><path d="M10 7V4.5h4V7"/></symbol>
+<symbol id="i-doctor" viewBox="0 0 24 24"><path d="M6 3v6a4 4 0 0 0 8 0V3M6 3H4.5M14 3h1.5M10 13v2.5a4.5 4.5 0 0 0 9 0V13"/><circle cx="19" cy="11" r="2"/></symbol>
+<symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.5 6.5a4 4 0 0 0 5.2 5.2l-8.8 8.8a2.1 2.1 0 0 1-3-3l8.8-8.8a4 4 0 0 0-2.2-2.2zM14.5 6.5l1.8 1.8M17 4l-2.5 2.5"/></symbol>
+<symbol id="i-device" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M7 20h10M12 16v4M7 9h4M7 12h7"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18h3"/></symbol>
+<symbol id="i-sms" viewBox="0 0 24 24"><path d="M4 5h16v11H9.5L4 20z"/><path d="M8 9h8M8 12h5"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+</defs></svg>
 
-<header class="nav">
-  <div class="wrap nav-row">
-    <a class="brand" href="/{{lang}}/">
-      <img src="/assets/mark-blue.png" alt="" width="46" height="36">
-      <span>Payna</span>
-    </a>
-    <nav class="nav-links">
-      <a href="#pay">{{nav_pay}}</a>
-      <a href="#credit">{{nav_credit}}</a>
-      <a href="#analytics">{{nav_analytics}}</a>
-      <a href="#pricing">{{nav_pricing}}</a>
-    </nav>
-    <nav class="lang" aria-label="{{lang_switch_label}}">
-      <a href="/en/" hreflang="en" lang="en">EN</a>
-      <a href="/fr/" hreflang="fr" lang="fr">FR</a>
-      <a href="/ar/" hreflang="ar" lang="ar">AR</a>
-    </nav>
+<a class="skip" href="#main">{{skip_to_content}}</a>
+<div id="top-mark" aria-hidden="true"></div>
+
+<header class="site-head"><div class="wrap">
+  <div class="brand">
+    <button type="button" class="logo-spin" aria-label="{{spin_label}}"><svg class="star draw" viewBox="-640 -640 1280 1280" aria-hidden="true"><g><g class="blade"><use class="b-body" href="#ip-blade"/><use class="b-line" href="#ip-outline"/></g></g><g transform="rotate(90)"><g class="blade"><use class="b-body" href="#ip-blade"/><use class="b-line" href="#ip-outline"/></g></g><g transform="rotate(180)"><g class="blade"><use class="b-body" href="#ip-blade"/><use class="b-line" href="#ip-outline"/></g></g><g transform="rotate(270)"><g class="blade"><use class="b-body" href="#ip-blade"/><use class="b-line" href="#ip-outline"/></g></g></svg></button>
+    <a href="#top" class="wordmark">ItriPay</a>
   </div>
-</header>
+  <nav class="nav" aria-label="{{nav_main_label}}">
+    <a href="#how">{{nav_how}}</a><a href="#features">{{nav_features}}</a><a href="#credit">{{nav_credit}}</a><a href="#pricing">{{nav_pricing}}</a><a href="#faq">{{nav_faq}}</a>
+  </nav>
+  <div class="head-end">
+    <div class="lang" role="group" aria-label="{{lang_switch_label}}"><a href="/en/" hreflang="en" lang="en"{{current_en_html}}>EN</a><a href="/fr/" hreflang="fr" lang="fr"{{current_fr_html}}>FR</a><a href="/ar/" hreflang="ar" lang="ar"{{current_ar_html}}>ع</a></div>
+    <a class="btn btn-sm" href="#join" data-wait><span>{{cta_waitlist}}</span></a>
+  </div>
+</div></header>
 
 <main id="main">
 
-<!-- ═══════════════ HERO ═══════════════ -->
-<section class="hero">
-  <img class="watermark" src="/assets/watermark.png" alt="" aria-hidden="true" width="1200" height="944">
-  <div class="wrap grid">
-    <div class="copy">
-      <p class="wordmark">{{hero_wordmark}}</p>
-      <h1>{{hero_line_html}}</h1>
-      <p class="lede">{{hero_description}}</p>
-      <div class="cta">
-        <a class="btn" href="#contact">{{cta_contact}}</a>
-        <a class="btn ghost" href="#pricing">{{cta_pricing}}</a>
+<!-- ═══════════════ HERO ═══════════════
+     Shasha wa7da bdebt: l'3onwan, l'nass, joj boutonat, rb3 l'qiyam w l'nejma. -->
+<section class="hero" id="top">
+  <canvas class="sky" aria-hidden="true"></canvas><div class="aurora" aria-hidden="true"></div>
+  <div class="wrap hero-c">
+    <div class="hero-text">
+      <h1 class="headline" aria-label="{{hero_title_text}}"><span aria-hidden="true">{{hero_headline_html}}</span></h1>
+      <p class="hero-sub up" style="--i:3">{{hero_sub}}</p>
+      <div class="hero-cta up" style="--i:4">
+        <a class="btn btn-primary" href="#join" data-wait><span>{{cta_waitlist}}</span><svg class="ic ar" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-ghost" href="#how"><span>{{cta_how}}</span><svg class="ic ar" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="pills up" style="--i:5">
+        <button type="button" class="vtrig pill on" data-v="0"><span class="vglyph" data-own="0"><svg class="star" viewBox="-640 -640 1280 1280" aria-hidden="true"><g><g class="blade b0"><use href="#ip-blade"/></g></g><g transform="rotate(90)"><g class="blade b1"><use href="#ip-blade"/></g></g><g transform="rotate(180)"><g class="blade b2"><use href="#ip-blade"/></g></g><g transform="rotate(270)"><g class="blade b3"><use href="#ip-blade"/></g></g></svg></span><span>{{v1_name}}</span></button>
+        <button type="button" class="vtrig pill" data-v="1"><span class="vglyph" data-own="1"><svg class="star" viewBox="-640 -640 1280 1280" aria-hidden="true"><g><g class="blade b0"><use href="#ip-blade"/></g></g><g transform="rotate(90)"><g class="blade b1"><use href="#ip-blade"/></g></g><g transform="rotate(180)"><g class="blade b2"><use href="#ip-blade"/></g></g><g transform="rotate(270)"><g class="blade b3"><use href="#ip-blade"/></g></g></svg></span><span>{{v2_name}}</span></button>
+        <button type="button" class="vtrig pill" data-v="2"><span class="vglyph" data-own="2"><svg class="star" viewBox="-640 -640 1280 1280" aria-hidden="true"><g><g class="blade b0"><use href="#ip-blade"/></g></g><g transform="rotate(90)"><g class="blade b1"><use href="#ip-blade"/></g></g><g transform="rotate(180)"><g class="blade b2"><use href="#ip-blade"/></g></g><g transform="rotate(270)"><g class="blade b3"><use href="#ip-blade"/></g></g></svg></span><span>{{v3_name}}</span></button>
+        <button type="button" class="vtrig pill" data-v="3"><span class="vglyph" data-own="3"><svg class="star" viewBox="-640 -640 1280 1280" aria-hidden="true"><g><g class="blade b0"><use href="#ip-blade"/></g></g><g transform="rotate(90)"><g class="blade b1"><use href="#ip-blade"/></g></g><g transform="rotate(180)"><g class="blade b2"><use href="#ip-blade"/></g></g><g transform="rotate(270)"><g class="blade b3"><use href="#ip-blade"/></g></g></svg></span><span>{{v4_name}}</span></button>
       </div>
     </div>
-    <div class="media">
-      <div class="media-box">
-        <article class="receipt" aria-label="{{receipt_label}}">
-          <header>
-            <strong>{{demo_shop}}</strong>
-            <span>{{demo_city}}</span>
-          </header>
-          <p class="amount"><bdi>120.00</bdi> <small>{{cur}}</small></p>
-          <dl>
-            <div><dt>{{receipt_date}}</dt><dd>{{demo_date}}</dd></div>
-            <div><dt>{{receipt_method}}</dt><dd>{{receipt_method_value}}</dd></div>
-            <div><dt>{{receipt_ref}}</dt><dd><bdi>{{receipt_ref_value}}</bdi></dd></div>
-          </dl>
-          <p class="chip ok">{{receipt_paid}}</p>
-          <footer>{{receipt_thanks}}</footer>
-        </article>
-      </div>
+    <div class="stage up" style="--i:1">
+      <div class="bigstar"><div class="rot">
+        <svg class="star draw" viewBox="-640 -640 1280 1280" role="group" aria-label="{{star_label}}"><g><g class="blade vtrig on" data-v="0" role="button" tabindex="0" aria-label="{{v1_name}}" data-name="{{v1_name}}" data-line="{{v1_line}}"><use class="b-body" href="#ip-blade"/><use class="b-line" href="#ip-outline"/></g></g><g transform="rotate(90)"><g class="blade vtrig" data-v="1" role="button" tabindex="0" aria-label="{{v2_name}}" data-name="{{v2_name}}" data-line="{{v2_line}}"><use class="b-body" href="#ip-blade"/><use class="b-line" href="#ip-outline"/></g></g><g transform="rotate(180)"><g class="blade vtrig" data-v="2" role="button" tabindex="0" aria-label="{{v3_name}}" data-name="{{v3_name}}" data-line="{{v3_line}}"><use class="b-body" href="#ip-blade"/><use class="b-line" href="#ip-outline"/></g></g><g transform="rotate(270)"><g class="blade vtrig" data-v="3" role="button" tabindex="0" aria-label="{{v4_name}}" data-name="{{v4_name}}" data-line="{{v4_line}}"><use class="b-body" href="#ip-blade"/><use class="b-line" href="#ip-outline"/></g></g></svg>
+      </div></div>
+      <p class="vcap" aria-live="polite"><b data-vtext="name">{{v1_name}}</b><span data-vtext="line">{{v1_line}}</span></p>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════ PAY ═══════════════ -->
-<section class="feature" id="pay">
-  <div class="wrap grid">
-    <div class="copy">
-      <p class="eyebrow">{{pay_eyebrow}}</p>
-      <h2>{{pay_title}}</h2>
-      <p>{{pay_body}}</p>
-      <ul class="points">
-        <li>{{pay_p1}}</li>
-        <li>{{pay_p2}}</li>
-        <li>{{pay_p3}}</li>
-      </ul>
-    </div>
-    <div class="media">
-      <div class="media-box">
-        <div class="keypad" aria-hidden="true">
-          <div class="kp-amount">
-            <span class="kp-label">{{kp_amount_label}}</span>
-            <span class="kp-value"><bdi>120.00</bdi></span>
-            <span class="kp-cur">{{cur}}</span>
-          </div>
-          <div class="kp-grid">
-            <span>1</span><span>2</span><span>3</span>
-            <span>4</span><span>5</span><span>6</span>
-            <span>7</span><span>8</span><span>9</span>
-            <span>.</span><span>0</span><span class="kp-del" title="{{kp_delete_label}}">⌫</span>
-          </div>
-          <div class="kp-btn">{{kp_pay}}</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- ═══════════════ PROBLEM ═══════════════ -->
+<section class="sec problem first" id="problem"><div class="wrap">
+  <header class="sec-head rv"><p class="eyebrow">{{problem_eyebrow}}</p><h2>{{problem_title}}</h2><p class="lede">{{problem_sub}}</p></header>
+  <ul class="grid-3">
+    <li class="card rv" style="--i:0"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-device"/></svg></span><h3>{{problem_1_title}}</h3><p>{{problem_1_body}}</p></li>
+    <li class="card rv" style="--i:1"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-book"/></svg></span><h3>{{problem_2_title}}</h3><p>{{problem_2_body}}</p></li>
+    <li class="card rv" style="--i:2"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-chart"/></svg></span><h3>{{problem_3_title}}</h3><p>{{problem_3_body}}</p></li>
+  </ul>
+</div></section>
 
-<!-- ═══════════════ CREDIT ═══════════════ -->
-<section class="feature credit" id="credit">
-  <div class="wrap grid flip">
-    <div class="copy">
-      <p class="eyebrow">{{credit_eyebrow}}</p>
-      <h2>{{credit_title}}</h2>
-      <p>{{credit_body}}</p>
-      <ul class="points">
-        <li>{{credit_p1}}</li>
-        <li>{{credit_p2}}</li>
-        <li>{{credit_p3}}</li>
-      </ul>
-    </div>
-    <div class="media">
-      <div class="media-box">
-        <div class="ledger" aria-hidden="true">
-          <header>
-            <span class="ledger-title">{{ledger_title}}</span>
-            <span class="ledger-total">{{ledger_total_label}} <b><bdi>1 240.00</bdi> {{cur}}</b></span>
-          </header>
-          <div class="ledger-head"><span>{{ledger_col_customer}}</span><span>{{ledger_col_balance}}</span></div>
-          <ul class="rows">
-            <li><span class="who"><b>{{demo_c1}}</b><small>{{demo_c1_note}}</small></span><span class="bal"><bdi>320.00</bdi></span></li>
-            <li><span class="who"><b>{{demo_c2}}</b><small>{{demo_c2_note}}</small></span><span class="bal"><bdi>180.00</bdi></span></li>
-            <li><span class="who"><b>{{demo_c3}}</b><small>{{demo_c3_note}}</small></span><span class="bal"><bdi>540.00</bdi></span></li>
-            <li><span class="who"><b>{{demo_c4}}</b><small>{{demo_c4_note}}</small></span><span class="bal"><bdi>200.00</bdi></span></li>
-          </ul>
-          <p class="chip warm">{{ledger_sms}}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- ═══════════════ HOW IT WORKS ═══════════════ -->
+<section class="sec how" id="how"><div class="wrap">
+  <header class="sec-head rv"><p class="eyebrow">{{how_eyebrow}}</p><h2>{{how_title}}</h2></header>
+  <ol class="steps">
+    <li class="rv" style="--i:0"><span class="step-n">1</span><h3>{{how_1_title}}</h3><p>{{how_1_body}}</p></li>
+    <li class="rv" style="--i:1"><span class="step-n">2</span><h3>{{how_2_title}}</h3><p>{{how_2_body}}</p></li>
+    <li class="rv" style="--i:2"><span class="step-n">3</span><h3>{{how_3_title}}</h3><p>{{how_3_body}}</p></li>
+  </ol>
+</div></section>
 
-<!-- ═══════════════ ANALYTICS ═══════════════ -->
-<section class="feature analytics" id="analytics">
-  <div class="wrap grid">
-    <div class="copy">
-      <p class="eyebrow">{{analytics_eyebrow}}</p>
-      <h2>{{analytics_title}}</h2>
-      <p>{{analytics_body}}</p>
-      <ul class="points">
-        <li>{{analytics_p1}}</li>
-        <li>{{analytics_p2}}</li>
-        <li>{{analytics_p3}}</li>
-      </ul>
-    </div>
-    <div class="media">
-      <div class="media-box">
-        <div class="stats" aria-hidden="true">
-          <div class="tiles">
-            <div class="tile"><span>{{stat_today}}</span><b><bdi>1 320</bdi> {{cur}}</b></div>
-            <div class="tile"><span>{{stat_week}}</span><b><bdi>8 745</bdi> {{cur}}</b></div>
-            <div class="tile"><span>{{stat_month}}</span><b><bdi>31 060</bdi> {{cur}}</b></div>
-          </div>
-          <div class="chart">
-            <p class="chart-label">{{chart_label}}</p>
-            <div class="bars">
-              <div class="bar" style="--v:0.58"><i></i><span>{{day_1}}</span></div>
-              <div class="bar" style="--v:0.71"><i></i><span>{{day_2}}</span></div>
-              <div class="bar" style="--v:0.46"><i></i><span>{{day_3}}</span></div>
-              <div class="bar" style="--v:0.83"><i></i><span>{{day_4}}</span></div>
-              <div class="bar" style="--v:1"><i></i><span>{{day_5}}</span></div>
-              <div class="bar" style="--v:0.92"><i></i><span>{{day_6}}</span></div>
-              <div class="bar today" style="--v:0.64"><i></i><span>{{day_7}}</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- ═══════════════ FEATURES ═══════════════ -->
+<section class="sec features" id="features"><div class="wrap">
+  <header class="sec-head rv"><p class="eyebrow">{{features_eyebrow}}</p><h2>{{features_title}}</h2></header>
+  <ul class="grid-feat">
+    <li class="card rv" style="--i:0"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-tap"/></svg></span><h3>{{feat_1_title}}</h3><p>{{feat_1_body}}</p></li>
+    <li class="card rv" style="--i:1"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-chart"/></svg></span><h3>{{feat_2_title}}</h3><p>{{feat_2_body}}</p></li>
+    <li class="card rv" style="--i:2"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-receipt"/></svg></span><h3>{{feat_3_title}}</h3><p>{{feat_3_body}}</p></li>
+    <li class="card rv" style="--i:3"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg></span><h3>{{feat_4_title}}</h3><p>{{feat_4_body}}</p></li>
+    <li class="card rv" style="--i:4"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg></span><h3>{{feat_5_title}}</h3><p>{{feat_5_body}}</p></li>
+  </ul>
+</div></section>
 
-<!-- ═══════════════ LANGUAGES ═══════════════ -->
-<section class="languages" id="languages">
-  <div class="wrap">
-    <div class="copy center">
-      <p class="eyebrow">{{lang_eyebrow}}</p>
-      <h2>{{lang_title}}</h2>
-      <p>{{lang_body}}</p>
-    </div>
-    <div class="specimen">
-      <div><span class="word" lang="ar" dir="rtl">ادفع</span><span class="name">{{lang_darija}}</span></div>
-      <div><span class="word tifinagh" lang="zgh" dir="ltr">ⵙⵍⵎⴷ</span><span class="name">{{lang_amazigh}}</span></div>
-      <div><span class="word" lang="fr" dir="ltr">Payer</span><span class="name">{{lang_french}}</span></div>
-      <div><span class="word" lang="en" dir="ltr">Pay</span><span class="name">{{lang_english}}</span></div>
-    </div>
+<!-- ═══════════════ CREDIT (orange) ═══════════════ -->
+<section class="sec credit" id="credit"><div class="wrap"><div class="credit-in">
+  <div class="credit-text rv">
+    <p class="eyebrow">{{credit_eyebrow}}</p><h2>{{credit_title}}</h2><p class="lede">{{credit_body}}</p>
+    <ul class="cpoints">
+      <li><svg class="ic" aria-hidden="true"><use href="#i-book"/></svg><span>{{credit_p1}}</span></li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>{{credit_p2}}</span></li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-sms"/></svg><span>{{credit_p3}}</span></li>
+    </ul>
   </div>
-</section>
-
-<!-- ═══════════════ PRICING ═══════════════ -->
-<section class="pricing" id="pricing">
-  <div class="wrap">
-    <div class="copy center">
-      <p class="eyebrow">{{pricing_eyebrow}}</p>
-      <h2>{{pricing_title}}</h2>
-    </div>
-    <div class="plan">
-      <p class="price"><span class="num"><bdi>49</bdi></span><span class="unit">{{price_cur}} {{per_month}}</span></p>
-      <p class="rule">{{pricing_free_rule}}</p>
-      <p class="how">{{pricing_how}}</p>
-      <h3>{{included_title}}</h3>
-      <ul class="included">
-        <li>{{inc_1}}</li>
-        <li>{{inc_2}}</li>
-        <li>{{inc_3}}</li>
-        <li>{{inc_4}}</li>
-        <li>{{inc_5}}</li>
-        <li>{{inc_6}}</li>
-      </ul>
-      <a class="btn" href="#contact">{{cta_contact}}</a>
-    </div>
+  <div class="carnet rv static" aria-hidden="true" data-paid="{{app_paid}}">
+    <div class="cn-rings"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="cn-head"><span>{{app_credit}} · {{app_total}}</span><b><span data-total>842.50</span> <i>{{app_cur}}</i></b></div>
+    <ul>
+      <li style="--i:0"><span class="cn-av">{{cn_1_initial}}</span><span class="cn-who"><b>{{cn_1_name}}</b><small data-note="{{cn_1_note}}">{{cn_1_note}}</small></span><em data-bal="86.00">86.00</em></li>
+      <li style="--i:1"><span class="cn-av">{{cn_2_initial}}</span><span class="cn-who"><b>{{cn_2_name}}</b><small data-note="{{cn_2_note}}">{{cn_2_note}}</small></span><em data-bal="240.50">240.50</em></li>
+      <li style="--i:2"><span class="cn-av">{{cn_3_initial}}</span><span class="cn-who"><b>{{cn_3_name}}</b><small data-note="{{cn_3_note}}">{{cn_3_note}}</small></span><em data-bal="55.00">55.00</em></li>
+      <li style="--i:3"><span class="cn-av">{{cn_4_initial}}</span><span class="cn-who"><b>{{cn_4_name}}</b><small data-note="{{cn_4_note}}">{{cn_4_note}}</small></span><em data-bal="461.00">461.00</em></li>
+    </ul>
+    <div class="cn-sms"><svg class="ic" aria-hidden="true"><use href="#i-sms"/></svg><span>{{app_sms}}</span></div>
   </div>
-</section>
+</div></div></section>
 
-<!-- ═══════════════ CONTACT ═══════════════
+<!-- ═══════════════ WHO IT IS FOR ═══════════════ -->
+<section class="sec who" id="who"><div class="wrap">
+  <header class="sec-head rv"><p class="eyebrow">{{who_eyebrow}}</p><h2>{{who_title}}</h2></header>
+  <ul class="grid-who">
+    <li class="card rv" style="--i:0"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-shop"/></svg></span><h3>{{who_1}}</h3></li>
+    <li class="card rv" style="--i:1"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-cup"/></svg></span><h3>{{who_2}}</h3></li>
+    <li class="card rv" style="--i:2"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-basket"/></svg></span><h3>{{who_3}}</h3></li>
+    <li class="card rv" style="--i:3"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-taxi"/></svg></span><h3>{{who_4}}</h3></li>
+    <li class="card rv" style="--i:4"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-doctor"/></svg></span><h3>{{who_5}}</h3></li>
+    <li class="card rv" style="--i:5"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-wrench"/></svg></span><h3>{{who_6}}</h3><p>{{who_6_sub}}</p></li>
+  </ul>
+</div></section>
+
+<!-- ═══════════════ PREMIUM (gold) ═══════════════ -->
+<section class="sec premium" id="pricing"><div class="wrap"><div class="prem-card rv">
+  <div class="shimmer" aria-hidden="true"></div>
+  <div class="price-main">
+    <p class="eyebrow"><span class="vglyph" data-own="0"><svg class="star" viewBox="-640 -640 1280 1280" aria-hidden="true"><g><g class="blade"><use href="#ip-blade"/></g></g><g transform="rotate(90)"><g class="blade"><use href="#ip-blade"/></g></g><g transform="rotate(180)"><g class="blade"><use href="#ip-blade"/></g></g><g transform="rotate(270)"><g class="blade"><use href="#ip-blade"/></g></g></svg></span>{{premium_eyebrow}}</p>
+    <h2>{{premium_title}}</h2>
+    <p class="price"><b data-count="49">49</b><span>{{price_cur}} <small>{{per_month}}</small></span></p>
+    <p class="nodevice"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg><span><b>{{nodevice}}</b> {{nodevice_sub}}</span></p>
+    <p class="rule">{{pricing_rule}}</p><p class="rule-how">{{pricing_how}}</p>
+    <a class="btn btn-gold" href="#join" data-wait data-thread="242,205,115"><span>{{cta_waitlist}}</span><svg class="ic ar" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+  </div>
+  <div class="price-inc">
+    <h3>{{included_title}}</h3>
+    <ul>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>{{inc_1}}</span></li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>{{inc_2}}</span></li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>{{inc_3}}</span></li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>{{inc_4}}</span></li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>{{inc_5}}</span></li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>{{inc_6}}</span></li>
+    </ul>
+  </div>
+</div></div></section>
+
+<!-- ═══════════════ PARTNERS ═══════════════
+     B l'7arf: ItriPay ma-3endouch l'agrément w kayqelleb 3la partenaire. -->
+<section class="sec partners" id="partners"><div class="wrap"><div class="partners-in rv">
+  <div>
+    <p class="eyebrow">{{partners_eyebrow}}</p><h2>{{partners_title}}</h2><p class="lede">{{partners_body}}</p>
+    <a class="btn btn-light" href="#join" data-mode="contact"><span>{{partners_cta}}</span><svg class="ic ar" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+  </div>
+  <ul class="plist">
+    <li><span class="vglyph" data-own="0"><svg class="star" viewBox="-640 -640 1280 1280" aria-hidden="true"><g><g class="blade b0"><use href="#ip-blade"/></g></g><g transform="rotate(90)"><g class="blade b1"><use href="#ip-blade"/></g></g><g transform="rotate(180)"><g class="blade b2"><use href="#ip-blade"/></g></g><g transform="rotate(270)"><g class="blade b3"><use href="#ip-blade"/></g></g></svg></span><span>{{partners_p1}}</span></li>
+    <li><span class="vglyph" data-own="1"><svg class="star" viewBox="-640 -640 1280 1280" aria-hidden="true"><g><g class="blade b0"><use href="#ip-blade"/></g></g><g transform="rotate(90)"><g class="blade b1"><use href="#ip-blade"/></g></g><g transform="rotate(180)"><g class="blade b2"><use href="#ip-blade"/></g></g><g transform="rotate(270)"><g class="blade b3"><use href="#ip-blade"/></g></g></svg></span><span>{{partners_p2}}</span></li>
+    <li><span class="vglyph" data-own="2"><svg class="star" viewBox="-640 -640 1280 1280" aria-hidden="true"><g><g class="blade b0"><use href="#ip-blade"/></g></g><g transform="rotate(90)"><g class="blade b1"><use href="#ip-blade"/></g></g><g transform="rotate(180)"><g class="blade b2"><use href="#ip-blade"/></g></g><g transform="rotate(270)"><g class="blade b3"><use href="#ip-blade"/></g></g></svg></span><span>{{partners_p3}}</span></li>
+  </ul>
+</div></div></section>
+
+<!-- ═══════════════ THE NAME ═══════════════ -->
+<section class="sec name" id="name"><div class="wrap"><div class="name-in rv">
+  <div class="name-star"><svg class="star" viewBox="-640 -640 1280 1280" aria-hidden="true"><g><g class="blade"><use href="#ip-blade"/></g></g><g transform="rotate(90)"><g class="blade"><use href="#ip-blade"/></g></g><g transform="rotate(180)"><g class="blade"><use href="#ip-blade"/></g></g><g transform="rotate(270)"><g class="blade"><use href="#ip-blade"/></g></g></svg><span class="tifinagh" lang="zgh" aria-hidden="true">ⵉⵜⵔⵉ</span></div>
+  <div>
+    <p class="eyebrow">{{name_eyebrow}}</p><h2>{{name_title}}</h2><p class="lede">{{name_body}}</p><p class="name-foot">{{name_foot}}</p>
+    <ul class="slogan on-light"><li><button type="button" class="vtrig sl on" data-v="0">{{v1_name}}</button></li><li><button type="button" class="vtrig sl" data-v="1">{{v2_name}}</button></li><li><button type="button" class="vtrig sl" data-v="2">{{v3_name}}</button></li><li><button type="button" class="vtrig sl" data-v="3">{{v4_name}}</button></li></ul>
+  </div>
+</div></div></section>
+
+<!-- ═══════════════ FAQ ═══════════════ -->
+<section class="sec faq" id="faq"><div class="wrap">
+  <header class="sec-head rv"><p class="eyebrow">{{faq_eyebrow}}</p><h2>{{faq_title}}</h2></header>
+  <div class="faq-list">
+    <details class="rv" style="--i:0"><summary><span>{{faq_1_q}}</span><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>{{faq_1_a}}</p></details>
+    <details class="rv" style="--i:1"><summary><span>{{faq_2_q}}</span><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>{{faq_2_a}}</p></details>
+    <details class="rv" style="--i:2"><summary><span>{{faq_3_q}}</span><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>{{faq_3_a}}</p></details>
+    <details class="rv" style="--i:3"><summary><span>{{faq_4_q}}</span><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>{{faq_4_a}}</p></details>
+    <details class="rv" style="--i:4"><summary><span>{{faq_5_q}}</span><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>{{faq_5_a}}</p></details>
+    <details class="rv" style="--i:5"><summary><span>{{faq_6_q}}</span><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>{{faq_6_a}}</p></details>
+  </div>
+</div></section>
+
+<!-- ═══════════════ WAITLIST AND CONTACT ═══════════════
      Web3Forms. L'access_key 3lani b l'tasmim (docs.web3forms.com FAQ: "Access
-     key is public"); howa alias dyal l'email, machi secret. Bla JS: POST
-     3adi, w Web3Forms kayredirecti l /{{lang}}/sent/ (nfs l'domaine: l'free
-     plan kay9bel ghir hadi). B JS: fetch, w l'naja7 wla l'khata2 kaybano
-     f blasthom bla ma ytbeddel l'page. L'email kayb9a f l'footer f l'joj
-     7alat. -->
-<section class="contact" id="contact">
-  <div class="wrap grid">
-    <div class="copy">
-      <p class="eyebrow">{{contact_eyebrow}}</p>
-      <h2>{{contact_title}}</h2>
-      <p>{{contact_body}}</p>
-      <p class="contact-alt">{{contact_alt}} <a href="mailto:{{contact_email}}">{{contact_email}}</a></p>
+     key is public"); howa alias dyal l'email, machi secret.
+     Bla JS: POST 3adi (l'navigateur kaytchecki name w email), w Web3Forms
+     kayredirecti l /{{lang}}/sent/ (nfs l'domaine: l'free plan kay9bel ghir
+     hadi). L'subject 3am, w "intent" (waitlist / contact) kayban f l'email.
+     B JS: fetch, l'subject 3la 7sab l'mode, w l'7alat kaybano f blasthom:
+     sending, invalid, rejected, unknown, w l'naja7. -->
+<section class="sec join" id="join"><div class="wrap"><div class="join-in">
+  <div class="join-text rv">
+    <p class="eyebrow">{{join_eyebrow}}</p><h2>{{join_title}}</h2><p class="lede">{{join_body}}</p>
+    <p class="alt">{{join_alt}} <a href="mailto:{{contact_email}}">{{contact_email}}</a></p>
+  </div>
+  <div class="form-box rv">
+    <form class="form" id="join-form" action="{{form_endpoint}}" method="POST"
+      data-send-waitlist="{{form_send_waitlist}}" data-send-contact="{{form_send_contact}}"
+      data-subject-waitlist="{{form_subject_waitlist}}" data-subject-contact="{{form_subject_contact}}"
+      data-sending="{{form_sending}}" data-invalid="{{form_invalid}}" data-invalid-msg="{{form_invalid_msg}}"
+      data-rejected="{{form_rejected}}" data-unknown="{{form_unknown}}">
+      <input type="hidden" name="access_key" value="{{form_access_key}}">
+      <input type="hidden" name="subject" value="{{form_subject}}">
+      <input type="hidden" name="from_name" value="ItriPay website">
+      <input type="hidden" name="redirect" value="{{base_url}}/{{lang}}/sent/">
+      <!-- Honeypot: l'bots kay3emmro kolchi; l'nas ma-kaychoufouhch. -->
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <fieldset class="seg"><legend class="sr">{{form_mode_label}}</legend>
+        <label><input type="radio" name="intent" value="waitlist" checked><span>{{form_mode_waitlist}}</span></label><label><input type="radio" name="intent" value="contact"><span>{{form_mode_contact}}</span></label>
+      </fieldset>
+      <label for="f-name">{{form_name}}</label><input id="f-name" name="name" autocomplete="name" maxlength="120" required>
+      <label for="f-email">{{form_email}}</label><input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="200" dir="ltr" required>
+      <label for="f-msg">{{form_message}} <small data-opt>({{form_optional}})</small></label><textarea id="f-msg" name="message" rows="4" maxlength="4000"></textarea>
+      <button class="btn btn-primary" type="submit" data-wait><span data-send>{{form_send_waitlist}}</span><svg class="ic ar" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      <p class="form-status" role="status" aria-live="polite"></p>
+    </form>
+    <div class="form-done" data-done="waitlist" hidden tabindex="-1">
+      <p class="chip"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>{{sent_chip}}</p>
+      <h3>{{done_waitlist_title}}</h3><p>{{done_waitlist_body}}</p>
     </div>
-    <div class="media">
-      <form class="form" action="{{form_endpoint}}" method="POST" id="contact-form" novalidate>
-        <input type="hidden" name="access_key" value="{{form_access_key}}">
-        <input type="hidden" name="subject" value="{{form_subject}}">
-        <input type="hidden" name="from_name" value="Payna website">
-        <input type="hidden" name="redirect" value="{{base_url}}/{{lang}}/sent/">
-        <!-- Honeypot: l'bots kay3emmro kolchi; l'nas ma-kaychoufouhch. -->
-        <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-
-        <div class="field">
-          <label for="f-name">{{form_name}}</label>
-          <input id="f-name" name="name" type="text" required autocomplete="name" maxlength="120">
-        </div>
-        <div class="field">
-          <label for="f-email">{{form_email}}</label>
-          <input id="f-email" name="email" type="email" required autocomplete="email" maxlength="200" dir="ltr">
-        </div>
-        <div class="field">
-          <label for="f-message">{{form_message}}</label>
-          <textarea id="f-message" name="message" required rows="5" maxlength="4000"></textarea>
-        </div>
-
-        <p class="form-status" id="form-status" role="status" aria-live="polite" hidden></p>
-
-        <button class="btn" type="submit" id="form-submit">{{form_send}}</button>
-      </form>
-
-      <div class="form-done" id="form-done" hidden tabindex="-1">
-        <p class="chip ok">{{sent_chip}}</p>
-        <h3>{{sent_title}}</h3>
-        <p>{{sent_body}}</p>
-      </div>
+    <div class="form-done" data-done="contact" hidden tabindex="-1">
+      <p class="chip"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>{{sent_chip}}</p>
+      <h3>{{done_contact_title}}</h3><p>{{done_contact_body}}</p>
     </div>
   </div>
-</section>
+</div></div></section>
 
 </main>
 
-<script>
-// Progressive enhancement bark. Bla JS l'form kaykhdem b7al form 3adi
-// (POST + redirect l /sent/). B JS: nb9aw f l'page, w kanwerriw l'naja7
-// wla l'khata2 f blasthom.
-//
-// ⚠ Ghiyab l'jawab machi jawab. Timeout wla network error ma-kay3niwch
-// "ma-tsiftatch": kay3niw "ma-3refnach". L'klam dyal l'khata2 kay9oul
-// hadchi b l'7arf w kay3ti l'email — ma-kay9oulch "failed".
-(function () {
-  var form = document.getElementById('contact-form');
-  var status = document.getElementById('form-status');
-  var done = document.getElementById('form-done');
-  var button = document.getElementById('form-submit');
-  if (!form || !window.fetch || !window.FormData) return;
-
-  var t = {
-    sending: {{form_sending_js}},
-    invalid: {{form_invalid_js}},
-    rejected: {{form_rejected_js}},
-    unknown: {{form_unknown_js}}
-  };
-
-  function show(kind, text) {
-    status.hidden = false;
-    status.className = 'form-status ' + kind;
-    status.textContent = text;
-  }
-
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    if (!form.checkValidity()) {
-      show('err', t.invalid);
-      form.reportValidity();
-      return;
-    }
-    var data = new FormData(form);
-    data.delete('redirect'); // b JS ma-kaynch redirect: l'jawab JSON
-    var body = {};
-    data.forEach(function (v, k) { body[k] = v; });
-
-    button.disabled = true;
-    show('wait', t.sending);
-
-    var controller = window.AbortController ? new AbortController() : null;
-    var timer = controller && setTimeout(function () { controller.abort(); }, 15000);
-
-    fetch(form.action, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(body),
-      signal: controller ? controller.signal : undefined
-    }).then(function (res) {
-      return res.json().then(function (json) { return { ok: res.ok, json: json }; },
-                             function () { return { ok: res.ok, json: null }; });
-    }).then(function (r) {
-      if (r.ok && r.json && r.json.success) {
-        form.hidden = true;
-        done.hidden = false;
-        done.focus();
-      } else {
-        // L'server jaweb b "la": hadi refus 7a9i9i, machi ghiyab.
-        show('err', t.rejected);
-        button.disabled = false;
-      }
-    }).catch(function () {
-      // Timeout, network, CORS: ma-3refnach. Ma-n9oulouch "failed".
-      show('err', t.unknown);
-      button.disabled = false;
-    }).then(function () { if (timer) clearTimeout(timer); });
-  });
-})();
-</script>
-
-<footer class="footer">
-  <div class="wrap footer-row">
-    <a class="brand" href="/{{lang}}/">
-      <img src="/assets/mark-white.png" alt="" width="46" height="36">
-      <span>Payna</span>
-    </a>
-    <p class="footer-contact"><span>{{footer_contact_label}}</span> <a href="mailto:{{contact_email}}">{{contact_email}}</a></p>
-    <nav class="lang" aria-label="{{lang_switch_label}}">
-      <a href="/en/" hreflang="en" lang="en">English</a>
-      <a href="/fr/" hreflang="fr" lang="fr">Français</a>
-      <a href="/ar/" hreflang="ar" lang="ar">العربية</a>
-    </nav>
+<footer class="site-foot"><div class="wrap">
+  <div class="foot-top">
+    <div class="brand"><svg class="star" viewBox="-640 -640 1280 1280" aria-hidden="true"><g><g class="blade"><use href="#ip-blade"/></g></g><g transform="rotate(90)"><g class="blade"><use href="#ip-blade"/></g></g><g transform="rotate(180)"><g class="blade"><use href="#ip-blade"/></g></g><g transform="rotate(270)"><g class="blade"><use href="#ip-blade"/></g></g></svg><span class="wordmark">ItriPay</span></div>
+    <p class="foot-tag">{{footer_tag}}</p>
+    <ul class="slogan foot-slogan"><li><button type="button" class="vtrig sl on" data-v="0">{{v1_name}}</button></li><li><button type="button" class="vtrig sl" data-v="1">{{v2_name}}</button></li><li><button type="button" class="vtrig sl" data-v="2">{{v3_name}}</button></li><li><button type="button" class="vtrig sl" data-v="3">{{v4_name}}</button></li></ul>
   </div>
-  <div class="wrap"><p class="fine">{{footer_note}}</p></div>
-</footer>
+  <div class="foot-bot">
+    <nav aria-label="{{nav_footer_label}}"><a href="#how">{{nav_how}}</a><a href="#features">{{nav_features}}</a><a href="#credit">{{nav_credit}}</a><a href="#pricing">{{nav_pricing}}</a><a href="#faq">{{nav_faq}}</a></nav>
+    <p>{{footer_contact_label}}: <a href="mailto:{{contact_email}}">{{contact_email}}</a></p>
+    <div class="lang" role="group" aria-label="{{lang_switch_label}}"><a href="/en/" hreflang="en" lang="en"{{current_en_html}}>EN</a><a href="/fr/" hreflang="fr" lang="fr"{{current_fr_html}}>FR</a><a href="/ar/" hreflang="ar" lang="ar"{{current_ar_html}}>ع</a></div>
+    <p class="copy">{{footer_note}}</p>
+  </div>
+</div></footer>
 </body>
 </html>

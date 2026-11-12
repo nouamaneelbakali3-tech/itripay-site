@@ -160,18 +160,30 @@ phase B wires it to the real Web3Forms endpoint with the existing access key and
 
 ---
 
+## Phase B (done, 2026-11-12, branch `redesign-c`)
+
+C is built into the real site: `src/template.html`, `src/sent.html`, `src/strings/{en,fr,ar}.json`, `site.css`,
+`site.js` (behaviour only — the markup and words are static HTML per language), fonts as WOFF in `assets/fonts/`
+(`tool/make_fonts.dart`), favicons / og image / marks from `itripay-logo.png` (`tool/make_logo.dart`), Payna →
+ItriPay everywhere except `base_url`. `.vercelignore` keeps `mockups/`, `src/`, `tool/` and `assets/source/` out of
+the deployment. Checks and section screenshots: `mockups/capture-site.dart` (`shots`, `checks`, `perf`) driving
+headless Edge over the DevTools protocol (`mockups/edge-cdp.ps1`); the screenshots are in `mockups/shots/site/`.
+
+Changes against the prototype: the build's forbidden-words list now allows "agréé" / "بنك" (the copy says the
+*partner* is licensed and mentions the bank) and forbids the claim instead ("nous sommes agréés", "we are licensed",
+"نحن مرخَّص…"); the form is live (Web3Forms, two modes, subject per mode, `intent` field); the "Talk to us about
+partnering" button switches the form to Contact.
+
 ## What is left
 
-1. **Build C into `src/`** — `src/template.html`, all strings into `src/strings/{en,fr,ar}.json` (every key in all
-   three), `site.css`, the script, the fonts (WOFF2), then `dart run tool/build.dart`. Rename Payna → ItriPay
-   everywhere (meta, titles, `sent/` pages, README, form subject, favicons and marks regenerated from
-   `itripay-logo.png` via `tool/make_logo.dart`). Keep base_url `payna-ma.vercel.app`.
-2. **A real scroll test** — in a normal browser window, scroll the whole page with the mouse standing still and
-   moving: threads on every waitlist button, header shadow, reveals, count-up, carnet loop. (In this session the
-   preview pane was hidden, so it never fired native scroll events; that path was only checked by firing the event by hand.)
-3. **A phone test** — on a real, cheap Android phone: hero fits the first screen with the browser bars showing,
+1. **WOFF2** — needs a Brotli encoder (`pip install fonttools brotli`); none on this machine. WOFF2 plus subsetting
+   would roughly halve the 380 KB of fonts again.
+2. **A phone test** — on a real, cheap Android phone: hero fits the first screen with the browser bars showing,
    smoothness of the sky and star, the soft pulse on waitlist buttons, Arabic layout.
-4. Also open: verify `contact@itripay.com` receives mail; the app still says `support@`.
+3. **A real form submission** from the deployed preview (one per mode) to confirm Web3Forms delivers with the new
+   subjects and sender name; and verify `contact@itripay.com` receives mail (the Web3Forms key still delivers to
+   the inbox it was created for). The app still says `support@`.
+4. **Merge into `main`** when approved — Vercel deploys `main`.
 
 ## Files in `mockups/`
 

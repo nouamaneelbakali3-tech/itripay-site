@@ -53,12 +53,20 @@ final RegExp placeholder = RegExp(r'\{\{([a-z0-9_]+)\}\}');
 /// t9der tdekhkhel l'claim mn l'jiha: "sans contact" mzyan, "agréé" la.
 /// Had l'lista hna w machi f README bach l'build ytih, machi bach chi
 /// wa7ed y9ra l'qa3ida.
+///
+/// ItriPay: l'site kay9oul b l'7arf belli ma-3endouch l'agrément w kayqelleb
+/// 3la partenaire "agréé" / "مرخَّص", w kayhder 3la "l'bank" dyal l'TPE.
+/// Donc "agréé" w "بنك" bou7dhom wellaw msmou7in; li mamnou3 howa l'claim:
+/// "ItriPay est agréé", "nous sommes agréés", "we are licensed", "نحن مرخَّصون".
+/// ("Nous ne sommes pas agréés" ma-kat-tchedch: "pas" bin l'joj.)
 final List<RegExp> forbidden = [
   RegExp(r'certif', caseSensitive: false), // certified / certifié
   RegExp(r'bank[- ]?approved', caseSensitive: false),
-  RegExp(r'approuvé|agréé|homologu', caseSensitive: false),
+  RegExp(r'approuvé|homologu|agréé par', caseSensitive: false),
   RegExp(r'\b(visa|mastercard|maestro|cmi)\b', caseSensitive: false),
-  RegExp(r'معتمد|مصرف|بنك|فيزا|ماستر'),
+  RegExp(r'(we are|itripay is) (a )?licensed', caseSensitive: false),
+  RegExp(r'(sommes|est|êtes) agréé', caseSensitive: false),
+  RegExp(r'معتمد|مصرف|فيزا|ماستر|(نحن|ItriPay) مرخَّص'),
 ];
 
 void main() {
@@ -88,7 +96,7 @@ void main() {
       failed = true;
       continue;
     }
-    final strings = {...config, ...langStrings};
+    final strings = {...config, ...langStrings, ..._derived(lang, langStrings)};
 
     for (final entry in langStrings.entries) {
       for (final rule in forbidden) {
@@ -109,7 +117,9 @@ void main() {
       failed = true;
       continue;
     }
-    final dead = strings.keys.toSet().difference(used);
+    final dead = strings.keys.toSet().difference(used)
+      ..removeAll(_derived(lang, langStrings).keys)
+      ..remove('hero_title'); // kaytqra mn _derived
     if (dead.isNotEmpty) {
       stdout.writeln('$path: ma-mst3emlinch (klam mayyet): '
           '${(dead.toList()..sort()).join(', ')}');
@@ -130,6 +140,28 @@ void main() {
     }
   }
   if (failed) exit(1);
+}
+
+/// L'keys li kaybnihom l'build, machi l'tarjama:
+///   current_<l>_html  ' aria-current="page"' f l'lougha dyal l'page, wla ''.
+///   hero_headline_html  l'hero_title, kol kelma f <span> dyalha (bach
+///                       ttle3 kelma b kelma), "\n" = ster jdid.
+///   hero_title_text     nfs l'3onwan f ster wa7ed (l'aria-label w <title>).
+Map<String, String> _derived(String lang, Map<String, String> s) {
+  final out = <String, String>{
+    for (final l in languages) 'current_${l}_html': l == lang ? ' aria-current="page"' : '',
+  };
+  final title = s['hero_title'];
+  if (title != null) {
+    var w = 0;
+    out['hero_headline_html'] = title.split('\n').map((line) {
+      final words = line.split(' ').map((word) =>
+          '<span class="w"><i style="--w:${w++}">${_escape(word)}</i></span>');
+      return '<span class="ln">${words.join(' ')}</span>';
+    }).join(' ');
+    out['hero_title_text'] = title.replaceAll('\n', ' ');
+  }
+  return out;
 }
 
 Map<String, String> _readJson(String path) =>

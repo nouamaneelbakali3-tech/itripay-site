@@ -3,10 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Payna — Your phone is the terminal</title>
-<meta name="description" content="Payna turns an ordinary Android phone into a payment terminal for Moroccan merchants — tap to get paid, a digital credit carnet with SMS reminders, and daily sales figures, in Darija, Amazigh, French and English, for 49 MAD a month.">
-<meta name="theme-color" content="#0D48BE">
+<title>ItriPay — Your phone is the terminal</title>
+<meta name="description" content="ItriPay is a SoftPOS payment solution: your phone becomes the payment terminal. A digital credit carnet, sales reports and four languages, for 49 MAD a month. Pre-launch: join the waitlist.">
+<meta name="theme-color" content="#1A63E6">
 
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
@@ -18,365 +19,281 @@
 <link rel="alternate" hreflang="x-default" href="https://payna-ma.vercel.app/en/">
 
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Payna">
-<meta property="og:title" content="Payna — Your phone is the terminal">
-<meta property="og:description" content="Payna turns an ordinary Android phone into a payment terminal for Moroccan merchants — tap to get paid, a digital credit carnet with SMS reminders, and daily sales figures, in Darija, Amazigh, French and English, for 49 MAD a month.">
+<meta property="og:site_name" content="ItriPay">
+<meta property="og:title" content="ItriPay — Your phone is the terminal">
+<meta property="og:description" content="ItriPay is a SoftPOS payment solution: your phone becomes the payment terminal. A digital credit carnet, sales reports and four languages, for 49 MAD a month. Pre-launch: join the waitlist.">
 <meta property="og:url" content="https://payna-ma.vercel.app/en/">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://payna-ma.vercel.app/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Noto+Sans+Tifinagh&display=swap">
+<link rel="preload" href="/assets/fonts/Poppins-ExtraBold.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/assets/fonts/Cairo-Regular.woff" as="font" type="font/woff" crossorigin>
 <link rel="stylesheet" href="/site.css">
+<script src="/site.js" defer></script>
 </head>
-<body data-lang="en">
-<a class="skip" href="#main">Skip to content</a>
+<body>
+<!-- L'sprite: l'blade dyal l'nejma (mrsoum mn assets/source/itripay-logo.png)
+     w l'icons. Kolchi kaystaamel <use href="#..."> bach l'path ma-yt3awedch. -->
+<svg class="sprite" aria-hidden="true"><defs>
+<g id="ip-blade"><path d="M0 -588 L119 -221 Q132 -171 94 -138 L34 -91 Q14 -76 22 -46 L-297 -298 L-176 -252 Q-116 -231 -98 -286 Z" fill="currentColor"/><path d="M0 -588 V-232 Q0 -176 -52 -172 Q-70 -171 -88 -181 L-297 -298 L-176 -252 Q-116 -231 -98 -286 Z" fill="rgba(4,18,56,.15)"/></g>
+<path id="ip-outline" pathLength="1" d="M0 -588 L119 -221 Q132 -171 94 -138 L34 -91 Q14 -76 22 -46 L-297 -298 L-176 -252 Q-116 -231 -98 -286 Z"/>
+<symbol id="i-tap" viewBox="0 0 24 24"><path d="M7 8.5a5 5 0 0 1 0 7M10.5 6a9 9 0 0 1 0 12M14 3.5a13 13 0 0 1 0 17"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5M9 7h7M9 11h5"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M5 20V11M11 20V4M17 20v-6M2.5 20h19"/></symbol>
+<symbol id="i-receipt" viewBox="0 0 24 24"><path d="M5 3v18l2.5-1.5L10 21l2-1.5 2 1.5 2.5-1.5L19 21V3l-2.5 1.5L14 3l-2 1.5L10 3 7.5 4.5z"/><path d="M9 9h6M9 13h6"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.2a6.5 6.5 0 0 1 3.5 5.8"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></symbol>
+<symbol id="i-shop" viewBox="0 0 24 24"><path d="M3 9l1.5-5h15L21 9M4.5 10.5V20h15v-9.5M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0M10 20v-5h4v5"/></symbol>
+<symbol id="i-cup" viewBox="0 0 24 24"><path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5zM17 10h1.5a2.5 2.5 0 0 1 0 5H17M7 3v3M11 3v3M15 3v3"/></symbol>
+<symbol id="i-basket" viewBox="0 0 24 24"><path d="M3 10h18l-1.6 9a2 2 0 0 1-2 1.6H6.6a2 2 0 0 1-2-1.6zM8 10l3-6M16 10l-3-6M9 14v3M15 14v3"/></symbol>
+<symbol id="i-taxi" viewBox="0 0 24 24"><path d="M5 17H3.5v-4.2l1.8-4.6A2 2 0 0 1 7.2 7h9.6a2 2 0 0 1 1.9 1.2l1.8 4.6V17H19M5 17v2M19 17v2M5 17h14M3.5 12.5h17"/><circle cx="7.5" cy="14.8" r=".9"/><circle cx="16.5" cy="14.8" r=".9"/><path d="M10 7V4.5h4V7"/></symbol>
+<symbol id="i-doctor" viewBox="0 0 24 24"><path d="M6 3v6a4 4 0 0 0 8 0V3M6 3H4.5M14 3h1.5M10 13v2.5a4.5 4.5 0 0 0 9 0V13"/><circle cx="19" cy="11" r="2"/></symbol>
+<symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.5 6.5a4 4 0 0 0 5.2 5.2l-8.8 8.8a2.1 2.1 0 0 1-3-3l8.8-8.8a4 4 0 0 0-2.2-2.2zM14.5 6.5l1.8 1.8M17 4l-2.5 2.5"/></symbol>
+<symbol id="i-device" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M7 20h10M12 16v4M7 9h4M7 12h7"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18h3"/></symbol>
+<symbol id="i-sms" viewBox="0 0 24 24"><path d="M4 5h16v11H9.5L4 20z"/><path d="M8 9h8M8 12h5"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+</defs></svg>
 
-<header class="nav">
-  <div class="wrap nav-row">
-    <a class="brand" href="/en/">
-      <img src="/assets/mark-blue.png" alt="" width="46" height="36">
-      <span>Payna</span>
-    </a>
-    <nav class="nav-links">
-      <a href="#pay">Pay</a>
-      <a href="#credit">Credit</a>
-      <a href="#analytics">Analytics</a>
-      <a href="#pricing">Pricing</a>
-    </nav>
-    <nav class="lang" aria-label="Language">
-      <a href="/en/" hreflang="en" lang="en">EN</a>
-      <a href="/fr/" hreflang="fr" lang="fr">FR</a>
-      <a href="/ar/" hreflang="ar" lang="ar">AR</a>
-    </nav>
+<a class="skip" href="#main">Skip to content</a>
+<div id="top-mark" aria-hidden="true"></div>
+
+<header class="site-head"><div class="wrap">
+  <div class="brand">
+    <button type="button" class="logo-spin" aria-label="Spin the star"><svg class="star draw" viewBox="-640 -640 1280 1280" aria-hidden="true"><g><g class="blade"><use class="b-body" href="#ip-blade"/><use class="b-line" href="#ip-outline"/></g></g><g transform="rotate(90)"><g class="blade"><use class="b-body" href="#ip-blade"/><use class="b-line" href="#ip-outline"/></g></g><g transform="rotate(180)"><g class="blade"><use class="b-body" href="#ip-blade"/><use class="b-line" href="#ip-outline"/></g></g><g transform="rotate(270)"><g class="blade"><use class="b-body" href="#ip-blade"/><use class="b-line" href="#ip-outline"/></g></g></svg></button>
+    <a href="#top" class="wordmark">ItriPay</a>
   </div>
-</header>
+  <nav class="nav" aria-label="Main">
+    <a href="#how">How it works</a><a href="#features">Features</a><a href="#credit">Credit</a><a href="#pricing">Premium</a><a href="#faq">FAQ</a>
+  </nav>
+  <div class="head-end">
+    <div class="lang" role="group" aria-label="Language"><a href="/en/" hreflang="en" lang="en" aria-current="page">EN</a><a href="/fr/" hreflang="fr" lang="fr">FR</a><a href="/ar/" hreflang="ar" lang="ar">ع</a></div>
+    <a class="btn btn-sm" href="#join" data-wait><span>Join the waitlist</span></a>
+  </div>
+</div></header>
 
 <main id="main">
 
-<!-- ═══════════════ HERO ═══════════════ -->
-<section class="hero">
-  <img class="watermark" src="/assets/watermark.png" alt="" aria-hidden="true" width="1200" height="944">
-  <div class="wrap grid">
-    <div class="copy">
-      <p class="wordmark">Payna</p>
-      <h1>Your phone is<br>the terminal.</h1>
-      <p class="lede">Payna turns an ordinary Android phone into a payment terminal for Moroccan merchants — tap to get paid, a digital credit carnet with SMS reminders, and daily sales figures, in Darija, Amazigh, French and English, for 49 MAD a month.</p>
-      <div class="cta">
-        <a class="btn" href="#contact">Talk to us</a>
-        <a class="btn ghost" href="#pricing">See pricing</a>
+<!-- ═══════════════ HERO ═══════════════
+     Shasha wa7da bdebt: l'3onwan, l'nass, joj boutonat, rb3 l'qiyam w l'nejma. -->
+<section class="hero" id="top">
+  <canvas class="sky" aria-hidden="true"></canvas><div class="aurora" aria-hidden="true"></div>
+  <div class="wrap hero-c">
+    <div class="hero-text">
+      <h1 class="headline" aria-label="Your phone is the terminal."><span aria-hidden="true"><span class="ln"><span class="w"><i style="--w:0">Your</i></span> <span class="w"><i style="--w:1">phone</i></span> <span class="w"><i style="--w:2">is</i></span></span> <span class="ln"><span class="w"><i style="--w:3">the</i></span> <span class="w"><i style="--w:4">terminal.</i></span></span></span></h1>
+      <p class="hero-sub up" style="--i:3">ItriPay is a SoftPOS payment solution: your phone becomes the payment terminal. It helps merchants and service providers accept digital payments more easily.</p>
+      <div class="hero-cta up" style="--i:4">
+        <a class="btn btn-primary" href="#join" data-wait><span>Join the waitlist</span><svg class="ic ar" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-ghost" href="#how"><span>See how it works</span><svg class="ic ar" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="pills up" style="--i:5">
+        <button type="button" class="vtrig pill on" data-v="0"><span class="vglyph" data-own="0"><svg class="star" viewBox="-640 -640 1280 1280" aria-hidden="true"><g><g class="blade b0"><use href="#ip-blade"/></g></g><g transform="rotate(90)"><g class="blade b1"><use href="#ip-blade"/></g></g><g transform="rotate(180)"><g class="blade b2"><use href="#ip-blade"/></g></g><g transform="rotate(270)"><g class="blade b3"><use href="#ip-blade"/></g></g></svg></span><span>Connection</span></button>
+        <button type="button" class="vtrig pill" data-v="1"><span class="vglyph" data-own="1"><svg class="star" viewBox="-640 -640 1280 1280" aria-hidden="true"><g><g class="blade b0"><use href="#ip-blade"/></g></g><g transform="rotate(90)"><g class="blade b1"><use href="#ip-blade"/></g></g><g transform="rotate(180)"><g class="blade b2"><use href="#ip-blade"/></g></g><g transform="rotate(270)"><g class="blade b3"><use href="#ip-blade"/></g></g></svg></span><span>Speed</span></button>
+        <button type="button" class="vtrig pill" data-v="2"><span class="vglyph" data-own="2"><svg class="star" viewBox="-640 -640 1280 1280" aria-hidden="true"><g><g class="blade b0"><use href="#ip-blade"/></g></g><g transform="rotate(90)"><g class="blade b1"><use href="#ip-blade"/></g></g><g transform="rotate(180)"><g class="blade b2"><use href="#ip-blade"/></g></g><g transform="rotate(270)"><g class="blade b3"><use href="#ip-blade"/></g></g></svg></span><span>Security</span></button>
+        <button type="button" class="vtrig pill" data-v="3"><span class="vglyph" data-own="3"><svg class="star" viewBox="-640 -640 1280 1280" aria-hidden="true"><g><g class="blade b0"><use href="#ip-blade"/></g></g><g transform="rotate(90)"><g class="blade b1"><use href="#ip-blade"/></g></g><g transform="rotate(180)"><g class="blade b2"><use href="#ip-blade"/></g></g><g transform="rotate(270)"><g class="blade b3"><use href="#ip-blade"/></g></g></svg></span><span>Innovation</span></button>
       </div>
     </div>
-    <div class="media">
-      <div class="media-box">
-        <article class="receipt" aria-label="Receipt">
-          <header>
-            <strong>Épicerie Al Amal</strong>
-            <span>Casablanca</span>
-          </header>
-          <p class="amount"><bdi>120.00</bdi> <small>DH</small></p>
-          <dl>
-            <div><dt>Date</dt><dd>16 Sep, 14:32</dd></div>
-            <div><dt>Method</dt><dd>Tap to pay</dd></div>
-            <div><dt>Ref.</dt><dd><bdi>PA-0417</bdi></dd></div>
-          </dl>
-          <p class="chip ok">Paid</p>
-          <footer>Thank you for your visit</footer>
-        </article>
-      </div>
+    <div class="stage up" style="--i:1">
+      <div class="bigstar"><div class="rot">
+        <svg class="star draw" viewBox="-640 -640 1280 1280" role="group" aria-label="The ItriPay star: four points, four values"><g><g class="blade vtrig on" data-v="0" role="button" tabindex="0" aria-label="Connection" data-name="Connection" data-line="Merchant and customer, one tap apart."><use class="b-body" href="#ip-blade"/><use class="b-line" href="#ip-outline"/></g></g><g transform="rotate(90)"><g class="blade vtrig" data-v="1" role="button" tabindex="0" aria-label="Speed" data-name="Speed" data-line="Enter the amount. Hand over the phone. Done."><use class="b-body" href="#ip-blade"/><use class="b-line" href="#ip-outline"/></g></g><g transform="rotate(180)"><g class="blade vtrig" data-v="2" role="button" tabindex="0" aria-label="Security" data-name="Security" data-line="The customer sees the amount before they tap."><use class="b-body" href="#ip-blade"/><use class="b-line" href="#ip-outline"/></g></g><g transform="rotate(270)"><g class="blade vtrig" data-v="3" role="button" tabindex="0" aria-label="Innovation" data-name="Innovation" data-line="The carnet, without the carnet."><use class="b-body" href="#ip-blade"/><use class="b-line" href="#ip-outline"/></g></g></svg>
+      </div></div>
+      <p class="vcap" aria-live="polite"><b data-vtext="name">Connection</b><span data-vtext="line">Merchant and customer, one tap apart.</span></p>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════ PAY ═══════════════ -->
-<section class="feature" id="pay">
-  <div class="wrap grid">
-    <div class="copy">
-      <p class="eyebrow">Pay</p>
-      <h2>Enter the amount. Hand over the phone. Done.</h2>
-      <p>No terminal to rent, no box on the counter. The phone the merchant already owns takes the payment, and the customer sees the amount before they tap.</p>
-      <ul class="points">
-        <li>A receipt every time — printed, or shared on WhatsApp.</li>
-        <li>Refunds, in full or in half, from the transaction list.</li>
-        <li>Every transaction kept: what was paid, when, and what came back.</li>
-      </ul>
-    </div>
-    <div class="media">
-      <div class="media-box">
-        <div class="keypad" aria-hidden="true">
-          <div class="kp-amount">
-            <span class="kp-label">Amount</span>
-            <span class="kp-value"><bdi>120.00</bdi></span>
-            <span class="kp-cur">DH</span>
-          </div>
-          <div class="kp-grid">
-            <span>1</span><span>2</span><span>3</span>
-            <span>4</span><span>5</span><span>6</span>
-            <span>7</span><span>8</span><span>9</span>
-            <span>.</span><span>0</span><span class="kp-del" title="Delete">⌫</span>
-          </div>
-          <div class="kp-btn">Pay now</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- ═══════════════ PROBLEM ═══════════════ -->
+<section class="sec problem first" id="problem"><div class="wrap">
+  <header class="sec-head rv"><p class="eyebrow">The problem</p><h2>Your customer has a card. You only take cash.</h2><p class="lede">So the sale walks away. A card machine means a monthly fee and paperwork with the bank. And the paper credit book gets lost, along with the debts in it.</p></header>
+  <ul class="grid-3">
+    <li class="card rv" style="--i:0"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-device"/></svg></span><h3>The box on the counter</h3><p>A payment terminal is a second device to rent, charge and keep track of.</p></li>
+    <li class="card rv" style="--i:1"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-book"/></svg></span><h3>The paper carnet</h3><p>Who owes what lives in a notebook that can be lost, and nobody adds up the total.</p></li>
+    <li class="card rv" style="--i:2"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-chart"/></svg></span><h3>The numbers nobody has</h3><p>At closing time, the day’s sales are a guess.</p></li>
+  </ul>
+</div></section>
 
-<!-- ═══════════════ CREDIT ═══════════════ -->
-<section class="feature credit" id="credit">
-  <div class="wrap grid flip">
-    <div class="copy">
-      <p class="eyebrow">Credit</p>
-      <h2>The carnet, without the carnet.</h2>
-      <p>Every neighbourhood shop keeps a notebook of who owes what. Payna keeps it for you: each customer, each debt, each payment against it — and the total, always current.</p>
-      <ul class="points">
-        <li>One list, every balance, never out of date.</li>
-        <li>Register a payment against a debt in two taps.</li>
-        <li>SMS reminders — sent when you decide, not by themselves.</li>
-      </ul>
-    </div>
-    <div class="media">
-      <div class="media-box">
-        <div class="ledger" aria-hidden="true">
-          <header>
-            <span class="ledger-title">Credit</span>
-            <span class="ledger-total">Total <b><bdi>1 240.00</bdi> DH</b></span>
-          </header>
-          <div class="ledger-head"><span>Customer</span><span>Balance</span></div>
-          <ul class="rows">
-            <li><span class="who"><b>Y. Bennani</b><small>Bread, milk · today</small></span><span class="bal"><bdi>320.00</bdi></span></li>
-            <li><span class="who"><b>F. Ouazzani</b><small>Paid 150.00 · yesterday</small></span><span class="bal"><bdi>180.00</bdi></span></li>
-            <li><span class="who"><b>K. Idrissi</b><small>Gas bottle · 12 Sep</small></span><span class="bal"><bdi>540.00</bdi></span></li>
-            <li><span class="who"><b>S. Tazi</b><small>Groceries · 9 Sep</small></span><span class="bal"><bdi>200.00</bdi></span></li>
-          </ul>
-          <p class="chip warm">SMS reminder sent</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- ═══════════════ HOW IT WORKS ═══════════════ -->
+<section class="sec how" id="how"><div class="wrap">
+  <header class="sec-head rv"><p class="eyebrow">How it works</p><h2>Three steps. One phone.</h2></header>
+  <ol class="steps">
+    <li class="rv" style="--i:0"><span class="step-n">1</span><h3>Enter the amount</h3><p>Type the price on the keypad, the way you would on a calculator.</p></li>
+    <li class="rv" style="--i:1"><span class="step-n">2</span><h3>Hand over the phone</h3><p>The customer sees the amount and taps a card or phone on yours.</p></li>
+    <li class="rv" style="--i:2"><span class="step-n">3</span><h3>Done</h3><p>A receipt, printed or shared on WhatsApp. The sale is already in your records.</p></li>
+  </ol>
+</div></section>
 
-<!-- ═══════════════ ANALYTICS ═══════════════ -->
-<section class="feature analytics" id="analytics">
-  <div class="wrap grid">
-    <div class="copy">
-      <p class="eyebrow">Analytics</p>
-      <h2>The numbers, without the spreadsheet.</h2>
-      <p>Today, this week, this month — the totals a merchant actually asks for, on the screen they already have open.</p>
-      <ul class="points">
-        <li>Daily, monthly and yearly reports.</li>
-        <li>Export to PDF or Excel.</li>
-        <li>Payments and refunds counted separately, so the net is the net.</li>
-      </ul>
-    </div>
-    <div class="media">
-      <div class="media-box">
-        <div class="stats" aria-hidden="true">
-          <div class="tiles">
-            <div class="tile"><span>Today</span><b><bdi>1 320</bdi> DH</b></div>
-            <div class="tile"><span>This week</span><b><bdi>8 745</bdi> DH</b></div>
-            <div class="tile"><span>This month</span><b><bdi>31 060</bdi> DH</b></div>
-          </div>
-          <div class="chart">
-            <p class="chart-label">Last 7 days</p>
-            <div class="bars">
-              <div class="bar" style="--v:0.58"><i></i><span>Mon</span></div>
-              <div class="bar" style="--v:0.71"><i></i><span>Tue</span></div>
-              <div class="bar" style="--v:0.46"><i></i><span>Wed</span></div>
-              <div class="bar" style="--v:0.83"><i></i><span>Thu</span></div>
-              <div class="bar" style="--v:1"><i></i><span>Fri</span></div>
-              <div class="bar" style="--v:0.92"><i></i><span>Sat</span></div>
-              <div class="bar today" style="--v:0.64"><i></i><span>Sun</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- ═══════════════ FEATURES ═══════════════ -->
+<section class="sec features" id="features"><div class="wrap">
+  <header class="sec-head rv"><p class="eyebrow">Features</p><h2>Everything a shop needs. Nothing it doesn’t.</h2></header>
+  <ul class="grid-feat">
+    <li class="card rv" style="--i:0"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-tap"/></svg></span><h3>Tap to pay</h3><p>The phone the merchant already owns takes the payment.</p></li>
+    <li class="card rv" style="--i:1"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-chart"/></svg></span><h3>Sales analytics</h3><p>Daily, monthly and yearly reports. Export to PDF or Excel.</p></li>
+    <li class="card rv" style="--i:2"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-receipt"/></svg></span><h3>Your own receipt</h3><p>Your logo and shop name, printed or shared on WhatsApp.</p></li>
+    <li class="card rv" style="--i:3"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg></span><h3>Staff accounts</h3><p>Add employees and choose what each one may do.</p></li>
+    <li class="card rv" style="--i:4"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg></span><h3>Four languages</h3><p>Darija, Tamazight, French and English, chosen on the first screen.</p></li>
+  </ul>
+</div></section>
 
-<!-- ═══════════════ LANGUAGES ═══════════════ -->
-<section class="languages" id="languages">
-  <div class="wrap">
-    <div class="copy center">
-      <p class="eyebrow">Languages</p>
-      <h2>It speaks the merchant's language.</h2>
-      <p>Darija, Amazigh, French and English — chosen on the first screen, in the merchant's own words, not a translation of someone else's app.</p>
-    </div>
-    <div class="specimen">
-      <div><span class="word" lang="ar" dir="rtl">ادفع</span><span class="name">Darija</span></div>
-      <div><span class="word tifinagh" lang="zgh" dir="ltr">ⵙⵍⵎⴷ</span><span class="name">Amazigh</span></div>
-      <div><span class="word" lang="fr" dir="ltr">Payer</span><span class="name">French</span></div>
-      <div><span class="word" lang="en" dir="ltr">Pay</span><span class="name">English</span></div>
-    </div>
+<!-- ═══════════════ CREDIT (orange) ═══════════════ -->
+<section class="sec credit" id="credit"><div class="wrap"><div class="credit-in">
+  <div class="credit-text rv">
+    <p class="eyebrow">Credit carnet</p><h2>The carnet, without the carnet.</h2><p class="lede">Every neighbourhood shop keeps a notebook of who owes what. ItriPay keeps it for you: each customer, each debt, each payment against it, and a total that is always current.</p>
+    <ul class="cpoints">
+      <li><svg class="ic" aria-hidden="true"><use href="#i-book"/></svg><span>One list, every balance, never out of date.</span></li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Register a payment against a debt in two taps.</span></li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-sms"/></svg><span>SMS reminders, sent when you decide, not by themselves.</span></li>
+    </ul>
   </div>
-</section>
-
-<!-- ═══════════════ PRICING ═══════════════ -->
-<section class="pricing" id="pricing">
-  <div class="wrap">
-    <div class="copy center">
-      <p class="eyebrow">Pricing</p>
-      <h2>One plan. Everything included.</h2>
-    </div>
-    <div class="plan">
-      <p class="price"><span class="num"><bdi>49</bdi></span><span class="unit">MAD / month</span></p>
-      <p class="rule">Free if you don't reach 500 MAD revenue in 30 days.</p>
-      <p class="how">Activate for free, use everything. If your revenue exceeds 500 MAD in 30 days, 49 MAD is deducted automatically.</p>
-      <h3>All features included</h3>
-      <ul class="included">
-        <li>Transactions — all payments and refunds</li>
-        <li>Sales and analytics — daily, monthly and yearly reports</li>
-        <li>Export PDF / Excel</li>
-        <li>Multi-users — add employees with permissions</li>
-        <li>Credit — track debts and SMS alerts</li>
-        <li>Custom receipt — with your logo and shop name</li>
-      </ul>
-      <a class="btn" href="#contact">Talk to us</a>
-    </div>
+  <div class="carnet rv static" aria-hidden="true" data-paid="Paid">
+    <div class="cn-rings"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="cn-head"><span>Credit · Total</span><b><span data-total>842.50</span> <i>DH</i></b></div>
+    <ul>
+      <li style="--i:0"><span class="cn-av">Y</span><span class="cn-who"><b>Y. Bennani</b><small data-note="Bread, milk · today">Bread, milk · today</small></span><em data-bal="86.00">86.00</em></li>
+      <li style="--i:1"><span class="cn-av">F</span><span class="cn-who"><b>F. Ouazzani</b><small data-note="Paid 150.00 · yesterday">Paid 150.00 · yesterday</small></span><em data-bal="240.50">240.50</em></li>
+      <li style="--i:2"><span class="cn-av">K</span><span class="cn-who"><b>K. Idrissi</b><small data-note="Gas bottle · 12 Sep">Gas bottle · 12 Sep</small></span><em data-bal="55.00">55.00</em></li>
+      <li style="--i:3"><span class="cn-av">S</span><span class="cn-who"><b>S. Tazi</b><small data-note="Groceries · 9 Sep">Groceries · 9 Sep</small></span><em data-bal="461.00">461.00</em></li>
+    </ul>
+    <div class="cn-sms"><svg class="ic" aria-hidden="true"><use href="#i-sms"/></svg><span>SMS reminder sent</span></div>
   </div>
-</section>
+</div></div></section>
 
-<!-- ═══════════════ CONTACT ═══════════════
+<!-- ═══════════════ WHO IT IS FOR ═══════════════ -->
+<section class="sec who" id="who"><div class="wrap">
+  <header class="sec-head rv"><p class="eyebrow">Who it is for</p><h2>Made for anyone who sells and wants to get paid.</h2></header>
+  <ul class="grid-who">
+    <li class="card rv" style="--i:0"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-shop"/></svg></span><h3>Corner shops</h3></li>
+    <li class="card rv" style="--i:1"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-cup"/></svg></span><h3>Cafés and snacks</h3></li>
+    <li class="card rv" style="--i:2"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-basket"/></svg></span><h3>Market vendors</h3></li>
+    <li class="card rv" style="--i:3"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-taxi"/></svg></span><h3>Taxis</h3></li>
+    <li class="card rv" style="--i:4"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-doctor"/></svg></span><h3>Doctors and dentists</h3></li>
+    <li class="card rv" style="--i:5"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-wrench"/></svg></span><h3>Services</h3><p>Hairdressers, plumbers</p></li>
+  </ul>
+</div></section>
+
+<!-- ═══════════════ PREMIUM (gold) ═══════════════ -->
+<section class="sec premium" id="pricing"><div class="wrap"><div class="prem-card rv">
+  <div class="shimmer" aria-hidden="true"></div>
+  <div class="price-main">
+    <p class="eyebrow"><span class="vglyph" data-own="0"><svg class="star" viewBox="-640 -640 1280 1280" aria-hidden="true"><g><g class="blade"><use href="#ip-blade"/></g></g><g transform="rotate(90)"><g class="blade"><use href="#ip-blade"/></g></g><g transform="rotate(180)"><g class="blade"><use href="#ip-blade"/></g></g><g transform="rotate(270)"><g class="blade"><use href="#ip-blade"/></g></g></svg></span>ItriPay Premium</p>
+    <h2>All features, no limits.</h2>
+    <p class="price"><b data-count="49">49</b><span>MAD <small>/ month</small></span></p>
+    <p class="nodevice"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg><span><b>No extra device</b> The phone you own is the terminal.</span></p>
+    <p class="rule">Free if you don’t reach 500 MAD revenue in 30 days.</p><p class="rule-how">Activate for free, use everything. If your revenue exceeds 500 MAD in 30 days, 49 MAD is deducted automatically.</p>
+    <a class="btn btn-gold" href="#join" data-wait data-thread="242,205,115"><span>Join the waitlist</span><svg class="ic ar" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+  </div>
+  <div class="price-inc">
+    <h3>Included in Premium</h3>
+    <ul>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Transactions: all payments and refunds</span></li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Sales and analytics: daily, monthly and yearly reports</span></li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Export PDF / Excel</span></li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Multi-user: employees with permissions</span></li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Credit: track debts, SMS alerts</span></li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Custom receipt with your logo and shop name</span></li>
+    </ul>
+  </div>
+</div></div></section>
+
+<!-- ═══════════════ PARTNERS ═══════════════
+     B l'7arf: ItriPay ma-3endouch l'agrément w kayqelleb 3la partenaire. -->
+<section class="sec partners" id="partners"><div class="wrap"><div class="partners-in rv">
+  <div>
+    <p class="eyebrow">Partners</p><h2>We are looking for a licensed payment partner.</h2><p class="lede">ItriPay is the merchant’s app: the terminal on the phone, the carnet, the reports. To move money it needs a licensed payment institution or acquiring bank behind it. We are not licensed ourselves, and we do not claim to be.</p>
+    <a class="btn btn-light" href="#join" data-mode="contact"><span>Talk to us about partnering</span><svg class="ic ar" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+  </div>
+  <ul class="plist">
+    <li><span class="vglyph" data-own="0"><svg class="star" viewBox="-640 -640 1280 1280" aria-hidden="true"><g><g class="blade b0"><use href="#ip-blade"/></g></g><g transform="rotate(90)"><g class="blade b1"><use href="#ip-blade"/></g></g><g transform="rotate(180)"><g class="blade b2"><use href="#ip-blade"/></g></g><g transform="rotate(270)"><g class="blade b3"><use href="#ip-blade"/></g></g></svg></span><span>A working Android app in four languages</span></li>
+    <li><span class="vglyph" data-own="1"><svg class="star" viewBox="-640 -640 1280 1280" aria-hidden="true"><g><g class="blade b0"><use href="#ip-blade"/></g></g><g transform="rotate(90)"><g class="blade b1"><use href="#ip-blade"/></g></g><g transform="rotate(180)"><g class="blade b2"><use href="#ip-blade"/></g></g><g transform="rotate(270)"><g class="blade b3"><use href="#ip-blade"/></g></g></svg></span><span>Built around the neighbourhood shop, not adapted to it</span></li>
+    <li><span class="vglyph" data-own="2"><svg class="star" viewBox="-640 -640 1280 1280" aria-hidden="true"><g><g class="blade b0"><use href="#ip-blade"/></g></g><g transform="rotate(90)"><g class="blade b1"><use href="#ip-blade"/></g></g><g transform="rotate(180)"><g class="blade b2"><use href="#ip-blade"/></g></g><g transform="rotate(270)"><g class="blade b3"><use href="#ip-blade"/></g></g></svg></span><span>Open to payment institutions, acquirers and banks in Morocco</span></li>
+  </ul>
+</div></div></section>
+
+<!-- ═══════════════ THE NAME ═══════════════ -->
+<section class="sec name" id="name"><div class="wrap"><div class="name-in rv">
+  <div class="name-star"><svg class="star" viewBox="-640 -640 1280 1280" aria-hidden="true"><g><g class="blade"><use href="#ip-blade"/></g></g><g transform="rotate(90)"><g class="blade"><use href="#ip-blade"/></g></g><g transform="rotate(180)"><g class="blade"><use href="#ip-blade"/></g></g><g transform="rotate(270)"><g class="blade"><use href="#ip-blade"/></g></g></svg><span class="tifinagh" lang="zgh" aria-hidden="true">ⵉⵜⵔⵉ</span></div>
+  <div>
+    <p class="eyebrow">The name</p><h2>Itri means star.</h2><p class="lede">ⵉⵜⵔⵉ, itri, is the Tamazight word for star. Long before maps, traders crossed this country by the stars. We took the name for the same reason: a fixed point a merchant can count on.</p><p class="name-foot">Four points, four promises.</p>
+    <ul class="slogan on-light"><li><button type="button" class="vtrig sl on" data-v="0">Connection</button></li><li><button type="button" class="vtrig sl" data-v="1">Speed</button></li><li><button type="button" class="vtrig sl" data-v="2">Security</button></li><li><button type="button" class="vtrig sl" data-v="3">Innovation</button></li></ul>
+  </div>
+</div></div></section>
+
+<!-- ═══════════════ FAQ ═══════════════ -->
+<section class="sec faq" id="faq"><div class="wrap">
+  <header class="sec-head rv"><p class="eyebrow">FAQ</p><h2>Questions, answered plainly.</h2></header>
+  <div class="faq-list">
+    <details class="rv" style="--i:0"><summary><span>Do I need a card reader or any extra device?</span><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>No. ItriPay runs on an Android phone with NFC. There is nothing else to buy or rent.</p></details>
+    <details class="rv" style="--i:1"><summary><span>How much does it cost?</span><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>49 MAD a month, everything included. It is free in any 30 days where your revenue stays under 500 MAD.</p></details>
+    <details class="rv" style="--i:2"><summary><span>Can I take payments with it today?</span><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Not yet. ItriPay is pre-launch and we are looking for a licensed payment partner. Join the waitlist and we will write to you when it opens.</p></details>
+    <details class="rv" style="--i:3"><summary><span>Is ItriPay a bank or a payment institution?</span><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>No. ItriPay is software. Payments will be processed by a licensed partner.</p></details>
+    <details class="rv" style="--i:4"><summary><span>Which languages does the app speak?</span><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Darija, Tamazight, French and English.</p></details>
+    <details class="rv" style="--i:5"><summary><span>What is the credit carnet?</span><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>The notebook of who owes what, kept on the phone: each customer, each debt, each payment, and a total that is always current.</p></details>
+  </div>
+</div></section>
+
+<!-- ═══════════════ WAITLIST AND CONTACT ═══════════════
      Web3Forms. L'access_key 3lani b l'tasmim (docs.web3forms.com FAQ: "Access
-     key is public"); howa alias dyal l'email, machi secret. Bla JS: POST
-     3adi, w Web3Forms kayredirecti l /en/sent/ (nfs l'domaine: l'free
-     plan kay9bel ghir hadi). B JS: fetch, w l'naja7 wla l'khata2 kaybano
-     f blasthom bla ma ytbeddel l'page. L'email kayb9a f l'footer f l'joj
-     7alat. -->
-<section class="contact" id="contact">
-  <div class="wrap grid">
-    <div class="copy">
-      <p class="eyebrow">Contact</p>
-      <h2>Talk to us.</h2>
-      <p>Investors, accelerators, merchants who want in early — write to us here and we answer from the same inbox.</p>
-      <p class="contact-alt">Or email us directly: <a href="mailto:payna.contact@gmail.com">payna.contact@gmail.com</a></p>
+     key is public"); howa alias dyal l'email, machi secret.
+     Bla JS: POST 3adi (l'navigateur kaytchecki name w email), w Web3Forms
+     kayredirecti l /en/sent/ (nfs l'domaine: l'free plan kay9bel ghir
+     hadi). L'subject 3am, w "intent" (waitlist / contact) kayban f l'email.
+     B JS: fetch, l'subject 3la 7sab l'mode, w l'7alat kaybano f blasthom:
+     sending, invalid, rejected, unknown, w l'naja7. -->
+<section class="sec join" id="join"><div class="wrap"><div class="join-in">
+  <div class="join-text rv">
+    <p class="eyebrow">Waitlist and contact</p><h2>Be there when it opens.</h2><p class="lede">Merchants who want in early, payment partners, investors: write to us here. We answer from the same inbox.</p>
+    <p class="alt">Or email us directly: <a href="mailto:contact@itripay.com">contact@itripay.com</a></p>
+  </div>
+  <div class="form-box rv">
+    <form class="form" id="join-form" action="https://api.web3forms.com/submit" method="POST"
+      data-send-waitlist="Join the waitlist" data-send-contact="Send"
+      data-subject-waitlist="ItriPay website — waitlist" data-subject-contact="ItriPay website — new message"
+      data-sending="Sending…" data-invalid="Please enter your name and a valid email address." data-invalid-msg="Please write a message too."
+      data-rejected="It was not accepted. Please email us directly at contact@itripay.com." data-unknown="We could not confirm that it was sent. Please email us directly at contact@itripay.com.">
+      <input type="hidden" name="access_key" value="4d43e91a-6d9f-464f-98af-6f4eb05f321c">
+      <input type="hidden" name="subject" value="ItriPay website — new submission">
+      <input type="hidden" name="from_name" value="ItriPay website">
+      <input type="hidden" name="redirect" value="https://payna-ma.vercel.app/en/sent/">
+      <!-- Honeypot: l'bots kay3emmro kolchi; l'nas ma-kaychoufouhch. -->
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <fieldset class="seg"><legend class="sr">What would you like to do?</legend>
+        <label><input type="radio" name="intent" value="waitlist" checked><span>Join the waitlist</span></label><label><input type="radio" name="intent" value="contact"><span>Contact us</span></label>
+      </fieldset>
+      <label for="f-name">Your name</label><input id="f-name" name="name" autocomplete="name" maxlength="120" required>
+      <label for="f-email">Your email</label><input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="200" dir="ltr" required>
+      <label for="f-msg">Message <small data-opt>(optional)</small></label><textarea id="f-msg" name="message" rows="4" maxlength="4000"></textarea>
+      <button class="btn btn-primary" type="submit" data-wait><span data-send>Join the waitlist</span><svg class="ic ar" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      <p class="form-status" role="status" aria-live="polite"></p>
+    </form>
+    <div class="form-done" data-done="waitlist" hidden tabindex="-1">
+      <p class="chip"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Sent</p>
+      <h3>You are on the waitlist.</h3><p>We will write to you at this address when ItriPay opens.</p>
     </div>
-    <div class="media">
-      <form class="form" action="https://api.web3forms.com/submit" method="POST" id="contact-form" novalidate>
-        <input type="hidden" name="access_key" value="4d43e91a-6d9f-464f-98af-6f4eb05f321c">
-        <input type="hidden" name="subject" value="Payna website — new message">
-        <input type="hidden" name="from_name" value="Payna website">
-        <input type="hidden" name="redirect" value="https://payna-ma.vercel.app/en/sent/">
-        <!-- Honeypot: l'bots kay3emmro kolchi; l'nas ma-kaychoufouhch. -->
-        <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-
-        <div class="field">
-          <label for="f-name">Your name</label>
-          <input id="f-name" name="name" type="text" required autocomplete="name" maxlength="120">
-        </div>
-        <div class="field">
-          <label for="f-email">Your email</label>
-          <input id="f-email" name="email" type="email" required autocomplete="email" maxlength="200" dir="ltr">
-        </div>
-        <div class="field">
-          <label for="f-message">Message</label>
-          <textarea id="f-message" name="message" required rows="5" maxlength="4000"></textarea>
-        </div>
-
-        <p class="form-status" id="form-status" role="status" aria-live="polite" hidden></p>
-
-        <button class="btn" type="submit" id="form-submit">Send</button>
-      </form>
-
-      <div class="form-done" id="form-done" hidden tabindex="-1">
-        <p class="chip ok">Sent</p>
-        <h3>Thank you — we have your message.</h3>
-        <p>We read everything that comes in and reply from payna.contact@gmail.com.</p>
-      </div>
+    <div class="form-done" data-done="contact" hidden tabindex="-1">
+      <p class="chip"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Sent</p>
+      <h3>Thank you. We have your message.</h3><p>We read everything that comes in and reply from contact@itripay.com.</p>
     </div>
   </div>
-</section>
+</div></div></section>
 
 </main>
 
-<script>
-// Progressive enhancement bark. Bla JS l'form kaykhdem b7al form 3adi
-// (POST + redirect l /sent/). B JS: nb9aw f l'page, w kanwerriw l'naja7
-// wla l'khata2 f blasthom.
-//
-// ⚠ Ghiyab l'jawab machi jawab. Timeout wla network error ma-kay3niwch
-// "ma-tsiftatch": kay3niw "ma-3refnach". L'klam dyal l'khata2 kay9oul
-// hadchi b l'7arf w kay3ti l'email — ma-kay9oulch "failed".
-(function () {
-  var form = document.getElementById('contact-form');
-  var status = document.getElementById('form-status');
-  var done = document.getElementById('form-done');
-  var button = document.getElementById('form-submit');
-  if (!form || !window.fetch || !window.FormData) return;
-
-  var t = {
-    sending: "Sending…",
-    invalid: "Please fill in all three fields, with a valid email address.",
-    rejected: "The message was not accepted. Please email us directly at payna.contact@gmail.com.",
-    unknown: "We could not confirm the message was sent. Please email us directly at payna.contact@gmail.com."
-  };
-
-  function show(kind, text) {
-    status.hidden = false;
-    status.className = 'form-status ' + kind;
-    status.textContent = text;
-  }
-
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    if (!form.checkValidity()) {
-      show('err', t.invalid);
-      form.reportValidity();
-      return;
-    }
-    var data = new FormData(form);
-    data.delete('redirect'); // b JS ma-kaynch redirect: l'jawab JSON
-    var body = {};
-    data.forEach(function (v, k) { body[k] = v; });
-
-    button.disabled = true;
-    show('wait', t.sending);
-
-    var controller = window.AbortController ? new AbortController() : null;
-    var timer = controller && setTimeout(function () { controller.abort(); }, 15000);
-
-    fetch(form.action, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(body),
-      signal: controller ? controller.signal : undefined
-    }).then(function (res) {
-      return res.json().then(function (json) { return { ok: res.ok, json: json }; },
-                             function () { return { ok: res.ok, json: null }; });
-    }).then(function (r) {
-      if (r.ok && r.json && r.json.success) {
-        form.hidden = true;
-        done.hidden = false;
-        done.focus();
-      } else {
-        // L'server jaweb b "la": hadi refus 7a9i9i, machi ghiyab.
-        show('err', t.rejected);
-        button.disabled = false;
-      }
-    }).catch(function () {
-      // Timeout, network, CORS: ma-3refnach. Ma-n9oulouch "failed".
-      show('err', t.unknown);
-      button.disabled = false;
-    }).then(function () { if (timer) clearTimeout(timer); });
-  });
-})();
-</script>
-
-<footer class="footer">
-  <div class="wrap footer-row">
-    <a class="brand" href="/en/">
-      <img src="/assets/mark-white.png" alt="" width="46" height="36">
-      <span>Payna</span>
-    </a>
-    <p class="footer-contact"><span>Contact</span> <a href="mailto:payna.contact@gmail.com">payna.contact@gmail.com</a></p>
-    <nav class="lang" aria-label="Language">
-      <a href="/en/" hreflang="en" lang="en">English</a>
-      <a href="/fr/" hreflang="fr" lang="fr">Français</a>
-      <a href="/ar/" hreflang="ar" lang="ar">العربية</a>
-    </nav>
+<footer class="site-foot"><div class="wrap">
+  <div class="foot-top">
+    <div class="brand"><svg class="star" viewBox="-640 -640 1280 1280" aria-hidden="true"><g><g class="blade"><use href="#ip-blade"/></g></g><g transform="rotate(90)"><g class="blade"><use href="#ip-blade"/></g></g><g transform="rotate(180)"><g class="blade"><use href="#ip-blade"/></g></g><g transform="rotate(270)"><g class="blade"><use href="#ip-blade"/></g></g></svg><span class="wordmark">ItriPay</span></div>
+    <p class="foot-tag">The payment terminal in your pocket.</p>
+    <ul class="slogan foot-slogan"><li><button type="button" class="vtrig sl on" data-v="0">Connection</button></li><li><button type="button" class="vtrig sl" data-v="1">Speed</button></li><li><button type="button" class="vtrig sl" data-v="2">Security</button></li><li><button type="button" class="vtrig sl" data-v="3">Innovation</button></li></ul>
   </div>
-  <div class="wrap"><p class="fine">© 2026 Payna. Made in Morocco.</p></div>
-</footer>
+  <div class="foot-bot">
+    <nav aria-label="Footer"><a href="#how">How it works</a><a href="#features">Features</a><a href="#credit">Credit</a><a href="#pricing">Premium</a><a href="#faq">FAQ</a></nav>
+    <p>Contact: <a href="mailto:contact@itripay.com">contact@itripay.com</a></p>
+    <div class="lang" role="group" aria-label="Language"><a href="/en/" hreflang="en" lang="en" aria-current="page">EN</a><a href="/fr/" hreflang="fr" lang="fr">FR</a><a href="/ar/" hreflang="ar" lang="ar">ع</a></div>
+    <p class="copy">© 2026 ItriPay. Made in Morocco.</p>
+  </div>
+</div></footer>
 </body>
 </html>

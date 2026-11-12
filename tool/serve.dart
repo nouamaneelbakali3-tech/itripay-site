@@ -30,7 +30,7 @@ const Map<String, String> types = {
 Future<void> main(List<String> args) async {
   final port = args.isEmpty ? 8080 : int.parse(args.first);
   final server = await HttpServer.bind(InternetAddress.loopbackIPv4, port);
-  stdout.writeln('payna-site -> http://localhost:$port/');
+  stdout.writeln('itripay-site -> http://localhost:$port/');
 
   await for (final req in server) {
     final res = req.response;
