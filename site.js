@@ -22,13 +22,14 @@
     var points = $$('.stage .blade[data-v]');
     if (points.length !== 4) return;
     var curV = 0, holdUntil = 0, CYCLE = 3400, HOLD = 6000;
+    /* getAttribute, not dataset: the star's points are SVG elements, and SVG dataset came late to older Safari */
     function setValue(i) {
       curV = i;
-      $$('.vtrig[data-v]').forEach(function (el) { el.classList.toggle('on', +el.dataset.v === i); });
-      $$('[data-vtext]').forEach(function (el) { el.textContent = points[i].dataset[el.dataset.vtext]; });
+      $$('.vtrig[data-v]').forEach(function (el) { el.classList.toggle('on', +el.getAttribute('data-v') === i); });
+      $$('[data-vtext]').forEach(function (el) { el.textContent = points[i].getAttribute('data-' + el.getAttribute('data-vtext')); });
     }
     function userValue(i) { holdUntil = Date.now() + HOLD; setValue(i); }
-    function trig(e) { var t = e.target.closest && e.target.closest('.vtrig'); return t ? +t.dataset.v : -1; }
+    function trig(e) { var t = e.target.closest && e.target.closest('.vtrig'); return t ? +t.getAttribute('data-v') : -1; }
     document.addEventListener('pointerover', function (e) { if (e.pointerType === 'mouse') { var i = trig(e); if (i >= 0) userValue(i); } });
     document.addEventListener('focusin', function (e) { var i = trig(e); if (i >= 0) userValue(i); });
     document.addEventListener('click', function (e) {
@@ -37,7 +38,7 @@
     });
     document.addEventListener('keydown', function (e) {
       var b = e.target.closest && e.target.closest('.blade.vtrig');
-      if (b && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); userValue(+b.dataset.v); spinOnce(b.closest('svg.star')); }
+      if (b && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); userValue(+b.getAttribute('data-v')); spinOnce(b.closest('svg.star')); }
     });
     if (!reduce) setInterval(function () { if (document.hidden || Date.now() < holdUntil) return; setValue((curV + 1) % 4); }, CYCLE);
   })();
@@ -284,28 +285,44 @@
     document.addEventListener('visibilitychange', function () { if (document.hidden) unmount(); });
   })();
 
-  /* ---------- Premium: the 49 counts up once when it scrolls into view ---------- */
+  /* ---------- scroll triggers that survive a phone's toolbars ----------
+     On an iPhone, Safari's toolbars collapse and expand while you scroll, so the viewport's bottom edge moves
+     up and down by ~90px. A trigger set on a visibility ratio sits right on that moving edge and keeps
+     flipping. So: start when the element is clearly in view (its top above the lowest 15% of the screen),
+     and stop only once it has left the screen entirely. Between the two, nothing changes. */
+  function whileInView(el, start, stop) {
+    var on = false;
+    new IntersectionObserver(function (en) {
+      if (en[0].isIntersecting && !on) { on = true; start(); }
+    }, { rootMargin: '0px 0px -15% 0px' }).observe(el);
+    new IntersectionObserver(function (en) {
+      if (!en[0].isIntersecting && on) { on = false; if (stop) stop(); }
+    }).observe(el);
+  }
+
+  /* ---------- Premium: the 49 counts up once when it comes into view ----------
+     It reads 49 until then, so a missed trigger never leaves a 0 on the page. */
   (function () {
     var el = $('[data-count]'); if (!el || reduce || !hasIO) return;
-    var to = +el.dataset.count; el.textContent = '0';
-    var o = new IntersectionObserver(function (en) {
-      if (!en[0].isIntersecting) return; o.disconnect();
+    var to = +el.getAttribute('data-count'), done = false;
+    whileInView(el, function () {
+      if (done) return; done = true;
       var t0 = 0, D = 1200;
+      el.textContent = '0';
       requestAnimationFrame(function step(t) {
         if (!t0) t0 = t; var k = Math.min(1, (t - t0) / D);
         el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step);
       });
-    }, { threshold: 0.6 });
-    o.observe(el);
+    });
   })();
 
   /* ---------- credit carnet: a short loop — a reminder goes out, a debt is paid, the total drops ----------
      Without JS (or with reduced motion) the carnet stays still with the SMS note showing (.static). */
   (function () {
     var cn = $('.carnet'); if (!cn || reduce || !hasIO) return;
-    var rows = $$('li', cn), tot = $('[data-total]', cn), paid = cn.dataset.paid;
+    var rows = $$('li', cn), tot = $('[data-total]', cn), paid = cn.getAttribute('data-paid');
     cn.classList.remove('static');
-    var timers = [], vis = false;
+    var timers = [], vis = false;   /* vis: the loop is running (from "clearly in view" until "off screen") */
     function later(f, ms) { timers.push(setTimeout(f, ms)); }
     function count(from, to) {
       var t0 = 0; requestAnimationFrame(function s(t) { if (!t0) t0 = t; var k = Math.min(1, (t - t0) / 700); tot.textContent = (from + (to - from) * k).toFixed(2); if (k < 1 && vis) requestAnimationFrame(s); });
@@ -321,10 +338,9 @@
       later(function () { rows[0].classList.add('paid'); $('em', rows[0]).textContent = '0.00'; $('small', rows[0]).textContent = paid; count(842.5, 756.5); }, 4200);
       later(function () { if (vis) play(); }, 8200);
     }
-    new IntersectionObserver(function (en) {
-      vis = en[0].isIntersecting; timers.forEach(clearTimeout); timers = [];
-      if (vis) play();
-    }, { threshold: 0.35 }).observe(cn);
+    whileInView(cn,
+      function () { vis = true; timers.forEach(clearTimeout); timers = []; play(); },
+      function () { vis = false; timers.forEach(clearTimeout); timers = []; });
   })();
 
   /* ---------- the form: waitlist or contact, sent to Web3Forms ----------
