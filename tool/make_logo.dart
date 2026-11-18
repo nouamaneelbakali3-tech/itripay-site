@@ -3,37 +3,52 @@
 //
 //   dart run tool/make_logo.dart
 //
-// Kayqra assets/source/itripay-logo.png (6250x6250, mn repo dyal l'app:
-// nejma byda b rb3 rious w l'facets rmadiyin, 3la #0D48BE ghamlin bla
+// Kayqra assets/source/itripay-logo.png (mn repo dyal l'app: nejma byda b
+// rb3 rious, kol ras nousso byed w nousso rmadi, 3la lard azraq flat bla
 // alpha) w kaykhrej:
 //
-//   assets/favicon-16.png        l'icon kima f l'app: mrebbe3 azraq w
-//   assets/favicon-32.png        l'nejma, b l'facets dyalha
+//   src/star.json                l'paths dyal l'nejma (star_blade_d,
+//                                star_facet_d) li kaydkhlhom tool/build.dart
+//                                f l'sprite: l'header, l'hero, l'glyphs.
+//   assets/favicon.svg           l'nejma vectorielle 3la mrebbe3 azraq
+//   favicon.ico (f l'racine)     16 + 32 + 48 f malaf wa7ed (/favicon.ico
+//                                kaytlbouh l'browsers w l'crawlers b rasshom)
+//   assets/favicon-{16,32,48,96,192}.png
 //   assets/apple-touch-icon.png  180x180 (iOS kaydewwer l'zwaya b rasso)
-//   assets/icon-512.png          512x512
+//   assets/icon-512.png          512x512 (l'logo f l'JSON-LD)
 //   assets/og.png                1200x630, l'tsswira dyal l'partage (WhatsApp...)
 //   assets/mark-white.png        l'nejma 3la alpha, 480px (l'mails, docs)
-//   assets/mark-blue.png         nfs l'chakl b #0D48BE, l'byed
+//   assets/mark-blue.png         nfs l'chakl b lawn l'lard, l'byed
 //
-// assets/favicon.svg machi mn hna: howa l'nejma l'vectorielle (nfs l'paths
-// dyal l'site, BLADE/FACET f src/template.html), mektoub b l'yed.
+// L'TRACE: l'nejma 3endha simétrie dyal 90°. Kanakhdo ghir l'ras l'fou9ani
+// (l'composante connexe li fiha l'pixel ta7t l'ras), kanjebdo l'7afa dyalo
+// b marching squares (sub-pixel, 3la l'nouss bin l'lard w l'byed), w
+// kanbsto b Douglas-Peucker. L'site kaydewwerha b rotate(90/180/270).
+// L'facet (l'jiha l'rmadiya) = nfs l'ras, ghir l'pixels li 3la l'imin dyal
+// l'khatt l'wasti. Les unités: l'centre 0,0, l'ras f -588 (viewBox dyal
+// l'site -640..640, b7al 9bel).
 //
-// L'site nafso kayrsem l'nejma b SVG, machi b had l'PNGs.
-//
-// L'KEYING (l'mark-white / mark-blue): l'lard #0D48BE w l'nejma byda wla
-// rmadiya (R kbir). Alpha mn l'canal l'a7mar: 0x0D -> 0, w kolchi li fo9
-// 65% -> 255 (dakhel l'nejma 3amer, ghir l'7afa li fiha antialiasing).
+// L'KEYING (l'mark-white / mark-blue): l'nejma byda wla rmadiya (R kbir)
+// w l'lard R sghir. Alpha mn l'canal l'a7mar, w kolchi li fo9 65% -> 255.
 // L'lawn kayt-7ssab b unpremultiply, donc l'facets kayb9aw rmadiyin.
 // ============================================================================
 
+import 'dart:convert';
 import 'dart:io';
+import 'dart:math' as math;
 
 import 'package:image/image.dart' as img;
 
 const String source = 'assets/source/itripay-logo.png';
 const String out = 'assets';
 
-const int bgR = 0x0D, bgG = 0x48, bgB = 0xBE;
+/// Fin kaykoun ras l'nejma l'fou9ani f les unités dyal l'sprite.
+const double tipUnits = 588;
+
+/// L'facet: l'rmadi dyal l'logo (#ECEBE9 3la byed) b7al overlay f9 currentColor.
+const String facetFill = 'rgba(60,40,20,.08)';
+
+late int bgR, bgG, bgB;
 
 void main() {
   final full = img.decodePng(File(source).readAsBytesSync());
@@ -42,17 +57,21 @@ void main() {
     exit(1);
   }
   final bg = full.getPixel(0, 0);
-  if (bg.r.toInt() != bgR || bg.g.toInt() != bgG || bg.b.toInt() != bgB) {
-    stderr.writeln('l\'pixel (0,0) machi #0D48BE: '
-        '${bg.r.toInt()},${bg.g.toInt()},${bg.b.toInt()} — machi l\'masdar l\'mtwe9e3');
+  bgR = bg.r.toInt();
+  bgG = bg.g.toInt();
+  bgB = bg.b.toInt();
+  if (bgR > 80 || bgB < 150) {
+    stderr.writeln('l\'pixel (0,0) machi azraq: $bgR,$bgG,$bgB — machi l\'masdar l\'mtwe9e3');
     exit(1);
   }
-  stdout.writeln('masdar: ${full.width}x${full.height}');
+  final bgHex = '#${[bgR, bgG, bgB].map((c) => c.toRadixString(16).padLeft(2, '0')).join().toUpperCase()}';
+  stdout.writeln('masdar: ${full.width}x${full.height}, lard $bgHex');
+  final iso = (bgR + 255) / 2;
 
-  // ── 1. L'bbox dyal l'nejma (R b3id mn l'lard) ──
+  // ── 1. L'bbox dyal l'nejma ──
   var minX = full.width, minY = full.height, maxX = -1, maxY = -1;
   for (final p in full) {
-    if (p.r > bgR + 60) {
+    if (p.r > iso) {
       if (p.x < minX) minX = p.x;
       if (p.x > maxX) maxX = p.x;
       if (p.y < minY) minY = p.y;
@@ -60,8 +79,44 @@ void main() {
     }
   }
   final cx = (minX + maxX) / 2, cy = (minY + maxY) / 2;
-  final starSize = (maxX - minX + 1) > (maxY - minY + 1) ? maxX - minX + 1 : maxY - minY + 1;
-  stdout.writeln('nejma: ${maxX - minX + 1}x${maxY - minY + 1} f ($minX,$minY)');
+  final starSize = math.max(maxX - minX + 1, maxY - minY + 1);
+  stdout.writeln('nejma: ${maxX - minX + 1}x${maxY - minY + 1} f ($minX,$minY), centre ($cx,$cy)');
+
+  // ── 2. L'trace dyal l'ras l'fou9ani → src/star.json ──
+  final scale = tipUnits / (cy - minY);
+  // L'seed: l'pixel l'abyed f l'ster 40 ta7t l'ras, l'a9reb l l'centre.
+  final seedY = minY + 40;
+  var seedX = -1;
+  for (var x = minX; x <= maxX; x++) {
+    if (full.getPixel(x, seedY).r > iso && (seedX < 0 || (x - cx).abs() < (seedX - cx).abs())) seedX = x;
+  }
+  final blade = _component(full, seedX, seedY, iso);
+  String pathOf(bool Function(int x, int y) keep) {
+    final loop = _contour(full.width, full.height,
+        (x, y) => blade.contains(y * full.width + x) && keep(x, y) ? full.getPixel(x, y).r.toDouble() : bgR.toDouble(),
+        iso);
+    final simple = _rdp(loop, 0.7);
+    String n(double v) => (v.round() == 0 ? 0 : v.round()).toString();
+    return 'M${simple.map((p) => '${n((p.x - cx) * scale)} ${n((p.y - cy) * scale)}').join(' L')} Z';
+  }
+  final bladeD = pathOf((_, __) => true);
+  final facetD = pathOf((x, _) => x > cx);
+  File('src/star.json').writeAsStringSync(const JsonEncoder.withIndent('  ').convert({
+    '//': 'Generated by tool/make_logo.dart from $source. Do not edit.',
+    'star_blade_d': bladeD,
+    'star_facet_d': facetD,
+    'star_facet_fill': facetFill,
+  }) + '\n');
+  stdout.writeln('  -> src/star.json (blade ${bladeD.length} chars, facet ${facetD.length} chars)');
+
+  // ── 3. favicon.svg: nfs l'paths 3la mrebbe3 b lawn l'lard ──
+  File('$out/favicon.svg').writeAsStringSync(
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-700 -700 1400 1400">'
+      '<rect x="-700" y="-700" width="1400" height="1400" rx="300" fill="$bgHex"/>'
+      '<defs><g id="b"><path d="$bladeD" fill="#fff"/><path d="$facetD" fill="$facetFill"/></g></defs>'
+      '<use href="#b"/><use href="#b" transform="rotate(90)"/><use href="#b" transform="rotate(180)"/>'
+      '<use href="#b" transform="rotate(270)"/></svg>\n');
+  stdout.writeln('  -> $out/favicon.svg');
 
   img.Image down(img.Image im, int w, [int? h]) => img.copyResize(im,
       width: w, height: h ?? w, interpolation: img.Interpolation.average);
@@ -81,19 +136,25 @@ void main() {
     return down(sq, size);
   }
 
-  // ── 2. L'icons: b7al l'launcher, l'nejma kbira f 16/32 bach tban ──
-  _write('favicon-16.png', framed(0.90, 16));
-  _write('favicon-32.png', framed(0.86, 32));
+  // ── 4. L'icons: l'nejma kbira f l'sghar bach tban ──
+  final ico = [framed(0.90, 16), framed(0.86, 32), framed(0.84, 48)];
+  _write('favicon-16.png', ico[0]);
+  _write('favicon-32.png', ico[1]);
+  _write('favicon-48.png', ico[2]);
+  _write('favicon-96.png', framed(0.80, 96));
+  _write('favicon-192.png', framed(0.72, 192));
   _write('apple-touch-icon.png', framed(0.70, 180));
   _write('icon-512.png', framed(0.70, 512));
+  final icoFile = File('favicon.ico')..writeAsBytesSync(img.IcoEncoder().encodeImages(ico));
+  stdout.writeln('  -> ${icoFile.path} 16+32+48 ${(icoFile.lengthSync() / 1024).toStringAsFixed(1)} KB');
 
-  // ── 3. og.png: 1200x630, l'nejma f l'wst ──
+  // ── 5. og.png: 1200x630, l'nejma f l'wst ──
   final og = img.Image(width: 1200, height: 630, numChannels: 3);
   img.fill(og, color: img.ColorRgb8(bgR, bgG, bgB));
   img.compositeImage(og, framed(0.66, 630), dstX: (1200 - 630) ~/ 2, dstY: 0);
   _write('og.png', og);
 
-  // ── 4. L'mark 3la alpha ──
+  // ── 6. L'mark 3la alpha ──
   final pad = (starSize * 0.02).round();
   final crop = img.copyCrop(full,
       x: minX - pad, y: minY - pad, width: maxX - minX + 1 + 2 * pad, height: maxY - minY + 1 + 2 * pad);
@@ -111,6 +172,107 @@ void main() {
   }
   _write('mark-white.png', down(white, 480, (white.height * 480 / white.width).round()));
   _write('mark-blue.png', down(blue, 480, (blue.height * 480 / blue.width).round()));
+}
+
+/// L'pixels (y*w+x) dyal l'composante connexe (4-voisins) li fiha (sx,sy).
+Set<int> _component(img.Image im, int sx, int sy, double iso) {
+  final w = im.width, h = im.height;
+  final seen = <int>{};
+  final stack = [sy * w + sx];
+  while (stack.isNotEmpty) {
+    final i = stack.removeLast();
+    if (seen.contains(i)) continue;
+    final x = i % w, y = i ~/ w;
+    if (im.getPixel(x, y).r <= iso) continue;
+    seen.add(i);
+    if (x > 0) stack.add(i - 1);
+    if (x < w - 1) stack.add(i + 1);
+    if (y > 0) stack.add(i - w);
+    if (y < h - 1) stack.add(i + w);
+  }
+  if (seen.isEmpty) throw StateError('ma-l9itch l\'nejma f ($sx,$sy)');
+  return seen;
+}
+
+/// Marching squares 3la [f] (l'centres dyal l'pixels), kayrj3 l'loop l'kbir.
+List<math.Point<double>> _contour(int w, int h, double Function(int x, int y) f, double iso) {
+  double v(int x, int y) => (x < 0 || y < 0 || x >= w || y >= h) ? 0 : f(x, y);
+  // L'7wafi: kol nqta mfta7ha (edge id), w l'segments b joj.
+  final next = <int, int>{};
+  final pos = <int, math.Point<double>>{};
+  // edge id: horizontal (x,y)-(x+1,y) = 2*(y*(w+2)+x), vertical = +1.
+  int hId(int x, int y) => 2 * ((y + 1) * (w + 2) + (x + 1));
+  int vId(int x, int y) => hId(x, y) + 1;
+  math.Point<double> lerp(int x0, int y0, int x1, int y1) {
+    final a = v(x0, y0), b = v(x1, y1);
+    final t = (iso - a) / (b - a);
+    return math.Point(x0 + (x1 - x0) * t, y0 + (y1 - y0) * t);
+  }
+  for (var y = -1; y < h; y++) {
+    for (var x = -1; x < w; x++) {
+      final tl = v(x, y) > iso, tr = v(x + 1, y) > iso, br = v(x + 1, y + 1) > iso, bl = v(x, y + 1) > iso;
+      final c = (tl ? 8 : 0) | (tr ? 4 : 0) | (br ? 2 : 0) | (bl ? 1 : 0);
+      if (c == 0 || c == 15) continue;
+      final top = hId(x, y), bottom = hId(x, y + 1), left = vId(x, y), right = vId(x + 1, y);
+      pos[top] ??= lerp(x, y, x + 1, y);
+      pos[bottom] ??= lerp(x, y + 1, x + 1, y + 1);
+      pos[left] ??= lerp(x, y, x, y + 1);
+      pos[right] ??= lerp(x + 1, y, x + 1, y + 1);
+      // L'segments mwejjhin (l'dakhel 3la l'imin), bach l'loop ytrbet b wa7d l'ttijah.
+      const table = <int, List<List<String>>>{
+        1: [['l', 'b']], 2: [['b', 'r']], 3: [['l', 'r']], 4: [['r', 't']],
+        5: [['l', 't'], ['r', 'b']], 6: [['b', 't']], 7: [['l', 't']], 8: [['t', 'l']],
+        9: [['t', 'b']], 10: [['t', 'r'], ['b', 'l']], 11: [['t', 'r']], 12: [['r', 'l']],
+        13: [['r', 'b']], 14: [['b', 'l']],
+      };
+      final ids = {'t': top, 'b': bottom, 'l': left, 'r': right};
+      for (final s in table[c]!) {
+        next[ids[s[0]]!] = ids[s[1]]!;
+      }
+    }
+  }
+  List<math.Point<double>> best = [];
+  final done = <int>{};
+  for (final start in next.keys) {
+    if (done.contains(start)) continue;
+    final loop = <math.Point<double>>[];
+    var e = start;
+    while (!done.contains(e) && next.containsKey(e)) {
+      done.add(e);
+      loop.add(pos[e]!);
+      e = next[e]!;
+    }
+    if (loop.length > best.length) best = loop;
+  }
+  return best;
+}
+
+/// Douglas-Peucker 3la loop msdoud.
+List<math.Point<double>> _rdp(List<math.Point<double>> loop, double eps) {
+  // Nbdaw mn l'nqta l'fou9aniya (l'ras), bach l'path yebda tema.
+  var top = 0;
+  for (var i = 1; i < loop.length; i++) {
+    if (loop[i].y < loop[top].y) top = i;
+  }
+  final pts = [...loop.sublist(top), ...loop.sublist(0, top), loop[top]];
+  List<math.Point<double>> go(int a, int b) {
+    var far = -1.0, idx = -1;
+    final p = pts[a], q = pts[b];
+    final dx = q.x - p.x, dy = q.y - p.y, len = math.sqrt(dx * dx + dy * dy);
+    for (var i = a + 1; i < b; i++) {
+      final r = pts[i];
+      final d = len == 0
+          ? r.distanceTo(p)
+          : ((r.x - p.x) * dy - (r.y - p.y) * dx).abs() / len;
+      if (d > far) {
+        far = d;
+        idx = i;
+      }
+    }
+    if (far <= eps) return [p];
+    return [...go(a, idx), ...go(idx, b)];
+  }
+  return go(0, pts.length - 1);
 }
 
 void _write(String name, img.Image im) {

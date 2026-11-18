@@ -32,6 +32,8 @@ import 'dart:convert';
 import 'dart:io';
 
 const String siteConfig = 'src/site.json';
+/// L'paths dyal l'nejma, mktoubin mn tool/make_logo.dart (machi b l'yed).
+const String starPaths = 'src/star.json';
 const Map<String, String> templates = {
   'src/template.html': 'index.html',
   'src/sent.html': 'sent/index.html',
@@ -70,7 +72,8 @@ final List<RegExp> forbidden = [
 ];
 
 void main() {
-  final config = _readJson(siteConfig);
+  final config = {..._readJson(siteConfig), ..._readJson(starPaths)}
+    ..removeWhere((k, _) => k.startsWith('//'));
   final tpls = templates.map((src, _) => MapEntry(src, File(src).readAsStringSync()));
   final used = <String>{};
   for (final tpl in tpls.values) {

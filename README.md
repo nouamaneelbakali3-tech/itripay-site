@@ -23,20 +23,23 @@ the `image` package the logo tool uses.
 | `en/ fr/ ar/` | **Generated.** Edit `src/`, then rebuild. Committed so Vercel serves them as-is |
 | `site.css` | All styling. Colour tokens at the top |
 | `site.js` | Behaviour only (motion, the star, the waitlist threads, the live form). The page reads complete without it |
-| `assets/` | Favicons, og image, marks, fonts — generated from `assets/source/` |
+| `assets/` | Favicons (svg, 16/32/48/96/192), apple-touch-icon, icon-512 (the JSON-LD logo), og image, marks, fonts — generated from `assets/source/` |
+| `favicon.ico`, `src/star.json` | **Generated** by `tool/make_logo.dart` |
 | `assets/source/` | The logo and the app's TTF fonts. Not deployed |
 | `mockups/` | The redesign prototypes and `mockups/HANDOFF.md` (every design decision). Not deployed |
 | `tool/` | The four scripts above |
 | `vercel.json` | `/` → `/en/`, clean URLs, cache headers |
 | `sitemap.xml`, `robots.txt` | **Generated** by `tool/build.dart` from `base_url`. The sitemap lists `/en/ /fr/ /ar/` with hreflang alternates; the sent pages are left out and carry `noindex` (meta tag, plus `X-Robots-Tag` in `vercel.json`), and robots.txt does not block them, so crawlers can see that |
-| `.vercelignore` | Allowlist of what is deployed: `en/ fr/ ar/ assets/ index.html site.css site.js vercel.json sitemap.xml robots.txt` |
+| `.vercelignore` | Allowlist of what is deployed: `en/ fr/ ar/ assets/ index.html site.css site.js vercel.json sitemap.xml robots.txt favicon.ico` |
 
 ## Brand
 
 - **Name:** ItriPay, in Latin letters in every language. Itri (ⵉⵜⵔⵉ) is the Tamazight word for star.
 - **Four values:** Connection · Speed · Security · Innovation — one per point of the star.
-- **Logo:** `assets/source/itripay-logo.png` (6250×6250, from the app repo). The site draws the star
-  as SVG, traced from that PNG (the `ip-blade` path in the templates and `assets/favicon.svg`).
+- **Logo:** `assets/source/itripay-logo.png` (2000×2000, from the app repo, 2026-11-18). The site draws the star
+  as SVG: `tool/make_logo.dart` traces one point of it into `src/star.json`, which the build puts in the
+  `ip-blade` sprite (header, hero, glyphs) and in `assets/favicon.svg`. Replace the PNG, run the logo tool,
+  then the build.
 - **Colours:** built from the logo blue `#0D48BE`, one step lighter (`#1452CC`) for buttons and links.
   The orange is the app's Credit orange, the gold is Premium. All text pairs pass WCAG AA; the table is in
   `mockups/HANDOFF.md` §4.
