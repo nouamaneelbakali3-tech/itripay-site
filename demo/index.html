@@ -23,28 +23,48 @@
   <link rel="manifest" href="manifest.json">
 
   <!--
-    Phone frame on wide screens, full screen on phones.
+    Phone frame on any screen wider than 600px, full screen on phones.
     Flutter renders into #app (hostElement in flutter_bootstrap.js),
     so the app's own layout sees a phone-sized viewport on desktop.
     No external stylesheet or font: the demo makes no third-party
     requests (see lib/core/demo.dart).
+
+    Kan l'frame m9roun b (min-width: 600px) AND (min-height: 720px).
+    Walakin navigateur f desktop nadir ykoun fih 720px dyal l'3olou:
+    1366x768 kaybe9a fih ~650px mn be3d l'onglets w toolbar, w
+    1920x1080 b scaling 150% f Windows = viewport 1280x~630 CSS.
+    Had l'chachat kanou kaytse9tou l full screen b boutons dyal
+    keypad kbar bzaf. Daba l'3ard bo7do li kay9errer.
+
+    L'3olou: l'ecran dyal l'frame ma kayhbetch 3la 740px, 7it l'TPE
+    ma kayscrollich — f 597px (1366x657) l'bouton "Pay Now" kan
+    kaykhrej mn ta7t. Ila kanet l'fenêtre 9sira, l'frame kollo
+    kaytsghar b transform (fitPhone ta7t), w l'app katchouf dima
+    ecran dyal telephone kamel.
   -->
   <style>
     html, body { margin: 0; height: 100%; background: #F8F9FA; }
     #app { position: fixed; inset: 0; }
 
-    @media (min-width: 600px) and (min-height: 720px) {
+    @media (min-width: 600px) {
       body {
-        background: radial-gradient(circle at 50% 35%, #1E3A8A 0%, #0B1E4D 70%);
+        background: #E5E7EB;
         display: flex; align-items: center; justify-content: center;
+        overflow: hidden;
       }
       #phone {
+        /* l'ecran (bla padding): 740–932px d l'3olou, w 390–430px
+           d l'3ard, kaytba3 l'3olou. --s kayji mn fitPhone. */
+        --h: clamp(740px, calc(100vh - 60px), 932px);
+        flex: none;
         position: relative;
-        width: 390px; height: min(844px, calc(100vh - 48px));
+        height: var(--h);
+        width: clamp(390px, calc(var(--h) * 0.46), 430px);
+        transform: scale(var(--s, 1));
         padding: 14px;
         border-radius: 56px;
-        background: #0F172A;
-        box-shadow: 0 0 0 2px #334155, 0 30px 80px rgba(0, 0, 0, .55);
+        background: #111827;
+        box-shadow: 0 0 0 1px #9CA3AF, 0 24px 60px rgba(17, 24, 39, .28);
       }
       #app {
         position: relative; inset: auto;
@@ -57,6 +77,20 @@
 </head>
 <body>
   <div id="phone"><div id="app"></div></div>
+  <script>
+    // L'frame kaydkhol f l'fenêtre b 16px fo9 w ta7t. Ila kan twil
+    // mn l'fenêtre (ecran 740px f fenêtre 9sira), kaytsghar kollo.
+    // F telephone (< 600px) --s ma kayt9raach: l'app kat3mer l'ecran.
+    (function fitPhone() {
+      var phone = document.getElementById('phone');
+      function fit() {
+        var s = Math.min(1, (window.innerHeight - 32) / phone.offsetHeight);
+        phone.style.setProperty('--s', s > 0 ? s : 1);
+      }
+      fit();
+      window.addEventListener('resize', fit);
+    })();
+  </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
