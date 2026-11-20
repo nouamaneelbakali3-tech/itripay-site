@@ -6,20 +6,13 @@
     { "source": "/", "destination": "/en/", "permanent": false }
   ],
   "rewrites": [
-    { "source": "/join/:token", "destination": "/join/index.html" }
+    { "source": "/join/:token", "destination": "/join/" },
+    { "source": "/join/:token/", "destination": "/join/" }
   ],
   "headers": [
     {
       "source": "/.well-known/assetlinks.json",
       "headers": [{ "key": "Content-Type", "value": "application/json" }]
-    },
-    {
-      "source": "/join/(.*)",
-      "headers": [
-        { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
-        { "key": "Referrer-Policy", "value": "no-referrer" },
-        { "key": "Cache-Control", "value": "no-store" }
-      ]
     },
     {
       "source": "/assets/(.*)",
@@ -34,6 +27,14 @@
       "headers": [
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    },
+    {
+      "source": "/join/(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
+        { "key": "Referrer-Policy", "value": "no-referrer" },
+        { "key": "Cache-Control", "value": "no-store" }
       ]
     }
   ]
