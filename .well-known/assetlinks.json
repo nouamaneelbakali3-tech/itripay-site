@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.itripay",
+      "sha256_cert_fingerprints": [
+        "8A:83:55:D4:A6:60:E8:A3:7D:A5:3A:DB:7E:EF:36:B8:F7:59:67:86:26:74:5D:FC:BB:68:81:99:C1:5C:9C:32"
+      ]
+    }
+  }
+]
